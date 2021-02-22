@@ -26,6 +26,7 @@ body {
     width: 100%;
     font-size: 16px;
     overflow-x: hidden;
+    word-wrap: nowrap;
     color: #aaa;
     padding: 8px 0px 8px 16px;
     margin: 0px 0px 8px 0px;
@@ -47,7 +48,7 @@ span.section-header {
     padding: 0px 0px 0px 8px;
     margin: 12px 0px -12px 0px;
     color: white;
-    display: inline-block;
+    display: block;
     text-transform: uppercase;
     font-weight: 700;
     font-family: "Poppins";
