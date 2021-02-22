@@ -7,6 +7,7 @@ body {
 }
 .main {
     margin: 64px 0px 0px 320px;
+    font-size: 12px;
 }
 .sidebar {
     margin: -64px 0px 0px 0px;
