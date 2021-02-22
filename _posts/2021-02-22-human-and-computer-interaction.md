@@ -5,4 +5,7 @@ date: 2021-02-22
 ---
 
 ## Introduction
-Well. Finally got around to putting this old website together. Neat thing about it - powered by [Jekyll](http://jekyllrb.com) and I can use Markdown to author my posts. It actually is a lot easier than I thought it was going to be.
+
+Many products that involve user interaction have been designed with the users primarily kept in mind, hence they are also generally easier and enjoyable to use. Similarly, many other products have also been designed without the users kept in mind. One of the purpose of interaction design is to reduce negative user experience while enhancing the positive ones.
+
+Interaction Design is designing interactive products to support the way people communicate and interact in their everyday and working lives.
