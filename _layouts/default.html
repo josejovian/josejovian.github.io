@@ -10,12 +10,17 @@
 		</head>
 		<body>
 			<div class="sidebar">
-			<span class="section-title">Jose's Notes</span>
+				<span class="section-title">Jose's Notes</span>
 				<span class="section-header">Main Links</span>
-	    		<ul>
-	        		<a href="/" id="home"><li>Home</li></a>
-	    		</ul>
+				<ul>
+					<a href="/" id="home"><li>Home</li></a>
+				</ul>
 				<span class="section-header">Semester 4</span>
+				<ul>
+					{% for post in site.posts %}
+						<a href="{{ post.url }}" title="{{ post.title }}"><li>{{ post.title }}</li></a>
+					{% endfor %}
+				</ul>
 			</div>
 			<div class="main">
 				<div class="container">
