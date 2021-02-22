@@ -47,7 +47,7 @@ span.section-header {
     padding: 0px 0px 0px 8px;
     margin: 12px 0px -12px 0px;
     color: white;
-    display: block;
+    display: inline-block;
     text-transform: uppercase;
     font-weight: 700;
     font-family: "Poppins";
