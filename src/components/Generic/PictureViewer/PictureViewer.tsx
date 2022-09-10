@@ -1,0 +1,163 @@
+import clsx from "clsx";
+import Image from "next/image";
+import React, {
+	createContext,
+	SetStateAction,
+	useCallback,
+	useContext,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
+import ActionButton from "./Button";
+import { BsZoomIn, BsZoomOut, BsXLg } from "react-icons/bs";
+import { defaultModal, ModalContext } from "@/src/contexts/ModalContext";
+
+const multiplier: number[] = [1, 1.2, 1.5],
+	minScale = 0,
+	maxScale = multiplier.length - 1;
+
+export default function PictureViewer() {
+	const { modal, setModal } = useContext(ModalContext);
+	const [scale, setScale] = useState<number>(0);
+	const [active, setActive] = useState<boolean>(false);
+
+	function calculateScale(dir: number, prevScale: number) {
+		if (
+			(dir > 0 && prevScale < maxScale) ||
+			(dir < 0 && prevScale > minScale)
+		)
+			return prevScale + dir;
+		else return prevScale;
+	}
+
+	const whenScroll = useCallback((e: WheelEvent) => {
+		const dir: number = e.deltaY < 0 ? 1 : -1;
+		setScale((prevScale) => {
+			return calculateScale(dir, prevScale);
+		});
+	}, []);
+
+	function zoom(dir: number) {
+		setScale((prevScale) => {
+			return calculateScale(dir, prevScale);
+		});
+	}
+
+	function cleanUp() {
+		const innerWrapper: HTMLElement | null = document.getElementById(
+			"PictureViewer_image"
+		),
+		outerWrapper: HTMLElement | null = document.getElementById(
+			"PictureViewer_image"
+		);
+
+		if (innerWrapper && outerWrapper) {
+			setActive(false);
+			setTimeout(() => {
+				innerWrapper.removeEventListener("wheel", whenScroll);
+				setModal(defaultModal);
+				setScale(0);
+			}, 200);
+		}
+	}
+
+	useEffect(() => {
+		const innerWrapper: HTMLElement | null = document.getElementById(
+				"PictureViewer_image"
+			),
+			outerWrapper: HTMLElement | null = document.getElementById(
+				"PictureViewer_image"
+			);
+
+		if (innerWrapper && outerWrapper) {
+			innerWrapper.removeEventListener("wheel", whenScroll);
+			innerWrapper.addEventListener("wheel", whenScroll, {
+				passive: true,
+			});
+			setTimeout(() => {
+				setActive(true);
+			}, 200);
+		}
+	}, [modal, whenScroll]);
+
+	if (modal.src === "") {
+		return <></>;
+	}
+
+	return (
+		<div
+			id="PictureViewer_wrapper"
+			className={clsx(
+				"fixed top-0 left-0",
+				"w-screen h-screen",
+				"flex items-center justify-center",
+				"transition-opacity",
+				active ? "opacity-100" : "opacity-0"
+			)}
+			style={{ zIndex: 60 }}
+		>
+			<div
+				className={clsx(
+					"fixed top-0 left-0",
+					"w-screen h-screen",
+					"bg-stone-900"
+				)}
+				style={{ zIndex: 60 }}
+				onClick={() => cleanUp()}
+			/>
+			<div style={{ zIndex: 70 }}>
+				<div
+					className={clsx(
+						"fixed top-0 left-0",
+						"w-screen h-8 p-8",
+						"flex items-center justify-between",
+						"bg-stone-900 shadow-lg"
+					)}
+					style={{ zIndex: 80 }}
+				>
+					<span>{modal.alt}</span>
+					<div className="flex gap-4">
+						<ActionButton
+							icon={<BsZoomIn />}
+							onClick={() => zoom(1)}
+							disabled={scale === maxScale}
+						/>
+						<ActionButton
+							icon={<BsZoomOut />}
+							onClick={() => zoom(-1)}
+							disabled={scale === minScale}
+						/>
+						<ActionButton
+							icon={<BsXLg />}
+							onClick={() => cleanUp()}
+						/>
+					</div>
+				</div>
+				<motion.div
+					drag
+					dragConstraints={{
+						top: -64,
+						left: -64,
+						right: 64,
+						bottom: 64,
+					}}
+					id="PictureViewer_image"
+					className="relative cursor-move overflow-hidden"
+				>
+					<Image
+						className="absolute left-0 top-0"
+						src={modal.src}
+						placeholder="blur"
+						blurDataURL="/placeholder.png"
+						width={modal.width * multiplier[scale]}
+						height={modal.height * multiplier[scale]}
+						alt={modal.alt}
+						title={modal.alt}
+					/>
+				</motion.div>
+			</div>
+		</div>
+	);
+}

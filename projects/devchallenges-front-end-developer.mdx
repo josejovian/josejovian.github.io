@@ -1,0 +1,73 @@
+---
+id: devchallenges-front-end-developer
+title: DevChallenges Front End Web Developer
+published: "2022-08-07"
+techs: ["react", "next", "typescript", "javascript"]
+overview: My attempt on DevChallenges Front End Developer Challenges. This project contains eight front end mini projects.
+repo: https://github.com/josejovian/devchallenges-front-end-developer
+featured: true
+hidden: false
+---
+
+## Project Overview
+
+This is a group of front-end mini projects from DevChallenges. DevChallenges provides several challenges related to Front End Development, and we are required to fulfill all mandatory user stories and also follow the designs. I have made sure to do so.
+  
+I did not exactly complete these mini projects in proper sequence, and for the last three projects that I completed, they are made using Typescript.
+
+### Reusable Components
+![Reusable Components Storybook](/_next/image?url=%2Fprojects%2Freusable-components.png&w=3840&q=75 "Reusable Components Storybook")
+
+[demo](https://josejovian.github.io/devchallenges-front-end-developer/reusable-components/storybook-static) | [repo](https://github.com/josejovian/devchallenges-front-end-developer/tree/main/reusable-components)
+
+The first two challenges are just *the creation of reusable components*, button and input, so I just merged them into one same repository. I also used *Storybook* to easily display different variants or states of the reusable components.
+
+### WindBNB
+
+![WindBNB](/_next/image?url=%2Fprojects%2Fwindbnb.png&w=3840&q=75 "WindBNB")
+
+[demo](https://josejovian.github.io/devchallenges-front-end-developer/windbnb/build/) | [repo](https://github.com/josejovian/devchallenges-front-end-developer/tree/main/windbnb)
+
+A simple web app where users can *see listings of premade living places to rent*, and the users can also *filter the listings based on number of guests and preselected locations*. This is a React + Tailwind project, written in Typescript.
+
+### Todo App
+
+![Todo App](/_next/image?url=%2Fprojects%2Ftodo-app.png&w=3840&q=75 "Todo App")
+
+[demo](https://josejovian.github.io/todo-app/) | [repo](https://github.com/josejovian/todo-app)
+
+This is a React + SCSS project.
+
+### Random Quote Generator
+
+![Random Quote Generator](/_next/image?url=%2Fprojects%2Frandom-quote-generator.png&w=3840&q=75 "Random Quote Generator")
+
+[demo](https://josejovian.github.io/random-quote-generator) | [repo](https://github.com/josejovian/random-quote-generator)
+
+This is a React + SCSS project, and it uses [QuoteGarden API](https://pprathameshmore.github.io/QuoteGarden/).
+
+### Country Quiz
+
+![Country Quiz](/_next/image?url=%2Fprojects%2Fcountry-quiz.png&w=3840&q=75 "Country Quiz")
+
+[demo](https://josejovian.github.io/country-quiz) | [repo](https://github.com/josejovian/country-quiz)
+
+This is a React + SCSS project, and it uses [RestCountries API](https://restcountries.com/).
+
+### Weather App
+
+![Weather App](/_next/image?url=%2Fprojects%2Fweather-app.png&w=3840&q=75 "Weather App")
+
+[demo](https://ephemeral-chimera-37acac.netlify.app/build/) | [repo](https://github.com/josejovian/devchallenges-front-end-developer/tree/main/weather-app)
+
+A simple web app where users can *see the weather of preselected locations, or their own location* (if allowed). This is a React + Tailwind project, written in Typescript. It also uses [OpenWeatherMap API](https://openweathermap.org/api).
+
+### Jobs
+
+![Weather App](/_next/image?url=%2Fprojects%2Fjobs.png&w=3840&q=75 "Weather App")
+
+[demo](https://ephemeral-chimera-37acac.netlify.app/build/) | [repo](https://github.com/josejovian/devchallenges-front-end-developer/tree/main/jobs)
+
+A simple web app where users can *search jobs based on a key word, and even filter specific locations of the job*. This is a NextJS + Tailwind project, written in Typescript. It also uses [Google Jobs API from SerpAPI](https://serpapi.com/google-jobs-api).
+
+I thought since the user are supposed to be able to view job details, it would be as a separate page (e.g. domain/jobs/id), so NextJS's routing feature would come into play. However, since the API only gives job listing based on a query, I made everything in a single page, but I still ended up using NextJS's API feature because I cannot directly use the Jobs API due to CORS, so creating another API in NextJS to communicate with the Jobs API worked well to resolve this issue.

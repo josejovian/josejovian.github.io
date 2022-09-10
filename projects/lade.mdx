@@ -1,0 +1,38 @@
+---
+id: lade
+title: LADE
+published: "2022-03-17"
+techs: ["next", "firebase", "redux", "javascript"]
+overview: A web application to post problems, which I contributed to in the final project of the ICT Systems Design course that I took.
+demo: https://lade.vercel.app/
+repo: https://github.com/josejovian/lade
+featured: false
+hidden: false
+---
+
+## Project Overview
+
+This application is a part of my group's *final project of the ICT Systems Design course* that I took. I worked in this project with three other people, and this project is done in a few sprints. Two people from the group, including me, contributed to the technical part of this application.
+  
+LADE (abbreviation of Linear Algebra and Differential Equations) is an application that allows its user to create practice problems, and compile them into a contest problem. In some ways, one could consider this application as a mathematics counterpart to VJudge or CodeForces. Although, without changing any code line, this application can actually be extended to other topics, so it is actually not just limited to mathematics.
+
+## Tech Stacks and Libraries
+
+This is a React and Firebase project that uses Tailwind for the styling. These are the libraries used:
+- **clsx**, to simplify writing complex classes for components.
+- **formik**, to handle forms (e.g. Sign Up, Login, Create/Edit Problems/Contests).
+- **yup**, to simplify writing validations for forms, and it is used in conjunction with **formik**.
+- **interweave**, to handle parsing and displaying html (e.g. Problem/Contest Description/Comment).
+- **pushid**, to handle generation of unique IDs (for Problem/Contest/Comment).
+- **quill**, to handle WYISWYG editors (e.g. Problem/Contest Description/Comment).
+- **redux-persist**, to ensure that states persist after navigating to other pages, or even closing the site.
+
+## Highlighted Features
+
+The feature of sorting and pagination. This feature is not really related to the main point of this application, but this feature is not so insignificant either.
+Users can sort problems based on their creation time, correct/incorrect answers count, or number of comments. The sorting can be done ascendingly or descendingly.
+
+I found the pagination part quite confusing to work on, despite the fact that Firebase allows limiting the amount of data we get and from which key do we fetch the data from. Since Firebase already provided such capabilities, of course, one should consider using it instead of creating the pagination system from scratch. Although the data fetched from Firebase is already sorted, apparently, it is not possible to sort the data the other way around without sorting it from client-side.
+
+I ended up creating the pagination system from scratch. Due to the way I implemented this pagination system, this means that all the data would have to be fetched first to the client-side, then the sorting is done client-side, and so does the pagination. This is definitely not the best implementation, but considering the fact that this project is just a school work, I suppose this should be negligible.
+

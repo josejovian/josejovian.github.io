@@ -1,0 +1,29 @@
+---
+id: disclone
+title: Disclone
+published: '2022-03-17'
+techs: ["react", "firebase", "redux", "javascript"]
+overview: A personal project I've done to practice both Redux and Firebase. I used Chakra UI for quick styling and pre-made components.
+demo: https://advantageous-handle-91a30.netlify.app
+repo: https://github.com/josejovian/disclone
+featured: false
+hidden: false
+---
+
+## Project Overview
+
+This project is my attempt to solve the [challenge to create a full-stack application from DevChallenges](https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh). I also have made sure to complete all the user stories. Despite the fact that I used only React and Firebase, I think my attempt is still somehow decent.
+
+Disclone is essentially a chatting application, where users can send and read messages in a text channel, or even create a new text channel. Well, this description should be unnecessary since the name "Disclone" should be a dead giveaway. Though, I do not mean to imply that the clone can do what the original can do. To access the previously mentioned features (which are the only features of this application), the users must first be logged in.
+
+## Tech Stacks and Libraries
+
+This project uses React, and Firebase. One important library that I used in this project is React Infinite Scroll. I used this library to make the chat messages are not rendered at once, instead, the chat messages are displayed only if the user scroll towards it. I also used Chakra UI for the styling, and it has pre-made components for quick use.
+
+## Highlighted Features
+
+Obviously, the main feature of this application is the **real time channel and chat updates**.
+
+In order to implement this, I simply used this [specific feature of Firebase](https://firebase.google.com/docs/database/web/read-and-write#web_value_events), that is, listen for value events. With a listener, when changes occur within the messages of a channel, I have set it up so that a redux state update (the messages) will occur, so the users who are currently viewing the channel will see this update (the new messages) in real time. Using a similar process, the users will also see the new channels as soon as they are created.
+
+Firebase also has functionalities relating to user accounts, so I just used that to simplify making the login feature, instead of creating one from scratch.
