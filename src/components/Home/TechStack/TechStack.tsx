@@ -12,8 +12,9 @@ import {
 	SiRedux,
 	SiTypescript,
 } from "react-icons/si";
-import React from "react";
+import React, { useContext } from "react";
 import Tag from "../../Generic/Tag/Tag";
+import { ModeContext } from "@/src/contexts/ModeContext";
 
 const largeIcon = {
 	className: "w-8 h-8 text-inherit",
@@ -33,63 +34,56 @@ export function getTech(tech: string): TechProps {
 				icon: <SiHtml5 {...largeIcon} />,
 				text: "HTML",
 				color: "#E34F26",
-				color2: "orange",
 			};
 		case "css":
 			return {
 				icon: <SiCss3 {...largeIcon} />,
 				text: "CSS",
 				color: "#1572B6",
-				color2: "blue",
 			};
 		case "javascript":
 			return {
 				icon: <SiJavascript {...largeIcon} />,
 				text: "Javascript",
 				color: "#F7DF1E",
-				color2: "orange",
 			};
 		case "typescript":
 			return {
 				icon: <SiTypescript {...largeIcon} />,
 				text: "Typescript",
 				color: "#3178C6",
-				color2: "blue",
 			};
 		case "react":
 			return {
 				icon: <SiReact {...largeIcon} />,
 				text: "React.js",
 				color: "#61DAFB",
-				color2: "blue",
 			};
 		case "next":
 			return {
 				icon: <SiNextdotjs {...largeIcon} />,
 				text: "Next.js",
 				color: "#FFFFFF",
-				color2: "white",
+				color2: "black",
 			};
 		case "firebase":
 			return {
 				icon: <SiFirebase {...largeIcon} />,
 				text: "Firebase",
 				color: "#FFCA28",
-				color2: "orange",
 			};
 		case "mongo":
 			return {
 				icon: <SiMongodb {...largeIcon} />,
 				text: "MongoDB",
 				color: "#47A248",
-				color2: "green",
 			};
 		case "express":
 			return {
 				icon: <SiExpress {...largeIcon} />,
 				text: "Express",
 				color: "#FFFFFF",
-				color2: "white",
+				color2: "black",
 			};
 		case "node":
 			return {
@@ -117,14 +111,21 @@ interface TechStackProps {
 }
 
 export default function TechStack({ passedTechs }: TechStackProps) {
+	const mode = useContext(ModeContext);
+
+	console.log(mode);
+
 	return (
 		<div className="flex flex-wrap gap-4">
 			{passedTechs.map((tech) => {
-				const { icon, text, color } = getTech(tech);
+				const { icon, text, color, color2 } = getTech(tech);
 				return (
-					<Tag key={tech} style={{ color: color }}>
+					<Tag
+						key={tech}
+						style={{ color: mode ? color : (color2) ? color2 : color }}
+					>
 						{icon}
-						<span className="text-white">{text}</span>
+						<span className="col-text">{text}</span>
 					</Tag>
 				);
 			})}
