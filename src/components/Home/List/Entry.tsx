@@ -32,7 +32,8 @@ export default function Entry({
 			className={clsx(
 				"List_entry",
 				"relative px-8 py-4",
-				"bg-stone-600 rounded-sm shadow-lg overflow-hidden",
+				"bg-gray-100 dark:bg-stone-600 col-text",
+				"rounded-sm shadow-lg overflow-hidden",
 				alternate(
 					idx,
 					["pl-16 lg:pl-8 lg:pr-16", "lg:self-start"],

@@ -48,7 +48,7 @@ export default function ProjectCard({
 						height={(_width * 9) / 16}
 						alt={title}
 					/>
-					<div className="relative w-full p-8 bg-stone-700">
+					<div className="relative w-full p-8 col-tertiary col-text">
 						<h3
 							className={clsx(
 								"ProjectCard_title",
@@ -72,7 +72,8 @@ export default function ProjectCard({
 										key={`${title}-${tech}`}
 										className={clsx(
 											"px-2",
-											"bg-gray-200 text-stone-800",
+											"bg-gray-600 text-stone-100",
+											"dark:bg-gray-200 dark:text-stone-800",
 											"rounded-sm"
 										)}
 									>

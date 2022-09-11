@@ -3,6 +3,8 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { NextRouter, useRouter } from "next/router";
 import NavImage from "./NavImage.svg";
+import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
+import { StateModeType } from "@/src/types/Mode";
 
 interface LinkType {
 	name: string;
@@ -23,6 +25,7 @@ const links: LinkType[] = [
 interface NavProps {
 	scroll: number;
 	loading: boolean;
+	stateMode: StateModeType;
 }
 
 /*
@@ -53,30 +56,10 @@ function createRipple(event: any) {
 	button.appendChild(circle);
 }
 
-const PathOfSVG = ({ svg } : any) => {
-	return svg.firstChild;
-};
+export function Nav({ scroll, loading, stateMode }: NavProps) {
+	const [mode, setMode] = stateMode;
 
-export function Nav({ scroll, loading }: NavProps) {
 	const router: NextRouter = useRouter();
-
-	function transformLogo() {
-		const logoSvg = document.getElementById("Nav_logo");
-		const clip = document.getElementById("Nav_logo-clip");
-
-		if (!logoSvg || !clip) return;
-
-		const path = logoSvg.firstChild;
-
-		if (path) {
-			logoSvg.remove();
-			clip.appendChild(path);
-		}
-	}
-
-	useEffect(() => {
-		// transformLogo();
-	}, []);
 
 	return (
 		<nav
@@ -84,25 +67,27 @@ export function Nav({ scroll, loading }: NavProps) {
 			className={clsx(
 				"w-screen h-16",
 				"fixed flex flex-col top-0",
-				"bg-gray-800 border-0 z-50 overflow-hidden",
+				"col-secondary col-text",
+				"border-0 z-50 overflow-hidden",
 				scroll > 0 && "shadow-lg"
 			)}
 		>
 			<div
 				className={clsx(
-					"h-1 bg-blue-400 z-50 transition-all delay-300",
+					"h-1 bg-blue-400 z-50",
+					"transition-all delay-300"
 				)}
 			/>
-			<div className="flex flex-row items-between justify-between w-full p-adaptive">
+			<div
+				className={clsx(
+					"flex flex-row items-between justify-between",
+					"w-full p-adaptive"
+				)}
+			>
 				<div className="flex items-center justify-center">
 					<Link href="/" passHref>
 						<a>
-							<div
-								className={clsx(
-									"NavImage",
-									"bg-blue-400"
-								)}
-							>
+							<div className={clsx("NavImage", "bg-blue-400")}>
 								<svg width="108" height="28">
 									<defs>
 										<clipPath id="Nav_logo-clip">
@@ -152,6 +137,19 @@ export function Nav({ scroll, loading }: NavProps) {
 							</li>
 						);
 					})}
+					<li
+						className={clsx(
+							"Nav_link Pulsable",
+							"relative flex flex-col items-center"
+						)}
+					>
+						<button
+							className={clsx("p-4 z-50")}
+							onClick={() => setMode((prev) => !prev)}
+						>
+							{mode ? <BsFillSunFill /> : <BsFillMoonFill />}
+						</button>
+					</li>
 				</ul>
 			</div>
 		</nav>

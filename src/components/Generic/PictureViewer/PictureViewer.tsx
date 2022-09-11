@@ -93,7 +93,7 @@ export default function PictureViewer() {
 				"fixed top-0 left-0",
 				"w-screen h-screen",
 				"flex items-center justify-center",
-				"transition-opacity",
+				"text-white transition-opacity",
 				active ? "opacity-100" : "opacity-0"
 			)}
 			style={{ zIndex: 60 }}
@@ -107,7 +107,7 @@ export default function PictureViewer() {
 				style={{ zIndex: 60 }}
 				onClick={() => cleanUp()}
 			/>
-			<div style={{ zIndex: 70 }}>
+			<div className="max-w-none" style={{ zIndex: 70 }}>
 				<div
 					className={clsx(
 						"fixed top-0 left-0",
@@ -144,10 +144,10 @@ export default function PictureViewer() {
 						bottom: 64,
 					}}
 					id="PictureViewer_image"
-					className="relative cursor-move overflow-hidden"
+					className="relative cursor-move overflow-hidden max-w-none"
 				>
 					<Image
-						className="absolute left-0 top-0"
+						className="absolute left-0 top-0 max-w-none"
 						src={modal.src}
 						placeholder="blur"
 						blurDataURL="/placeholder.png"

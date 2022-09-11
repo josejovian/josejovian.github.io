@@ -12,6 +12,7 @@ import { WidthContext } from "@/src/contexts/WidthContext";
 import { NextRouter, useRouter } from "next/router";
 import { ScrollContext } from "@/src/contexts/ScrollContext";
 import { LoadingContext } from "@/src/contexts/LoadingContext";
+import { ModeContext } from "@/src/contexts/ModeContext";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
 function createRipple(event: any) {
@@ -25,9 +26,7 @@ function createRipple(event: any) {
 	circle.style.width = circle.style.height = `${diameter}px`;
 	circle.style.left = `${left}px`;
 	circle.style.top = `${top}px`;
-	circle.classList.add("ripple");
-	circle.classList.add("bg-gray-600");
-	circle.classList.add("z-40");
+	circle.className = "ripple bg-gray-300 dark:bg-gray-600 z-40";
 
 	const ripple = button.getElementsByClassName("ripple")[0];
 
@@ -43,6 +42,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const [scroll, setScroll] = useState<number>(0);
 	const [width, setWidth] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(false);
+	const stateMode = useState(false);
+	const mode = stateMode[0];
 	const router: NextRouter = useRouter();
 
 	const loadingContextValue = {
@@ -112,18 +113,24 @@ function MyApp({ Component, pageProps }: AppProps) {
 		<LoadingContext.Provider value={loadingContextValue}>
 			<WidthContext.Provider value={widthContextValue}>
 				<ScrollContext.Provider value={scrollContextValue}>
-					<ModalContext.Provider value={modalContextValue}>
-						<div>
-							<PictureViewer />
-							<Nav scroll={scroll} loading={loading} />
-							<div className="relative top-16 p-adaptive">
-								<Component {...pageProps} />
-								<div className="relative text-center p-8">
-									© {new Date().getFullYear()} Jose Jovian
+					<ModeContext.Provider value={mode}>
+						<ModalContext.Provider value={modalContextValue}>
+							<div className={mode ? "dark" : ""}>
+								<PictureViewer />
+								<Nav
+									scroll={scroll}
+									loading={loading}
+									stateMode={stateMode}
+								/>
+								<div className="relative top-16 p-adaptive col-secondary">
+									<Component {...pageProps} />
+									<div className="relative text-center p-8">
+										© {new Date().getFullYear()} Jose Jovian
+									</div>
 								</div>
 							</div>
-						</div>
-					</ModalContext.Provider>
+						</ModalContext.Provider>
+					</ModeContext.Provider>
 				</ScrollContext.Provider>
 			</WidthContext.Provider>
 		</LoadingContext.Provider>
