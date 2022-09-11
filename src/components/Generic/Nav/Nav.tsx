@@ -91,7 +91,6 @@ export function Nav({ scroll, loading }: NavProps) {
 			<div
 				className={clsx(
 					"h-1 bg-blue-400 z-50 transition-all delay-300",
-					loading ? "Nav_pulse" : ""
 				)}
 			/>
 			<div className="flex flex-row items-between justify-between w-full p-adaptive">
@@ -101,7 +100,7 @@ export function Nav({ scroll, loading }: NavProps) {
 							<div
 								className={clsx(
 									"NavImage",
-									loading ? "Nav_pulse" : "bg-blue-400"
+									"bg-blue-400"
 								)}
 							>
 								<svg width="108" height="28">
