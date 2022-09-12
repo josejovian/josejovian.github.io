@@ -9,10 +9,6 @@ interface HomeProps {
 }
 
 const Projects = ({ projects }: HomeProps) => {
-	useEffect(() => {
-		console.log(projects);
-	}, [projects]);
-
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
 			<Meta page="Projects" />

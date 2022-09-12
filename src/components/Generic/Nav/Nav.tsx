@@ -26,37 +26,10 @@ interface NavProps {
 	scroll: number;
 	loading: boolean;
 	stateMode: StateModeType;
+	setPreferredMode: (mode: boolean) => void
 }
 
-/*
-	Button Ripple Effect:
-	https://codepen.io/BretCameron/pen/mdPMVaW
-*/
-
-function createRipple(event: any) {
-	const button = event.currentTarget;
-
-	const circle = document.createElement("span");
-	const diameter = Math.max(button.clientWidth, button.clientHeight);
-	const radius = diameter / 2;
-
-	circle.style.width = circle.style.height = `${diameter}px`;
-	circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
-	circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
-	circle.classList.add("ripple");
-	circle.classList.add("bg-gray-600");
-	circle.classList.add("z-40");
-
-	const ripple = button.getElementsByClassName("ripple")[0];
-
-	if (ripple) {
-		ripple.remove();
-	}
-
-	button.appendChild(circle);
-}
-
-export function Nav({ scroll, loading, stateMode }: NavProps) {
+export function Nav({ scroll, loading, stateMode, setPreferredMode }: NavProps) {
 	const [mode, setMode] = stateMode;
 
 	const router: NextRouter = useRouter();

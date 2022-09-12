@@ -23,29 +23,29 @@ export default function PictureViewer() {
 	const [scale, setScale] = useState<number>(0);
 	const [active, setActive] = useState<boolean>(false);
 
-	function calculateScale(dir: number, prevScale: number) {
+	const calculateScale = useCallback((dir: number, prevScale: number) => {
 		if (
 			(dir > 0 && prevScale < maxScale) ||
 			(dir < 0 && prevScale > minScale)
 		)
 			return prevScale + dir;
 		else return prevScale;
-	}
+	}, []);
 
 	const whenScroll = useCallback((e: WheelEvent) => {
 		const dir: number = e.deltaY < 0 ? 1 : -1;
 		setScale((prevScale) => {
 			return calculateScale(dir, prevScale);
 		});
-	}, []);
+	}, [calculateScale]);
 
-	function zoom(dir: number) {
+	const zoom = useCallback((dir: number) => {
 		setScale((prevScale) => {
 			return calculateScale(dir, prevScale);
 		});
-	}
+	}, [calculateScale]);
 
-	function cleanUp() {
+	const cleanUp = useCallback(() => {
 		const innerWrapper: HTMLElement | null = document.getElementById(
 			"PictureViewer_image"
 		),
@@ -61,7 +61,7 @@ export default function PictureViewer() {
 				setScale(0);
 			}, 200);
 		}
-	}
+	}, []);
 
 	useEffect(() => {
 		const innerWrapper: HTMLElement | null = document.getElementById(
