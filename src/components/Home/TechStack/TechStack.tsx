@@ -113,8 +113,6 @@ interface TechStackProps {
 export default function TechStack({ passedTechs }: TechStackProps) {
 	const mode = useContext(ModeContext);
 
-	console.log(mode);
-
 	return (
 		<div className="flex flex-wrap gap-4">
 			{passedTechs.map((tech) => {

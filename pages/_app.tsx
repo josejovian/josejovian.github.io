@@ -7,7 +7,7 @@ import {
 	ModalType,
 } from "@/src/contexts/ModalContext";
 import PictureViewer from "@/src/components/Generic/PictureViewer/PictureViewer";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { WidthContext } from "@/src/contexts/WidthContext";
 import { NextRouter, useRouter } from "next/router";
 import { ScrollContext } from "@/src/contexts/ScrollContext";
@@ -42,8 +42,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const [scroll, setScroll] = useState<number>(0);
 	const [width, setWidth] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [readExistingPreference, setReadExistingPreference] = useState(false);
 	const stateMode = useState(false);
-	const mode = stateMode[0];
+	const [mode, setMode] = stateMode;
 	const router: NextRouter = useRouter();
 
 	const loadingContextValue = {
@@ -60,22 +61,39 @@ function MyApp({ Component, pageProps }: AppProps) {
 			setModal: setModal,
 		};
 
-	function trackScroll() {
+	const trackScroll = useCallback(() => {
 		const doc: HTMLElement = document.documentElement;
 		setScroll(doc.scrollTop);
-	}
+	}, []);
 
-	function trackWidth() {
+	const trackWidth = useCallback(() => {
 		setWidth(window.innerWidth);
-	}
+	}, []);
 
-	function startLoading() {
+	const startLoading = useCallback(() => {
 		setLoading(true);
-	}
+	}, []);
 
-	function stopLoading() {
+	const stopLoading = useCallback(() => {
 		setLoading(false);
-	}
+	}, []);
+
+	const getPreferredMode = useCallback(() => {
+		const existing = localStorage.getItem("mode");
+		console.log("Existing: ", existing);
+		if (existing) {
+			setMode(JSON.parse(existing));
+		}
+		setReadExistingPreference(true);
+	}, [setMode]);
+
+	const setPreferredMode = useCallback(() => {
+		localStorage.setItem("mode", JSON.stringify(mode));
+	}, [mode]);
+
+	useEffect(() => {
+		if (readExistingPreference) setPreferredMode();
+	}, [mode, setPreferredMode, readExistingPreference]);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -100,6 +118,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		window.addEventListener("resize", trackWidth);
 		router.events.on("routeChangeStart", startLoading);
 		router.events.on("routeChangeComplete", stopLoading);
+		getPreferredMode();
 
 		return () => {
 			window.removeEventListener("scroll", trackScroll);
@@ -107,7 +126,14 @@ function MyApp({ Component, pageProps }: AppProps) {
 			router.events.off("routeChangeStart", startLoading);
 			router.events.off("routeChangeComplete", stopLoading);
 		};
-	}, [router.events]);
+	}, [
+		router.events,
+		getPreferredMode,
+		startLoading,
+		stopLoading,
+		trackScroll,
+		trackWidth,
+	]);
 
 	return (
 		<LoadingContext.Provider value={loadingContextValue}>
@@ -121,6 +147,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 									scroll={scroll}
 									loading={loading}
 									stateMode={stateMode}
+									setPreferredMode={setPreferredMode}
 								/>
 								<div className="relative top-16 p-adaptive col-secondary">
 									<Component {...pageProps} />

@@ -130,8 +130,7 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 				section.subsections = [];
 			}
 		});
-		console.log("Width:");
-		console.log(width);
+		
 		setTable(temp);
 		setTableWidth(width);
 	}, [width]);
