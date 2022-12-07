@@ -1,20 +1,10 @@
 import clsx from "clsx";
-import type { NextApiRequest, NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import { useContext, useEffect, useMemo, useState, useCallback } from "react";
-import { bundleMDX } from "mdx-bundler";
-import { ProjectProps } from "@/src/types/Project";
-import Meta from "@/src/components/Generic/Layout/Layout";
-import { getMDXComponent } from "mdx-bundler/client";
-import { WidthContext } from "@/src/contexts/WidthContext";
-import { ScrollContext } from "@/src/contexts/ScrollContext";
-import Picture, {
-	PictureProps,
-} from "@/src/components/Generic/Picture/Picture";
-import Side from "@/src/components/Project/Side";
 import { useRouter } from "next/router";
+import { bundleMDX } from "mdx-bundler";
+import { getMDXComponent } from "mdx-bundler/client";
+import { Meta, Picture, PictureProps, Side } from "@/src/components";
+import { WidthContext, ScrollContext } from "@/src/contexts";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];
 
@@ -76,69 +66,72 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 			setBodyPictureWidth(projectBodyMD.offsetWidth);
 		}
 	}, [width, identifier]);
-	
+
 	function lineify(str: string) {
 		return str.replace(/\s/g, "-").toLowerCase();
 	}
 
-	const buildTable = useCallback((customWidth : number = 0) => {
-		const temp: GreatSection[] = [];
+	const buildTable = useCallback(
+		(customWidth: number = 0) => {
+			const temp: GreatSection[] = [];
 
-		const section: GreatSection = {
-			name: "",
-			link: "",
-			subsections: [],
-		};
+			const section: GreatSection = {
+				name: "",
+				link: "",
+				subsections: [],
+			};
 
-		const heads: NodeListOf<HTMLHeadElement> =
-			document.querySelectorAll("h2, h3");
+			const heads: NodeListOf<HTMLHeadElement> =
+				document.querySelectorAll("h2, h3");
 
-		heads.forEach((head, idx) => {
-			head.id = lineify(head.innerText);
-			head.classList.add("head-anchor");
+			heads.forEach((head, idx) => {
+				head.id = lineify(head.innerText);
+				head.classList.add("head-anchor");
 
-			if (head.tagName === "H2") {
-				if (
-					(temp.length === 0 && section.name !== null) ||
-					temp.length > 0
-				) {
+				if (head.tagName === "H2") {
+					if (
+						(temp.length === 0 && section.name !== null) ||
+						temp.length > 0
+					) {
+						temp.push({ ...section });
+						section.subsections = [];
+					}
+
+					section.name = head.innerText;
+					section.link = lineify(head.innerText);
+					section.position =
+						head.getBoundingClientRect().top -
+						document.body.getBoundingClientRect().top +
+						200;
+				}
+
+				if (head.tagName === "H3") {
+					section.subsections.push({
+						name: head.innerText,
+						link: lineify(head.innerText),
+						position:
+							head.getBoundingClientRect().top -
+							document.body.getBoundingClientRect().top +
+							200,
+					});
+				}
+
+				if (idx + 1 === heads.length && section.name !== "") {
 					temp.push({ ...section });
 					section.subsections = [];
 				}
+			});
 
-				section.name = head.innerText;
-				section.link = lineify(head.innerText);
-				section.position =
-					head.getBoundingClientRect().top -
-					document.body.getBoundingClientRect().top +
-					200;
-			}
-
-			if (head.tagName === "H3") {
-				section.subsections.push({
-					name: head.innerText,
-					link: lineify(head.innerText),
-					position:
-						head.getBoundingClientRect().top -
-						document.body.getBoundingClientRect().top +
-						200,
-				});
-			}
-
-			if (idx + 1 === heads.length && section.name !== "") {
-				temp.push({ ...section });
-				section.subsections = [];
-			}
-		});
-		
-		setTable(temp);
-		setTableWidth(width);
-	}, [width]);
+			setTable(temp);
+			setTableWidth(width);
+		},
+		[width]
+	);
 
 	useEffect(() => {
 		setTimeout(() => {
 			buildTable();
-		}, 100)
+		}, 100);
 	}, [buildTable]);
 
 	return (

@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import React, { useContext } from "react";
 import {
 	SiHtml5,
 	SiCss3,
@@ -12,9 +12,8 @@ import {
 	SiRedux,
 	SiTypescript,
 } from "react-icons/si";
-import React, { useContext } from "react";
-import Tag from "../../Generic/Tag/Tag";
-import { ModeContext } from "@/src/contexts/ModeContext";
+import { Tag } from "@/src/components";
+import { ModeContext } from "@/src/contexts";
 
 const largeIcon = {
 	className: "w-8 h-8 text-inherit",
@@ -106,11 +105,11 @@ export function getTech(tech: string): TechProps {
 	}
 }
 
-interface TechStackProps {
+export interface TechStackProps {
 	passedTechs: string[];
 }
 
-export default function TechStack({ passedTechs }: TechStackProps) {
+export function TechStack({ passedTechs }: TechStackProps) {
 	const mode = useContext(ModeContext);
 
 	return (
@@ -120,7 +119,9 @@ export default function TechStack({ passedTechs }: TechStackProps) {
 				return (
 					<Tag
 						key={tech}
-						style={{ color: mode ? color : (color2) ? color2 : color }}
+						style={{
+							color: mode ? color : color2 ? color2 : color,
+						}}
 					>
 						{icon}
 						<span className="col-text">{text}</span>

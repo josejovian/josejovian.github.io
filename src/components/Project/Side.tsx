@@ -1,17 +1,15 @@
-import { GreatSection, Section } from "@/pages/project/[id]";
 import clsx from "clsx";
-import { motion } from "framer-motion";
-import { useRouter } from "next/router";
 import { useCallback, useEffect, Fragment, useState } from "react";
-import Anchor from "./Anchor";
+import { GreatSection, Section } from "@/pages/project/[id]";
+import { Anchor } from "./Anchor";
 
-interface SideProps {
+export interface SideProps {
 	table: GreatSection[];
 	scroll: number;
 	width: number;
 }
 
-export default function Side({ width, scroll, table }: SideProps) {
+export function Side({ width, scroll, table }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
 	const trackSection = useCallback(() => {
@@ -54,7 +52,13 @@ export default function Side({ width, scroll, table }: SideProps) {
 
 	return (
 		<aside id="ProjectPost_table" className="hidden lg:block">
-			<div className={clsx("md:sticky top-32 p-8", "col-tertiary col-text", "rounded-sm shadow-lg border-l-4 border-blue-400")}>
+			<div
+				className={clsx(
+					"md:sticky top-32 p-8",
+					"col-tertiary col-text",
+					"rounded-sm shadow-lg border-l-4 border-blue-400"
+				)}
+			>
 				<h4 className="!mt-0 !mb-4 text-2xl">Table of Contents</h4>
 				<ul className="relative">
 					{table.map((head: GreatSection, idx) => {

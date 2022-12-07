@@ -1,12 +1,12 @@
 import Head from "next/head";
 
-interface MetaProps {
+export interface MetaProps {
 	title?: string;
 	page?: string;
 	description?: string;
 }
 
-export default function Meta({ title, description = "Jose's personal portfolio website.", page }: MetaProps) {
+export function Meta({ title, description = "Jose's personal portfolio website.", page }: MetaProps) {
 	const displayTitle = title ? title : `${page} - Jose Jovian`;
 
 	return (

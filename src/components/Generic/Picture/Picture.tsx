@@ -1,7 +1,7 @@
-import { ModalContext, ModalContextProps } from "@/src/contexts/ModalContext";
 import clsx from "clsx";
-import Image from "next/image";
 import { useContext } from "react";
+import Image from "next/image";
+import { ModalContext, ModalContextProps } from "@/src/contexts";
 
 export interface PictureProps {
 	src: string;
@@ -12,7 +12,7 @@ export interface PictureProps {
 	alt: string;
 }
 
-export default function Picture({
+export function Picture({
 	src,
 	width,
 	height,

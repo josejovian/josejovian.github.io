@@ -1,7 +1,7 @@
 import React, { SetStateAction } from "react";
 import { createContext } from "react";
 
-export const defaultContextValue : LoadingContextProps = {
+const defaultContextValue : LoadingContextProps = {
 	loading: false,
 	setLoading: () => {},
 };

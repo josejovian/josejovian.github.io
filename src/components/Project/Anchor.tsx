@@ -1,13 +1,13 @@
 import { Section } from "@/pages/project/[id]";
 import clsx from "clsx";
 
-interface AnchorProps {
+export interface AnchorProps {
 	head: Section;
 	depth: number;
 	active?: boolean;
 }
 
-export default function Anchor({ head, depth, active }: AnchorProps) {
+export function Anchor({ head, depth, active }: AnchorProps) {
 	return (
 		<div className="relative w-full h-fit">
 			{active && (
