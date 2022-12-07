@@ -1,18 +1,10 @@
 import clsx from "clsx";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import Image from "next/image";
-import React, {
-	createContext,
-	SetStateAction,
-	useCallback,
-	useContext,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
-import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
-import { ActionButton } from "./Button";
+import { motion } from "framer-motion";
 import { BsZoomIn, BsZoomOut, BsXLg } from "react-icons/bs";
-import { defaultModal, ModalContext } from "@/src/contexts/ModalContext";
+import { ActionButton } from "@/src/components";
+import { defaultModal, ModalContext } from "@/src/contexts";
 
 const multiplier: number[] = [1, 1.2, 1.5],
 	minScale = 0,
@@ -32,26 +24,32 @@ export function PictureViewer() {
 		else return prevScale;
 	}, []);
 
-	const whenScroll = useCallback((e: WheelEvent) => {
-		const dir: number = e.deltaY < 0 ? 1 : -1;
-		setScale((prevScale) => {
-			return calculateScale(dir, prevScale);
-		});
-	}, [calculateScale]);
+	const whenScroll = useCallback(
+		(e: WheelEvent) => {
+			const dir: number = e.deltaY < 0 ? 1 : -1;
+			setScale((prevScale) => {
+				return calculateScale(dir, prevScale);
+			});
+		},
+		[calculateScale]
+	);
 
-	const zoom = useCallback((dir: number) => {
-		setScale((prevScale) => {
-			return calculateScale(dir, prevScale);
-		});
-	}, [calculateScale]);
+	const zoom = useCallback(
+		(dir: number) => {
+			setScale((prevScale) => {
+				return calculateScale(dir, prevScale);
+			});
+		},
+		[calculateScale]
+	);
 
 	const cleanUp = useCallback(() => {
 		const innerWrapper: HTMLElement | null = document.getElementById(
-			"PictureViewer_image"
-		),
-		outerWrapper: HTMLElement | null = document.getElementById(
-			"PictureViewer_image"
-		);
+				"PictureViewer_image"
+			),
+			outerWrapper: HTMLElement | null = document.getElementById(
+				"PictureViewer_image"
+			);
 
 		if (innerWrapper && outerWrapper) {
 			setActive(false);

@@ -1,18 +1,17 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { Nav } from "@/src/components/Generic/Nav/Nav";
+import { useCallback, useEffect, useState } from "react";
+import { NextRouter, useRouter } from "next/router";
+import { Nav, PictureViewer } from "@/src/components";
 import {
 	defaultModal,
 	ModalContext,
 	ModalType,
-} from "@/src/contexts/ModalContext";
-import { PictureViewer } from "@/src/components/Generic/PictureViewer/PictureViewer";
-import { useCallback, useEffect, useState } from "react";
-import { WidthContext } from "@/src/contexts/WidthContext";
-import { NextRouter, useRouter } from "next/router";
-import { ScrollContext } from "@/src/contexts/ScrollContext";
-import { LoadingContext } from "@/src/contexts/LoadingContext";
-import { ModeContext } from "@/src/contexts/ModeContext";
+	ModeContext,
+	LoadingContext,
+	ScrollContext,
+	WidthContext,
+} from "@/src/contexts";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
 function createRipple(event: any) {

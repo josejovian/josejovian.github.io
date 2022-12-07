@@ -22,16 +22,14 @@ const list: EntryType[] = [
 		description: (
 			<ul>
 				<li>
-					Had been the manager of the Learning and Teaching (LnT) division, managing and organizing the
-					members&apos; classes.
+					Had been the manager of the Learning and Teaching (LnT)
+					division, managing and organizing the members&apos; classes.
 				</li>
 				<li>
-					Had been the C Programming Instructor, teaching first semester students basic C
-					programming and algorithms.
+					Had been the C Programming Instructor, teaching first
+					semester students basic C programming and algorithms.
 				</li>
-				<li>
-					Had been a part of the committee of few events.
-				</li>
+				<li>Had been a part of the committee of few events.</li>
 			</ul>
 		),
 		attachments: [
@@ -88,7 +86,7 @@ const list: EntryType[] = [
 	},
 ];
 
-export default function List() {
+export function List() {
 	return (
 		<div className="relative flex flex-col gap-8">
 			<div

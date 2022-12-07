@@ -1,11 +1,11 @@
-import Image from "next/image";
-import { ProjectProps } from "@/src/types/Project";
 import clsx from "clsx";
-import { getTech } from "../Home/TechStack/TechStack";
 import { useContext, useEffect, useState } from "react";
-import { WidthContext, WidthContextProps } from "@/src/contexts/WidthContext";
-import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { getTech } from "@/src/components";
+import { WidthContext } from "@/src/contexts";
+import { ProjectProps } from "@/src/types/Project";
 
 export interface ProjectCardProps extends ProjectProps {}
 

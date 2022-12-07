@@ -1,21 +1,10 @@
 import clsx from "clsx";
-import type { NextApiRequest, NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-import styles from "../styles/Home.module.css";
 import { useContext, useEffect, useMemo, useState, useCallback } from "react";
-import { bundleMDX } from "mdx-bundler";
-import { ProjectProps } from "@/src/types/Project";
-import { Meta } from "@/src/components/Generic/Layout/Layout";
-import { getMDXComponent } from "mdx-bundler/client";
-import { WidthContext } from "@/src/contexts/WidthContext";
-import { ScrollContext } from "@/src/contexts/ScrollContext";
-import {
-	Picture,
-	PictureProps,
-} from "@/src/components/Generic/Picture/Picture";
-import { Side } from "@/src/components/Project/Side";
 import { useRouter } from "next/router";
+import { bundleMDX } from "mdx-bundler";
+import { getMDXComponent } from "mdx-bundler/client";
+import { Meta, Picture, PictureProps, Side } from "@/src/components";
+import { WidthContext, ScrollContext } from "@/src/contexts";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];
 

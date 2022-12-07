@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import { ProjectCard } from "@/src/components/Project/Card";
-import { ProjectProps } from "@/src/types/Project";
 import { useEffect } from "react";
-import { Meta } from "@/src/components/Generic/Layout/Layout";
+import { Meta, ProjectCard } from "@/src/components";
+import { ProjectProps } from "@/src/types";
 
 interface HomeProps {
 	projects: ProjectProps[];
