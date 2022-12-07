@@ -6,7 +6,7 @@ import {
 	ModalContext,
 	ModalType,
 } from "@/src/contexts/ModalContext";
-import PictureViewer from "@/src/components/Generic/PictureViewer/PictureViewer";
+import { PictureViewer } from "@/src/components/Generic/PictureViewer/PictureViewer";
 import { useCallback, useEffect, useState } from "react";
 import { WidthContext } from "@/src/contexts/WidthContext";
 import { NextRouter, useRouter } from "next/router";

@@ -13,7 +13,7 @@ import {
 	SiTypescript,
 } from "react-icons/si";
 import React, { useContext } from "react";
-import Tag from "../../Generic/Tag/Tag";
+import { Tag } from "../../Generic/Tag/Tag";
 import { ModeContext } from "@/src/contexts/ModeContext";
 
 const largeIcon = {
@@ -120,7 +120,9 @@ export default function TechStack({ passedTechs }: TechStackProps) {
 				return (
 					<Tag
 						key={tech}
-						style={{ color: mode ? color : (color2) ? color2 : color }}
+						style={{
+							color: mode ? color : color2 ? color2 : color,
+						}}
 					>
 						{icon}
 						<span className="col-text">{text}</span>

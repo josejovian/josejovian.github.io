@@ -1,8 +1,8 @@
 import clsx from "clsx";
-import ProjectCard from "@/src/components/Project/Card";
+import { ProjectCard } from "@/src/components/Project/Card";
 import { ProjectProps } from "@/src/types/Project";
 import { useEffect } from "react";
-import Meta from "@/src/components/Generic/Layout/Layout";
+import { Meta } from "@/src/components/Generic/Layout/Layout";
 
 interface HomeProps {
 	projects: ProjectProps[];
@@ -14,11 +14,9 @@ const Projects = ({ projects }: HomeProps) => {
 			<Meta page="Projects" />
 			<h1 className="text-6xl">My Projects.</h1>
 			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
-				{ projects.map((project) => {
-					return (
-						<ProjectCard key={project.id} {...project} />
-					);
-				}) }
+				{projects.map((project) => {
+					return <ProjectCard key={project.id} {...project} />;
+				})}
 			</section>
 		</main>
 	);

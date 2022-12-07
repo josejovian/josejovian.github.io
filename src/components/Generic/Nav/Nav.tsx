@@ -22,7 +22,7 @@ const links: LinkType[] = [
 	},
 ];
 
-interface NavProps {
+export interface NavProps {
 	scroll: number;
 	loading: boolean;
 	stateMode: StateModeType;

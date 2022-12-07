@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import { useContext, useState } from "react";
-import Picture from "../../Generic/Picture/Picture";
+import { Picture } from "../../Generic/Picture/Picture";
 
 function alternate(idx: number, a: any, b: any) {
 	return idx % 2 === 1 ? a : b;
@@ -14,12 +14,12 @@ export interface EntryType {
 	attachments: any[];
 }
 
-interface EntryProps extends EntryType {
+export interface EntryProps extends EntryType {
 	idx: number;
 	maxIdx: number;
 }
 
-export default function Entry({
+export function Entry({
 	idx,
 	maxIdx,
 	name,

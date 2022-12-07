@@ -10,7 +10,7 @@ import React, {
 	useState,
 } from "react";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
-import ActionButton from "./Button";
+import { ActionButton } from "./Button";
 import { BsZoomIn, BsZoomOut, BsXLg } from "react-icons/bs";
 import { defaultModal, ModalContext } from "@/src/contexts/ModalContext";
 
@@ -18,7 +18,7 @@ const multiplier: number[] = [1, 1.2, 1.5],
 	minScale = 0,
 	maxScale = multiplier.length - 1;
 
-export default function PictureViewer() {
+export function PictureViewer() {
 	const { modal, setModal } = useContext(ModalContext);
 	const [scale, setScale] = useState<number>(0);
 	const [active, setActive] = useState<boolean>(false);
@@ -61,7 +61,7 @@ export default function PictureViewer() {
 				setScale(0);
 			}, 200);
 		}
-	}, []);
+	}, [setModal, whenScroll]);
 
 	useEffect(() => {
 		const innerWrapper: HTMLElement | null = document.getElementById(

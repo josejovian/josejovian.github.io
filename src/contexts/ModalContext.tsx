@@ -19,7 +19,7 @@ export const defaultModal: ModalType = {
 	alt: "",
 };
 
-export const defaultContextValue: ModalContextProps = {
+const defaultContextValue: ModalContextProps = {
 	modal: defaultModal,
 	setModal: () => {},
 };

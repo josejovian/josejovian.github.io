@@ -1,7 +1,7 @@
 import React, { SetStateAction } from "react";
 import { createContext } from "react";
 
-export const defaultContextValue : WidthContextProps = {
+const defaultContextValue : WidthContextProps = {
 	width: 0,
 	setWidth: () => {},
 };

@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import { MouseEventHandler } from "react";
 
-interface ActionButtonProps {
+export interface ActionButtonProps {
 	icon: React.ReactNode,
 	onClick: MouseEventHandler,
 	disabled : boolean,
 }
 
-export default function ActionButton({ disabled, icon, onClick }: Partial<ActionButtonProps>) {
+export function ActionButton({ disabled, icon, onClick }: Partial<ActionButtonProps>) {
 	return (
 		<button
 			className={clsx(

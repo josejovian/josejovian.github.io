@@ -12,7 +12,7 @@ export interface PictureProps {
 	alt: string;
 }
 
-export default function Picture({
+export function Picture({
 	src,
 	width,
 	height,

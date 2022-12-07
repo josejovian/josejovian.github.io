@@ -3,15 +3,15 @@ import clsx from "clsx";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useCallback, useEffect, Fragment, useState } from "react";
-import Anchor from "./Anchor";
+import { Anchor } from "./Anchor";
 
-interface SideProps {
+export interface SideProps {
 	table: GreatSection[];
 	scroll: number;
 	width: number;
 }
 
-export default function Side({ width, scroll, table }: SideProps) {
+export function Side({ width, scroll, table }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
 	const trackSection = useCallback(() => {

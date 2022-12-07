@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import React from "react";
 
-interface TagProps {
+export interface TagProps {
 	children: React.ReactNode;
 	className: string;
 	style: any;
 }
 
-export default function Tag({ children, className, style }: Partial<TagProps>) {
+export function Tag({ children, className, style }: Partial<TagProps>) {
 	return (
 		<span
 			className={clsx(

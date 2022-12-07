@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import Entry, { EntryType } from "./Entry";
+import { Entry, EntryType } from "./Entry";
 
 const list: EntryType[] = [
 	{

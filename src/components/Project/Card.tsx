@@ -7,9 +7,9 @@ import { WidthContext, WidthContextProps } from "@/src/contexts/WidthContext";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-interface ProjectCardProps extends ProjectProps {}
+export interface ProjectCardProps extends ProjectProps {}
 
-export default function ProjectCard({
+export function ProjectCard({
 	id,
 	title,
 	techs = [],

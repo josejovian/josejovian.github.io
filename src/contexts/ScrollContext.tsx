@@ -1,7 +1,7 @@
 import React, { SetStateAction } from "react";
 import { createContext } from "react";
 
-export const defaultContextValue : ScrollContextProps = {
+const defaultContextValue : ScrollContextProps = {
 	scroll: 0,
 	setScroll: () => {},
 };
