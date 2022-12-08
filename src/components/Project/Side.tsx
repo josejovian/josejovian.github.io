@@ -55,8 +55,8 @@ export function Side({ width, scroll, table }: SideProps) {
 			<div
 				className={clsx(
 					"md:sticky top-32 p-8",
-					"col-tertiary col-text",
-					"rounded-sm shadow-lg border-l-4 border-blue-400"
+					"secondary col-text",
+					"rounded-sm border border-l-4 !border-l-blue-400"
 				)}
 			>
 				<h4 className="!mt-0 !mb-4 text-2xl">Table of Contents</h4>

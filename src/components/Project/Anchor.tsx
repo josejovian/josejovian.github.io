@@ -1,5 +1,6 @@
 import { Section } from "@/pages/project/[id]";
 import clsx from "clsx";
+import Link from "next/link";
 
 export interface AnchorProps {
 	head: Section;
@@ -14,11 +15,11 @@ export function Anchor({ head, depth, active }: AnchorProps) {
 				<div
 					className={clsx(
 						"ProjectPost_table-arrow",
-						"absolute -left-8 top-3",
+						"absolute -left-8 top-3"
 					)}
 				/>
 			)}
-			<a
+			<Link
 				href={`#${head.link}`}
 				className={clsx("block -ml-8 -mr-8 pr-8", "leading-10")}
 				style={{
@@ -26,7 +27,7 @@ export function Anchor({ head, depth, active }: AnchorProps) {
 				}}
 			>
 				{head.name}
-			</a>
+			</Link>
 		</div>
 	);
 }

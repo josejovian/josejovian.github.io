@@ -13,7 +13,7 @@ export function Tag({ children, className, style }: Partial<TagProps>) {
 			className={clsx(
 				"w-fit px-4 py-2",
 				"flex items-center justify-center gap-4",
-				"col-tertiary col-text shadow-lg rounded-sm",
+				"secondary border col-text rounded-sm",
 				className
 			)}
 			style={style}

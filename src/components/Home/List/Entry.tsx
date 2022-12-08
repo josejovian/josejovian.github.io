@@ -29,9 +29,9 @@ export function Entry({
 		<div
 			className={clsx(
 				"List_entry",
-				"relative px-8 py-4",
-				"bg-gray-100 dark:bg-stone-600 col-text",
-				"rounded-sm shadow-lg overflow-hidden",
+				"relative px-8 py-6",
+				"secondary border col-text",
+				"rounded-sm overflow-hidden",
 				alternate(
 					idx,
 					["pl-16 lg:pl-8 lg:pr-16", "lg:self-start"],
@@ -44,7 +44,7 @@ export function Entry({
 					"List_entry-dot",
 					"absolute 4 w-6 h-6",
 					"bg-blue-400 rounded-full z-40",
-					alternate(idx, "lg:right-3", "lg:left-3")
+					alternate(idx, "lg:List_entry-dot-r", "lg:List_entry-dot-l")
 				)}
 			/>
 			{idx === maxIdx && (

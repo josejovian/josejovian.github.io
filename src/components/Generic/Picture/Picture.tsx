@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useContext } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { ModalContext, ModalContextProps } from "@/src/contexts";
 
 export interface PictureProps {

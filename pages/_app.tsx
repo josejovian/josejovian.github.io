@@ -12,6 +12,7 @@ import {
 	ScrollContext,
 	WidthContext,
 } from "@/src/contexts";
+import clsx from "clsx";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
 function createRipple(event: any) {
@@ -43,6 +44,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [readExistingPreference, setReadExistingPreference] = useState(false);
 	const stateMode = useState(false);
+	const [init, setInit] = useState(false);
 	const [mode, setMode] = stateMode;
 	const router: NextRouter = useRouter();
 
@@ -111,6 +113,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 	}, [loading]);
 
 	useEffect(() => {
+		setInit(true);
 		window.removeEventListener("scroll", trackScroll);
 		window.addEventListener("scroll", trackScroll, { passive: true });
 		window.removeEventListener("resize", trackWidth);
@@ -140,20 +143,27 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<ScrollContext.Provider value={scrollContextValue}>
 					<ModeContext.Provider value={mode}>
 						<ModalContext.Provider value={modalContextValue}>
-							<div className={mode ? "dark" : ""}>
-								<PictureViewer />
-								<Nav
-									scroll={scroll}
-									loading={loading}
-									stateMode={stateMode}
-									setPreferredMode={setPreferredMode}
-								/>
-								<div className="relative top-16 p-adaptive col-secondary">
-									<Component {...pageProps} />
-									<div className="relative text-center p-8">
-										© {new Date().getFullYear()} Jose Jovian
-									</div>
-								</div>
+							<div className={clsx(mode ? "dark" : "")}>
+								{init ? (
+									<>
+										<PictureViewer />
+										<Nav
+											scroll={scroll}
+											loading={loading}
+											stateMode={stateMode}
+											setPreferredMode={setPreferredMode}
+										/>
+										<div className="relative top-16 p-adaptive col-secondary">
+											<Component {...pageProps} />
+											<div className="relative col-text text-center p-8">
+												© {new Date().getFullYear()}{" "}
+												Jose Jovian
+											</div>
+										</div>
+									</>
+								) : (
+									<div className="" />
+								)}
 							</div>
 						</ModalContext.Provider>
 					</ModeContext.Provider>
