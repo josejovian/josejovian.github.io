@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import { BsZoomIn, BsZoomOut, BsXLg } from "react-icons/bs";
 import { ActionButton } from "@/src/components";

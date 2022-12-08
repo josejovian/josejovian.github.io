@@ -26,10 +26,15 @@ export interface NavProps {
 	scroll: number;
 	loading: boolean;
 	stateMode: StateModeType;
-	setPreferredMode: (mode: boolean) => void
+	setPreferredMode: (mode: boolean) => void;
 }
 
-export function Nav({ scroll, loading, stateMode, setPreferredMode }: NavProps) {
+export function Nav({
+	scroll,
+	loading,
+	stateMode,
+	setPreferredMode,
+}: NavProps) {
 	const [mode, setMode] = stateMode;
 
 	const router: NextRouter = useRouter();
@@ -40,8 +45,8 @@ export function Nav({ scroll, loading, stateMode, setPreferredMode }: NavProps) 
 			className={clsx(
 				"w-screen h-16",
 				"fixed flex flex-col top-0",
-				"col-secondary col-text",
-				"border-0 z-50 overflow-hidden",
+				"secondary border-b col-text",
+				"z-50 overflow-hidden transition-shadow",
 				scroll > 0 && "shadow-lg"
 			)}
 		>
@@ -58,18 +63,16 @@ export function Nav({ scroll, loading, stateMode, setPreferredMode }: NavProps) 
 				)}
 			>
 				<div className="flex items-center justify-center">
-					<Link href="/" passHref>
-						<a>
-							<div className={clsx("NavImage", "bg-blue-400")}>
-								<svg width="108" height="28">
-									<defs>
-										<clipPath id="Nav_logo-clip">
-											<NavImage id="Nav_logo" />
-										</clipPath>
-									</defs>
-								</svg>
-							</div>
-						</a>
+					<Link href="/">
+						<div className={clsx("NavImage", "bg-blue-400")}>
+							<svg width="108" height="28">
+								<defs>
+									<clipPath id="Nav_logo-clip">
+										<NavImage id="Nav_logo" />
+									</clipPath>
+								</defs>
+							</svg>
+						</div>
 					</Link>
 				</div>
 				<ul className="flex items-center justify-center border-0 h-full">
@@ -102,10 +105,12 @@ export function Nav({ scroll, loading, stateMode, setPreferredMode }: NavProps) 
 										)}
 									></span>
 								)}
-								<Link href={link.link} key={`Nav_${link.name}`}>
-									<a className="px-8 py-4 z-50">
-										{link.name}
-									</a>
+								<Link
+									href={link.link}
+									key={`Nav_${link.name}`}
+									className="px-8 py-4 z-50"
+								>
+									{link.name}
 								</Link>
 							</li>
 						);
