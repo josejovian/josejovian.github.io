@@ -92,9 +92,9 @@ export function List() {
 			<div
 				className={clsx(
 					"List_line",
-					"absolute",
-					" w-1 md:self-center",
-					"bg-blue-400 z-30"
+					"absolute bg-blue-400",
+					"w-1 md:self-center",
+					"z-30"
 				)}
 			/>
 			{list.map((entry, idx) => (

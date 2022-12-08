@@ -19,13 +19,13 @@
 	}
 
 	.col-primary {
-		@apply dark:bg-gray-900 bg-white;
+		@apply dark:bg-slate-900 bg-white;
 	}
 	.col-secondary {
-		@apply dark:bg-gray-800 bg-slate-100;
+		@apply dark:bg-slate-800 bg-slate-100;
 	}
-	.col-tertiary {
-		@apply dark:bg-gray-700 bg-stone-50;
+	.secondary {
+		@apply dark:bg-gray-700 bg-white col-text border-gray-200 dark:border-zinc-500;
 	}
 	.col-text {
 		@apply dark:text-gray-50 text-slate-800;
@@ -74,18 +74,24 @@
 @tailwind base;
 @layer components {
 	.List_line {
-		top: 18px;
-		height: calc(100% - 18px);
+		top: 28px;
+		height: calc(100% - 32px);
 	}
 	.List_entry {
-		width: calc(50% + 24px);
+		width: calc(50% + 34px);
 	}
 	.List_entry-dot {
-		top: 18px;
+		top: 26px;
+	}
+	.List_entry-dot-l {
+		left: calc(0.7109rem + 10px);
+	}
+	.List_entry-dot-r {
+		right: calc(0.7rem + 10px);
 	}
 	.List_line-cleaner {
-		top: 18px;
-		height: calc(100% - 18px);
+		top: 28px;
+		height: calc(100% - 28px);
 	}
 	.List_entry ul {
 		list-style-type: disc;
@@ -127,7 +133,8 @@
 	}
 
 	/* https://www.gradient-animator.com/ */
-	.Nav_pulse, .Nav_pulse * {
+	.Nav_pulse,
+	.Nav_pulse * {
 		background: linear-gradient(269deg, #ffffff, #38bdf8);
 		fill: linear-gradient(269deg, #ffffff, #38bdf8);
 		background-size: 400% 400%;
@@ -178,7 +185,7 @@
 	#ProjectPost_body :is(h2, h3) {
 		@apply mt-16 mb-8;
 	}
-	
+
 	#ProjectPost_body :is(h2, h3)::before {
 		content: "";
 		display: block;
@@ -191,8 +198,10 @@
 		@apply mt-0;
 	}
 
-	#ProjectPost_body p, ul, li {
-		@apply col-text
+	#ProjectPost_body p,
+	ul,
+	li {
+		@apply col-text;
 	}
 
 	#ProjectPost_body p {
@@ -329,5 +338,12 @@
 
 @font-face {
 	font-family: Rubik;
-	src: url("../public/fonts/Rubik/Rubik-VariableFont_wght.ttf");
+	src: url("../public/fonts/HankenGrotesk.ttf");
+}
+
+@media (prefers-color-scheme: dark) {
+	html,
+	body {
+		background: #1e293b;
+	}
 }
