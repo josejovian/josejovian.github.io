@@ -1,30 +1,117 @@
 import clsx from "clsx";
+import { Fragment, useMemo } from "react";
+import { MdSchool, MdGroups } from "react-icons/md";
+import { BsBriefcaseFill } from "react-icons/bs";
 import { Picture } from "@/src/components";
+import { ListEntryCategoryType, ListEntryType } from "@/src/types";
 
 function alternate(idx: number, a: any, b: any) {
 	return idx % 2 === 1 ? a : b;
 }
 
-export interface EntryType {
-	name: string;
-	addon: string;
-	description: any;
-	attachments: any[];
-}
-
-export interface EntryProps extends EntryType {
+export interface ListEntryProps extends ListEntryType {
 	idx: number;
 	maxIdx: number;
 }
 
-export function Entry({
+function getEntryIcon(input: ListEntryCategoryType) {
+	switch (input) {
+		case "education":
+			return <MdSchool />;
+		case "organization":
+			return <MdGroups />;
+		case "work":
+			return <BsBriefcaseFill />;
+		default:
+			return <></>;
+	}
+}
+
+export function ListEntry({
 	idx,
 	maxIdx,
 	name,
 	addon,
+	type,
 	description,
 	attachments,
-}: EntryProps) {
+}: ListEntryProps) {
+	const renderEntryDot = useMemo(
+		() => (
+			<div
+				className={clsx(
+					"List_entry-dot",
+					"absolute 4 w-6 h-6",
+					"bg-blue-400 rounded-full z-40",
+					alternate(idx, "lg:List_entry-dot-r", "lg:List_entry-dot-l")
+				)}
+			/>
+		),
+		[idx]
+	);
+
+	const renderEntryIcon = useMemo(() => {
+		return type ? (
+			<div
+				className={clsx(
+					"List_entry-back",
+					"absolute top-0 right-4 z-40"
+				)}
+			>
+				{getEntryIcon(type)}
+			</div>
+		) : (
+			<></>
+		);
+	}, [type]);
+
+	const renderEntryLineCleaner = useMemo(
+		() => (
+			<div
+				className={clsx(
+					"List_line-cleaner",
+					"absolute",
+					alternate(idx, "lg:right-3.5", "lg:left-3.5"),
+					"w-6 bg-inherit z-30"
+				)}
+			/>
+		),
+		[idx]
+	);
+
+	const renderEntryDetail = useMemo(
+		() => (
+			<Fragment>
+				<h3 className="text-xl">{name}</h3>
+				<span className="text-sm dark:text-gray-300 text-gray-500">
+					{addon}
+				</span>
+				<div>
+					<div className={clsx("text-left mt-2")}>{description}</div>
+				</div>
+				{attachments && attachments.length > 0 && (
+					<div className={clsx("flex flex-wrap gap-4 mt-4")}>
+						{attachments.map((att) => {
+							return (
+								<div key={att.title}>
+									<Picture
+										src={att.link}
+										width={112}
+										height={63}
+										ogWidth={att.width ?? 1280}
+										ogHeight={att.height ?? 720}
+										alt={att.title}
+									/>
+								</div>
+							);
+						})}
+					</div>
+				)}
+			</Fragment>
+		),
+		[addon, attachments, description, name]
+	);
+
 	return (
 		<div
 			className={clsx(
@@ -39,47 +126,10 @@ export function Entry({
 				)
 			)}
 		>
-			<div
-				className={clsx(
-					"List_entry-dot",
-					"absolute 4 w-6 h-6",
-					"bg-blue-400 rounded-full z-40",
-					alternate(idx, "lg:List_entry-dot-r", "lg:List_entry-dot-l")
-				)}
-			/>
-			{idx === maxIdx && (
-				<div
-					className={clsx(
-						"List_line-cleaner",
-						"absolute",
-						alternate(idx, "lg:right-3.5", "lg:left-3.5"),
-						"w-6 bg-inherit z-30"
-					)}
-				/>
-			)}
-			<h3 className="text-xl ">{name}</h3>
-			<span className="text-sm ">{addon}</span>
-			<div>
-				<div className={clsx("text-left mt-2")}>{description}</div>
-			</div>
-			{attachments.length > 0 && (
-				<div className={clsx("flex flex-wrap gap-4 mt-4")}>
-					{attachments.map((att) => {
-						return (
-							<div key={att.title}>
-								<Picture
-									src={att.link}
-									width={112}
-									height={63}
-									ogWidth={att.width ?? 1280}
-									ogHeight={att.height ?? 720}
-									alt={att.title}
-								/>
-							</div>
-						);
-					})}
-				</div>
-			)}
+			{renderEntryDot}
+			{renderEntryIcon}
+			{idx === maxIdx && renderEntryLineCleaner}
+			{renderEntryDetail}
 		</div>
 	);
 }
