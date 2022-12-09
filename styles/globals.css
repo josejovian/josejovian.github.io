@@ -25,7 +25,7 @@
 		@apply dark:bg-slate-800 bg-slate-100;
 	}
 	.secondary {
-		@apply dark:bg-gray-700 bg-white col-text border-gray-200 dark:border-zinc-500;
+		@apply dark:bg-gray-700 bg-white col-text border-gray-300 dark:border-zinc-500;
 	}
 	.col-text {
 		@apply dark:text-gray-50 text-slate-800;
@@ -99,6 +99,10 @@
 	}
 	.List_entry li:not(:first-child) {
 		@apply mt-1.5;
+	}
+	.List_entry-back svg {
+		@apply w-48 h-48;
+		opacity: 0.04;
 	}
 
 	#PictureViewer_image img {

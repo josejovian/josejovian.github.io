@@ -1,5 +1,11 @@
 import clsx from "clsx";
-import { List, Meta, TechStack, ProjectCard } from "@/src/components";
+import {
+	List,
+	Meta,
+	TechStack,
+	ProjectCard,
+	ListEntry,
+} from "@/src/components";
 import { ProjectProps } from "@/src/types";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];

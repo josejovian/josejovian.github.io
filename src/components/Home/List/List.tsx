@@ -1,10 +1,13 @@
 import clsx from "clsx";
-import { Entry, EntryType } from "./Entry";
+import { useMemo } from "react";
+import { ListEntry } from "./Entry";
+import { ListEntryType } from "@/src/types";
 
-const list: EntryType[] = [
+const list: ListEntryType[] = [
 	{
 		name: "Shibaura Institute of Technology",
 		addon: "April 2022 - July 2022",
+		type: "education",
 		description: (
 			<ul>
 				<li>
@@ -19,6 +22,7 @@ const list: EntryType[] = [
 	{
 		name: "Bina Nusantara Computer Club (BNCC) Alam Sutera",
 		addon: "October 2019 - October 2021",
+		type: "organization",
 		description: (
 			<ul>
 				<li>
@@ -37,7 +41,7 @@ const list: EntryType[] = [
 				title: "C Programming Instructor",
 				link: "/attachments/c-programming-instructor.png",
 				width: 1024,
-				heigt: 768,
+				height: 768,
 			},
 			{
 				title: "Android for Future, Android Programming Workshop",
@@ -52,6 +56,7 @@ const list: EntryType[] = [
 	{
 		name: "BINUS University",
 		addon: "August 2019 - 2023",
+		type: "education",
 		description: (
 			<ul>
 				<li>Majoring in Computer Science (Global Class).</li>
@@ -77,6 +82,7 @@ const list: EntryType[] = [
 	{
 		name: "SMA Citra Berkat",
 		addon: "2016 - 2019",
+		type: "education",
 		description: (
 			<ul>
 				<li>I majored in Natural Sciences.</li>
@@ -87,6 +93,19 @@ const list: EntryType[] = [
 ];
 
 export function List() {
+	const renderListEntries = useMemo(
+		() =>
+			list.map((entry, idx) => (
+				<ListEntry
+					key={entry.name}
+					{...entry}
+					idx={idx}
+					maxIdx={list.length - 1}
+				/>
+			)),
+		[]
+	);
+
 	return (
 		<div className="relative flex flex-col gap-8">
 			<div
@@ -97,14 +116,7 @@ export function List() {
 					"z-30"
 				)}
 			/>
-			{list.map((entry, idx) => (
-				<Entry
-					key={entry.name}
-					{...entry}
-					idx={idx}
-					maxIdx={list.length - 1}
-				/>
-			))}
+			{renderListEntries}
 		</div>
 	);
 }
