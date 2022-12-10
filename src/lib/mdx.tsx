@@ -1,75 +1,116 @@
-import { ProjectProps } from "../types/Project";
+import { BlogType, ContentType, ProjectType } from "@/src/types";
 
 const { readdirSync, readFileSync } = require("fs");
 const { join } = require("path");
 const { bundleMDX } = require("mdx-bundler");
 
-async function readProject(id: string) {
-	const result = await readFileSync(
-		join(process.cwd(), "projects", `${id}.mdx`),
-		"utf8"
-	);
+function getFrontmatter(
+	cat: ContentType,
+	data: any | null
+): ProjectType | BlogType | null {
+	if (!data) return null;
 
-	return result;
+	switch (cat) {
+		case "projects":
+			return data.frontmatter as ProjectType;
+		case "blogs":
+			return data.frontmatter as BlogType;
+		default:
+			return null;
+	}
+}
+
+function readContent(cat: ContentType, id: string) {
+	return readFileSync(join(process.cwd(), cat, `${id}.mdx`), "utf8");
+}
+
+function readContents(cat: ContentType) {
+	return readdirSync(join(process.cwd(), cat), "utf8");
+}
+
+async function readProject(id: string) {
+	return await readContent("projects", id);
+}
+
+async function readBlog(id: string) {
+	return await readContent("blogs", id);
 }
 
 async function readProjects() {
-	const result = readdirSync(join(process.cwd(), "projects"), "utf8");
-
-	return result;
+	return readContents("projects") as string[];
 }
 
-async function getProject(_id: string) {
-	const result = await readProject(_id);
+async function readBlogs() {
+	return readContents("blogs") as string[];
+}
 
-	const data = await bundleMDX({
+async function getContent(cat: ContentType, id: string) {
+	let result = null;
+
+	switch (cat) {
+		case "projects":
+			result = await readProject(id);
+			break;
+		case "blogs":
+			result = await readBlog(id);
+			break;
+	}
+
+	let data = null;
+
+	if (!result) return null;
+
+	data = await bundleMDX({
 		source: result,
 	});
 
-	const { id, title, techs, overview, featured, hidden }: ProjectProps =
-		data.frontmatter;
+	if (!data) return null;
 
-	return {
-		id: id,
-		title: title,
-		techs: techs,
-		featured: featured,
-		hidden: hidden,
-		overview: overview,
-	};
+	return getFrontmatter(cat, data);
 }
 
-async function getProjects() {
-	const projects = await readProjects();
-	const result = await Promise.all(
-		projects.map(async (filename: string) => {
+async function getContents(cat: ContentType) {
+	let result = null;
+
+	switch (cat) {
+		case "projects":
+			result = await readProjects();
+			break;
+		case "blogs":
+			result = await readBlogs();
+			break;
+	}
+
+	if (!result) return null;
+
+	return Promise.all(
+		result.map(async (filename: string) => {
 			const data = await bundleMDX({
 				source: readFileSync(
-					join(process.cwd(), "projects", `${filename}`),
+					join(process.cwd(), cat, `${filename}`),
 					"utf8"
 				),
 			});
-			const {
-				id,
-				title,
-				techs,
-				overview,
-				featured,
-				hidden,
-			}: ProjectProps = data.frontmatter;
 
-			return {
-				id: id,
-				title: title,
-				techs: techs,
-				featured: featured,
-				hidden: hidden,
-				overview: overview,
-			};
+			return getFrontmatter(cat, data);
 		})
 	);
+}
 
-	return result;
+async function getProject(_id: string) {
+	return getContent("projects", _id);
+}
+
+async function getProjects() {
+	return getContents("projects");
+}
+
+async function getBlog(_id: string) {
+	return getContent("blogs", _id);
+}
+
+async function getBlogs() {
+	return getContents("blogs");
 }
 
 module.exports = {
@@ -77,4 +118,8 @@ module.exports = {
 	readProjects,
 	getProject,
 	getProjects,
+	readBlog,
+	readBlogs,
+	getBlog,
+	getBlogs,
 };
