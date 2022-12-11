@@ -1,4 +1,5 @@
 import { BlogType, ContentType, ProjectType } from "@/src/types";
+import { toAltDateFormat } from "@/src/utils";
 
 const { readdirSync, readFileSync } = require("fs");
 const { join } = require("path");
@@ -22,13 +23,9 @@ function getFrontmatter(
 
 	const string = data.matter.content;
 
-	const date = new Date(frontmatter.date);
-
-	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-
 	return {
 		...frontmatter,
-		date: `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}`,
+		date: toAltDateFormat(data.frontmatter.date),
 		autoOverview: string.slice(0, Math.min(string.length, 256)),
 	};
 }
