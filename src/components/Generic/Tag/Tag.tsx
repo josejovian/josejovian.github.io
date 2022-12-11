@@ -1,24 +1,24 @@
 import clsx from "clsx";
 import React from "react";
+import { IconText } from "./IconText";
 
 export interface TagProps {
 	children: React.ReactNode;
-	className: string;
-	style: any;
+	className?: string;
+	style?: any;
 }
 
-export function Tag({ children, className, style }: Partial<TagProps>) {
+export function Tag({ children, className, style }: TagProps) {
 	return (
-		<span
+		<IconText
 			className={clsx(
 				"w-fit px-4 py-2",
-				"flex items-center justify-center gap-4",
 				"secondary border col-text rounded-sm",
 				className
 			)}
 			style={style}
 		>
 			{children}
-		</span>
+		</IconText>
 	);
 }
