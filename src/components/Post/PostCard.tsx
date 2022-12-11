@@ -12,12 +12,17 @@ import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import { getTech } from "@/src/components";
 import { WidthContext } from "@/src/contexts";
-import { BlogType, ContentType, ProjectType } from "@/src/types";
+import {
+	BlogType,
+	ContentType,
+	PostDescendantType,
+	ProjectType,
+} from "@/src/types";
 import { contentDetailLink, CONTENT_LIST_PATH } from "@/src/constants";
 
 export interface PostCardProps {
 	contentType: ContentType;
-	contentDetail: ProjectType | BlogType;
+	contentDetail: PostDescendantType;
 }
 
 export function PostCard({ contentType, contentDetail }: PostCardProps) {

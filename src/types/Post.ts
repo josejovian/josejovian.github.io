@@ -28,3 +28,5 @@ export interface ProjectType extends PostType {
 }
 
 export interface BlogType extends PostType {}
+
+export type PostDescendantType = ProjectType | BlogType;
