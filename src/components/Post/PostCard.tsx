@@ -1,29 +1,14 @@
 import clsx from "clsx";
-import {
-	Fragment,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
-import { getTech } from "@/src/components";
+import { getTech, PostDetailDate } from "@/src/components";
 import { WidthContext } from "@/src/contexts";
-import {
-	BlogType,
-	ContentType,
-	PostDescendantType,
-	ProjectType,
-} from "@/src/types";
-import { contentDetailLink, CONTENT_LIST_PATH } from "@/src/constants";
+import { ContentComponentGenericProps, ProjectType } from "@/src/types";
+import { contentDetailLink } from "@/src/constants";
 
-export interface PostCardProps {
-	contentType: ContentType;
-	contentDetail: PostDescendantType;
-}
+export interface PostCardProps extends ContentComponentGenericProps {}
 
 export function PostCard({ contentType, contentDetail }: PostCardProps) {
 	const { id, title, date, overview, autoOverview } = contentDetail;
@@ -55,7 +40,9 @@ export function PostCard({ contentType, contentDetail }: PostCardProps) {
 				>
 					{title}
 				</h3>
-				<span className="text-gray-600 dark:text-gray-400">{date}</span>
+				<div className="flex gap-2">
+					<PostDetailDate date={date} />
+				</div>
 			</>
 		),
 		[date, title]

@@ -22,13 +22,13 @@
 		@apply dark:bg-slate-900 bg-white;
 	}
 	.col-secondary {
-		@apply dark:bg-slate-800 bg-slate-100;
+		@apply dark:bg-slate-900 bg-slate-100;
 	}
 	.secondary {
 		@apply dark:bg-gray-700 bg-white col-text border-gray-300 dark:border-zinc-500;
 	}
 	.col-text {
-		@apply dark:text-gray-50 text-slate-800;
+		@apply dark:text-gray-200 text-slate-800;
 	}
 	.p-adaptive {
 		@apply px-8 sm:px-16 md:px-16 lg:px-32 xl:px-64 2xl:px-96;
@@ -137,6 +137,14 @@
 	.Nav_arrow {
 		clip-path: polygon(100% 0, 50% 50%, 0 0);
 		z-index: 55;
+	}
+
+	.IconText svg {
+		@apply text-gray-800 dark:text-gray-200;
+	}
+
+	.IconText span {
+		@apply text-gray-600 dark:text-gray-400;
 	}
 
 	/* https://www.gradient-animator.com/ */

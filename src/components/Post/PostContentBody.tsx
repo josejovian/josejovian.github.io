@@ -1,21 +1,21 @@
 import { MDXContentProps } from "mdx-bundler/client";
 import { FunctionComponent } from "react";
 import { Picture, Side } from "@/src/components";
-import { ContentType, GreatSectionType, PostType } from "@/src/types";
+import { GreatSectionType } from "@/src/types";
 
-export interface PostBodyType {
+export interface PostContentBodyProps {
 	bodyPictureWidth: number;
 	scroll: number;
 	table: GreatSectionType[];
 	Component: FunctionComponent<MDXContentProps>;
 }
 
-export function PostBody({
+export function PostContentBody({
 	scroll,
 	table,
 	bodyPictureWidth,
 	Component,
-}: PostBodyType) {
+}: PostContentBodyProps) {
 	return (
 		<div
 			className="relative w-full flex gap-8"

@@ -4,12 +4,11 @@ import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import {
 	Meta,
-	Picture,
-	Side,
-	PostBody,
-	PostTitle,
-	PostThumbnail,
-	PostWrapper,
+	PostContentBody,
+	PostContentDetail,
+	PostContentHeader,
+	PostContentThumbnail,
+	PostContentWrapper,
 } from "@/src/components";
 import { WidthContext, ScrollContext } from "@/src/contexts";
 import { useTable } from "@/src/hooks";
@@ -31,21 +30,24 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 	return (
 		<>
 			<Meta page={title} />
-			<PostWrapper>
-				<PostTitle>{title}</PostTitle>
-				<PostThumbnail
+			<PostContentWrapper>
+				<PostContentHeader
+					contentDetail={frontmatter}
+					contentType="projects"
+				/>
+				<PostContentThumbnail
 					contentType="projects"
 					id={id}
 					thumbnailWidth={thumbnailWidth}
 					title={title}
 				/>
-				<PostBody
+				<PostContentBody
 					bodyPictureWidth={bodyPictureWidth}
 					Component={Component}
 					scroll={scroll}
 					table={table}
 				/>
-			</PostWrapper>
+			</PostContentWrapper>
 		</>
 	);
 };

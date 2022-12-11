@@ -1,5 +1,10 @@
 export type ContentType = "blogs" | "projects";
 
+export interface ContentComponentGenericProps {
+	contentType: ContentType;
+	contentDetail: PostDescendantType;
+}
+
 export interface PostType {
 	id: string;
 	title: string;
