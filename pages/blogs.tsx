@@ -1,25 +1,25 @@
 import clsx from "clsx";
 import { useEffect } from "react";
 import { Meta, ProjectCard } from "@/src/components";
-import { ProjectType } from "@/src/types";
+import { BlogType } from "@/src/types";
 import { PostCard } from "@/src/components/Post/PostCard";
 
-interface HomeProps {
-	projects: ProjectType[];
+interface BlogsProps {
+	blogs: BlogType[];
 }
 
-const Projects = ({ projects }: HomeProps) => {
+const Blogs = ({ blogs }: BlogsProps) => {
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
-			<Meta page="Projects" />
-			<h1 className="text-6xl">My Projects.</h1>
+			<Meta page="Blog" />
+			<h1 className="text-6xl">Random Posts.</h1>
 			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
-				{projects.map((project) => {
+				{blogs.map((blog) => {
 					return (
 						<PostCard
-							contentType="projects"
-							contentDetail={project}
-							key={project.id}
+							contentType="blogs"
+							contentDetail={blog}
+							key={blog.id}
 						/>
 					);
 				})}
@@ -29,14 +29,14 @@ const Projects = ({ projects }: HomeProps) => {
 };
 
 export const getStaticProps = async (req: any) => {
-	const { getProjects } = require("../src/lib/mdx.tsx");
+	const { getBlogs } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectType[] = await getProjects();
+	let blogs: BlogType[] = await getBlogs();
 
 	return {
-		props: { projects: projects },
+		props: { blogs: blogs },
 		revalidate: 300,
 	};
 };
 
-export default Projects;
+export default Blogs;

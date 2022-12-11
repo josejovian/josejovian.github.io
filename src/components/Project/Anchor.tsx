@@ -1,9 +1,9 @@
-import { Section } from "@/pages/project/[id]";
 import clsx from "clsx";
 import Link from "next/link";
+import { SectionType } from "@/src/types";
 
 export interface AnchorProps {
-	head: Section;
+	head: SectionType;
 	depth: number;
 	active?: boolean;
 }

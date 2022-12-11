@@ -5,9 +5,9 @@ import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import { getTech } from "@/src/components";
 import { WidthContext } from "@/src/contexts";
-import { ProjectProps } from "@/src/types";
+import { ProjectType } from "@/src/types";
 
-export interface ProjectCardProps extends ProjectProps {}
+export interface ProjectCardProps extends ProjectType {}
 
 export function ProjectCard({
 	id,

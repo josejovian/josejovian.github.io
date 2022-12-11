@@ -1,19 +1,18 @@
+import { GreatSectionType, SectionType } from "@/src/types";
 import clsx from "clsx";
 import { useCallback, useEffect, Fragment, useState } from "react";
-import { GreatSection, Section } from "@/pages/project/[id]";
 import { Anchor } from "./Anchor";
 
 export interface SideProps {
-	table: GreatSection[];
+	table: GreatSectionType[];
 	scroll: number;
-	width: number;
 }
 
-export function Side({ width, scroll, table }: SideProps) {
+export function Side({ scroll, table }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
 	const trackSection = useCallback(() => {
-		const flattenTable: Section[] = [];
+		const flattenTable: SectionType[] = [];
 
 		table.forEach((section) => {
 			flattenTable.push({
@@ -51,7 +50,10 @@ export function Side({ width, scroll, table }: SideProps) {
 	}, [trackSection]);
 
 	return (
-		<aside id="ProjectPost_table" className="hidden lg:block">
+		<aside
+			id="ProjectPost_table"
+			className={clsx("hidden lg:block", table.length === 0 && "!hidden")}
+		>
 			<div
 				className={clsx(
 					"md:sticky top-32 p-8",
@@ -61,9 +63,9 @@ export function Side({ width, scroll, table }: SideProps) {
 			>
 				<h4 className="!mt-0 !mb-4 text-2xl">Table of Contents</h4>
 				<ul className="relative">
-					{table.map((head: GreatSection, idx) => {
+					{table.map((head: GreatSectionType, idx) => {
 						const sectionElements = head.subsections.map(
-							(sub: Section) => {
+							(sub: SectionType) => {
 								return (
 									<Anchor
 										key={sub.name}

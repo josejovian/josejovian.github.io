@@ -1,7 +1,7 @@
 ---
 id: trellone
 title: Trellone
-published: '2022-03-17'
+date: "2022-03-17"
 techs: ["next", "express", "mongo", "node", "redux", "javascript"]
 overview: A personal project I've done to practice building a MERN-stack application.
 demo: https://mellifluous-kheer-89413a.netlify.app
@@ -15,23 +15,24 @@ hidden: false
 This project is possibly the largest personal project that I've ever created. The primary reason I started this project is simply to **practice creating a MERN-stack application**, right after learning the basics of Node, Express and MongoDB. This probably was not a good idea for me who only had learnt the basics. Despite the fact that I spent almost a month, I still managed to finish this project. It is also the first ever full-stack application I have ever made. Additionally, this project is my attempt to solve the [challenge to create a full-stack application from DevChallenges](https://devchallenges.io/challenges/wP0LbGgEeKhpFHUpPpDh), so I have made sure to complete all the user stories.
 
 Trellone is an application, where people can create Kanban boards for their projects. To access the app's features, the user must be logged in using their Github account. The app currently supports basic Kanban board interactions, such as;
-- Creating and editing Boards, including its name, and description.
-- Adding users to kanban Boards.
-- Creating Lists (e.g. Unstarted, In Progress, Finished, etc).
-- Creating Cards in a List, including changing the card's name, description, members, tags, comments, or attachments.
-- Drag and drop Cards from one list to another.
+
+-   Creating and editing Boards, including its name, and description.
+-   Adding users to kanban Boards.
+-   Creating Lists (e.g. Unstarted, In Progress, Finished, etc).
+-   Creating Cards in a List, including changing the card's name, description, members, tags, comments, or attachments.
+-   Drag and drop Cards from one list to another.
 
 ## Tech Stacks and Libraries
 
 This project is a MERN-stack application. I used Chakra UI for the styling. I also used several other libraries/API, such as:
 
-- **Axios**, to handle API calls, mostly from front-end to back-end.
-- **React Drag and Drop**, to handle drag and drop interaction.
-- **Redux**, to handle state management.
-- **Redux Persist**, to ensure that the states persist within pages, even if the user closes the tab, by saving the states in the user's local storage.
-- **SocketIO**, to simulate a real-time interaction between users.
-- **Pexels API**, as the source of stock photos.
-- **Github Authorization**, as the only method of the user logging in to the application.
+-   **Axios**, to handle API calls, mostly from front-end to back-end.
+-   **React Drag and Drop**, to handle drag and drop interaction.
+-   **Redux**, to handle state management.
+-   **Redux Persist**, to ensure that the states persist within pages, even if the user closes the tab, by saving the states in the user's local storage.
+-   **SocketIO**, to simulate a real-time interaction between users.
+-   **Pexels API**, as the source of stock photos.
+-   **Github Authorization**, as the only method of the user logging in to the application.
 
 ## Highlighted Features
 
@@ -41,7 +42,7 @@ This feature is perhaps one of the most complex features in this application, th
 
 ### Drag and Drop Cards
 
-This feature is also one of the most complex features in this application. Along with the previous feature, I actually spent a while to understand the Drag and Drop library, then using the library to implement drag and drop cards within the same list or between lists.  
+This feature is also one of the most complex features in this application. Along with the previous feature, I actually spent a while to understand the Drag and Drop library, then using the library to implement drag and drop cards within the same list or between lists.
 
 One issue that I quickly noticed, as soon as I completed a basic implemenation of the library in this project, is that the feature does not work as smoothly during the time window, where the cursor is dragging and overlapping the card. Initially, I could not figure out the appropriate method to make it such that when a card is being clicked from any position within the card, then dragged, the mouse's position does not overlap the card.
 

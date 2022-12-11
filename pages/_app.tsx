@@ -153,7 +153,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 											stateMode={stateMode}
 											setPreferredMode={setPreferredMode}
 										/>
-										<div className="relative top-16 p-adaptive col-secondary">
+										<div className="App relative top-16 p-adaptive col-secondary">
 											<Component {...pageProps} />
 											<div className="relative col-text text-center p-8">
 												© {new Date().getFullYear()}{" "}

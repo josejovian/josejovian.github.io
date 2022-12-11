@@ -10,14 +10,23 @@ function getFrontmatter(
 ): ProjectType | BlogType | null {
 	if (!data) return null;
 
+	let frontmatter: ProjectType | BlogType;
 	switch (cat) {
 		case "projects":
-			return data.frontmatter as ProjectType;
+			frontmatter = data.frontmatter as ProjectType;
+			break;
 		case "blogs":
-			return data.frontmatter as BlogType;
-		default:
-			return null;
+			frontmatter = data.frontmatter as BlogType;
+			break;
 	}
+
+	const string = data.matter.content;
+
+	return {
+		...frontmatter,
+		date: new Date(frontmatter.date).toLocaleDateString(),
+		autoOverview: string.slice(0, Math.min(string.length, 256)),
+	};
 }
 
 function readContent(cat: ContentType, id: string) {

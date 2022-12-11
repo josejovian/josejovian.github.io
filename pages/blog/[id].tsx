@@ -19,7 +19,7 @@ interface PageProps {
 	frontmatter: any;
 }
 
-const Projects = ({ code, frontmatter }: PageProps) => {
+const Blogs = ({ code, frontmatter }: PageProps) => {
 	const { id, title, techs, overview, repo, demo } = frontmatter;
 	const Component = useMemo(() => getMDXComponent(code), [code]);
 
@@ -34,7 +34,7 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 			<PostWrapper>
 				<PostTitle>{title}</PostTitle>
 				<PostThumbnail
-					contentType="projects"
+					contentType="blogs"
 					id={id}
 					thumbnailWidth={thumbnailWidth}
 					title={title}
@@ -51,14 +51,14 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 };
 
 export const getStaticPaths = async () => {
-	const { readProjects } = require("../../src/lib/mdx.tsx");
+	const { readBlogs } = require("../../src/lib/mdx.tsx");
 
-	const projects = await readProjects();
+	const blogs = await readBlogs();
 
 	return {
-		paths: projects.map((project: string) => ({
+		paths: blogs.map((blog: string) => ({
 			params: {
-				id: project.replace(".mdx", ""),
+				id: blog.replace(".mdx", ""),
 			},
 		})),
 		fallback: false,
@@ -67,12 +67,12 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (req: any) => {
 	const { id } = req.params;
-	const { readProject } = require("../../src/lib/mdx.tsx");
+	const { readBlog } = require("../../src/lib/mdx.tsx");
 
-	const projectMD = await readProject(id);
+	const blogMD = await readBlog(id);
 
 	const { code, frontmatter } = await bundleMDX({
-		source: projectMD,
+		source: blogMD,
 	});
 
 	const result = {
@@ -89,4 +89,4 @@ export const getStaticProps = async (req: any) => {
 	};
 };
 
-export default Projects;
+export default Blogs;

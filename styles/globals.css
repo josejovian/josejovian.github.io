@@ -73,6 +73,9 @@
 }
 @tailwind base;
 @layer components {
+	.App {
+		min-height: calc(100vh - 64px) !important;
+	}
 	.List_line {
 		top: 28px;
 		height: calc(100% - 32px);
@@ -122,7 +125,7 @@
 	}
 
 	.text {
-		font-size: 1rem;
+		font-size: 16px;
 		line-height: 1.5rem;
 	}
 
@@ -186,6 +189,10 @@
 		}
 	}
 
+	#ProjectPost_body {
+		font-size: 18px !important;
+	}
+
 	#ProjectPost_body :is(h2, h3) {
 		@apply mt-16 mb-8;
 	}
@@ -209,8 +216,8 @@
 	}
 
 	#ProjectPost_body p {
-		@apply mb-8 col-text;
-		font-size: 17px;
+		@apply mb-8 col-text text-justify;
+		font-size: 18px;
 		line-height: 2.4rem;
 		letter-spacing: 0.1px;
 	}
@@ -238,12 +245,12 @@
 		@apply text-blue-400;
 	}
 
-	.ProjectPost_body-md {
+	/* .ProjectPost_body-md {
 		width: calc(100% - 20rem);
-	}
+	} */
 
-	#ProjectPost_table {
-		width: 18rem;
+	#ProjectPost_table > div {
+		width: 18rem !important;
 	}
 
 	.ProjectPost_table-arrow {

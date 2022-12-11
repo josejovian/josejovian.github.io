@@ -17,6 +17,10 @@ const links: LinkType[] = [
 		link: "/",
 	},
 	{
+		name: "blogs",
+		link: "/blogs",
+	},
+	{
 		name: "projects",
 		link: "/projects",
 	},
@@ -77,15 +81,21 @@ export function Nav({
 				</div>
 				<ul className="flex items-center justify-center border-0 h-full">
 					{links.map((link: LinkType) => {
-						function isActive() {
+						const active = (() => {
 							if (
 								router.pathname.includes("project") &&
 								link.link.includes("project")
 							)
 								return true;
 
+							if (
+								router.pathname.includes("blog") &&
+								link.link.includes("blog")
+							)
+								return true;
 							return router.pathname === link.link;
-						}
+						})();
+
 						return (
 							<li
 								className={clsx(
@@ -94,7 +104,7 @@ export function Nav({
 								)}
 								key={`Nav_${link.name}`}
 							>
-								{isActive() && (
+								{active && (
 									<span
 										className={clsx(
 											"Nav_arrow",
@@ -108,7 +118,10 @@ export function Nav({
 								<Link
 									href={link.link}
 									key={`Nav_${link.name}`}
-									className="px-8 py-4 z-50"
+									className={clsx(
+										"px-8 py-4 z-50",
+										active && "text-blue-400"
+									)}
 								>
 									{link.name}
 								</Link>
