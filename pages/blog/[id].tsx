@@ -9,10 +9,10 @@ import {
 	PostBody,
 	PostTitle,
 	PostThumbnail,
+	PostWrapper,
 } from "@/src/components";
 import { WidthContext, ScrollContext } from "@/src/contexts";
 import { useTable } from "@/src/hooks";
-import { PostWrapper } from "@/src/components/Post/PostWrapper";
 
 interface PageProps {
 	code: any;

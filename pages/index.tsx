@@ -6,7 +6,7 @@ import {
 	ProjectCard,
 	ListEntry,
 } from "@/src/components";
-import { ProjectProps } from "@/src/types";
+import { ProjectType } from "@/src/types";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];
 
@@ -24,7 +24,7 @@ const techStacks = [
 ];
 
 interface HomeProps {
-	projects: ProjectProps[];
+	projects: ProjectType[];
 }
 
 const Home = ({ projects }: HomeProps) => {
@@ -62,7 +62,7 @@ const Home = ({ projects }: HomeProps) => {
 export const getStaticProps = async (req: any) => {
 	const { getProject } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectProps[] = [];
+	let projects: ProjectType[] = [];
 
 	try {
 		for (const id of featuredProjects) {

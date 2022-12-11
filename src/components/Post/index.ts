@@ -1,3 +1,4 @@
-export * from "./PostBody";
-export * from "./PostTitle";
-export * from "./PostThumbnail";
+export * from "./PostContentBody";
+export * from "./PostContentTitle";
+export * from "./PostContentThumbnail";
+export * from "./PostContentWrapper";
