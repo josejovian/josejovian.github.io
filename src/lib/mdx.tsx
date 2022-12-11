@@ -22,9 +22,13 @@ function getFrontmatter(
 
 	const string = data.matter.content;
 
+	const date = new Date(frontmatter.date);
+
+	const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
 	return {
 		...frontmatter,
-		date: new Date(frontmatter.date).toLocaleDateString(),
+		date: `${date.getDate()} ${month[date.getMonth()]} ${date.getFullYear()}`,
 		autoOverview: string.slice(0, Math.min(string.length, 256)),
 	};
 }
