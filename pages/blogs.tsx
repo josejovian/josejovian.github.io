@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import { useEffect } from "react";
 import { Meta, ProjectCard } from "@/src/components";
 import { BlogType } from "@/src/types";
-import { PostCard } from "@/src/components/Post/PostCard";
+import { BlogCard } from "@/src/components/Post/BlogCard";
 
 interface BlogsProps {
 	blogs: BlogType[];
@@ -15,13 +14,7 @@ const Blogs = ({ blogs }: BlogsProps) => {
 			<h1 className="text-6xl">Random Posts.</h1>
 			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
 				{blogs.map((blog) => {
-					return (
-						<PostCard
-							contentType="blogs"
-							contentDetail={blog}
-							key={blog.id}
-						/>
-					);
+					return <BlogCard key={blog.id} {...blog} />;
 				})}
 			</section>
 		</main>

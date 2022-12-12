@@ -1,8 +1,6 @@
 import clsx from "clsx";
-import { useEffect } from "react";
 import { Meta, ProjectCard } from "@/src/components";
 import { ProjectType } from "@/src/types";
-import { PostCard } from "@/src/components/Post/PostCard";
 
 interface HomeProps {
 	projects: ProjectType[];
@@ -15,13 +13,7 @@ const Projects = ({ projects }: HomeProps) => {
 			<h1 className="text-6xl">My Projects.</h1>
 			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
 				{projects.map((project) => {
-					return (
-						<PostCard
-							contentType="projects"
-							contentDetail={project}
-							key={project.id}
-						/>
-					);
+					return <ProjectCard {...project} key={project.id} />;
 				})}
 			</section>
 		</main>
