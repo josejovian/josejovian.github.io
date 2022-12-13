@@ -1,6 +1,6 @@
 import { MDXContentProps } from "mdx-bundler/client";
 import { FunctionComponent } from "react";
-import { Picture, Side } from "@/src/components";
+import { Picture, PostContentTable } from "@/src/components";
 import { GreatSectionType } from "@/src/types";
 
 export interface PostContentBodyProps {
@@ -40,7 +40,7 @@ export function PostContentBody({
 					}}
 				/>
 			</section>
-			<Side scroll={scroll} table={table} />
+			<PostContentTable scroll={scroll} table={table} />
 		</div>
 	);
 }

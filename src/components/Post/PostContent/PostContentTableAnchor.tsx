@@ -9,7 +9,12 @@ export interface AnchorProps {
 	onClick?: () => void;
 }
 
-export function Anchor({ head, depth, active, onClick }: AnchorProps) {
+export function PostContentTableAnchor({
+	head,
+	depth,
+	active,
+	onClick,
+}: AnchorProps) {
 	return (
 		<div
 			className={clsx(

@@ -1,17 +1,17 @@
-import { GreatSectionType, SectionType } from "@/src/types";
 import clsx from "clsx";
-import { useCallback, useEffect, Fragment, useState } from "react";
-import { Anchor } from "./Anchor";
+import { useCallback, useEffect, useState } from "react";
+import { PostContentTableAnchor } from "./PostContentTableAnchor";
+import { GreatSectionType, SectionType } from "@/src/types";
 
 export interface SideProps {
 	table: GreatSectionType[];
 	scroll: number;
 }
 
-export function Side({ scroll, table }: SideProps) {
+export function PostContentTable({ scroll, table }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
-	const trackSection = useCallback(() => {
+	const handleTrackSections = useCallback(() => {
 		const flattenTable: SectionType[] = [];
 
 		table.forEach((section) => {
@@ -45,11 +45,9 @@ export function Side({ scroll, table }: SideProps) {
 		}
 	}, [active, scroll, table]);
 
-	useEffect(() => console.log(scroll), [scroll]);
-
 	useEffect(() => {
-		trackSection();
-	}, [trackSection, scroll]);
+		handleTrackSections();
+	}, [handleTrackSections, scroll]);
 
 	return (
 		<aside
@@ -69,7 +67,7 @@ export function Side({ scroll, table }: SideProps) {
 						const sectionElements = head.subsections.map(
 							(sub: SectionType) => {
 								return (
-									<Anchor
+									<PostContentTableAnchor
 										key={sub.name}
 										head={sub}
 										depth={2}
@@ -82,7 +80,7 @@ export function Side({ scroll, table }: SideProps) {
 
 						return (
 							<li key={head.name}>
-								<Anchor
+								<PostContentTableAnchor
 									head={head}
 									depth={1}
 									active={active === head.name}

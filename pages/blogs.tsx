@@ -1,7 +1,6 @@
 import clsx from "clsx";
-import { Meta, ProjectCard } from "@/src/components";
+import { Meta, BlogCard } from "@/src/components";
 import { BlogType } from "@/src/types";
-import { BlogCard } from "@/src/components/Post/BlogCard";
 
 interface BlogsProps {
 	blogs: BlogType[];
