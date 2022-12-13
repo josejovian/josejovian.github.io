@@ -6,22 +6,30 @@ export interface AnchorProps {
 	head: SectionType;
 	depth: number;
 	active?: boolean;
+	onClick?: () => void;
 }
 
-export function Anchor({ head, depth, active }: AnchorProps) {
+export function Anchor({ head, depth, active, onClick }: AnchorProps) {
 	return (
-		<div className="relative w-full h-fit">
+		<div
+			className={clsx(
+				"Anchor",
+				"relative h-fit -mx-8",
+				active && "bg-blue-100 dark:bg-slate-600"
+			)}
+			onClick={onClick}
+		>
 			{active && (
 				<div
 					className={clsx(
 						"ProjectPost_table-arrow",
-						"absolute -left-8 top-3"
+						"absolute top-3"
 					)}
 				/>
 			)}
 			<Link
 				href={`#${head.link}`}
-				className={clsx("block -ml-8 -mr-8 pr-8", "leading-10")}
+				className={clsx("block pr-8", "leading-10")}
 				style={{
 					paddingLeft: `${(depth - 1) * 2 + 2}rem`,
 				}}
