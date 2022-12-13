@@ -40,14 +40,16 @@ export function Side({ scroll, table }: SideProps) {
 			if (section.position >= scroll + 300) {
 				setActive(prevSection ? prevSection.name : section.name);
 				break;
-			} else if (section.position >= scroll + 100)
+			} else if (section.position >= scroll - 100)
 				setActive(section.name);
 		}
 	}, [active, scroll, table]);
 
+	useEffect(() => console.log(scroll), [scroll]);
+
 	useEffect(() => {
 		trackSection();
-	}, [trackSection]);
+	}, [trackSection, scroll]);
 
 	return (
 		<aside
@@ -72,6 +74,7 @@ export function Side({ scroll, table }: SideProps) {
 										head={sub}
 										depth={2}
 										active={active === sub.name}
+										onClick={() => setActive(sub.name)}
 									/>
 								);
 							}

@@ -269,6 +269,10 @@
 		border-bottom: 0.5rem solid transparent;
 	}
 
+	.Anchor {
+		width: calc(100% + 64px);
+	}
+
 	@media only screen and (max-width: 1024px) {
 		.List_entry {
 			width: 100%;

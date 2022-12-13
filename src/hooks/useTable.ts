@@ -88,7 +88,7 @@ export function useTable({ width }: useTableProps) {
 		setTimeout(() => {
 			handleBuildTable();
 		}, 100);
-	}, [handleBuildTable]);
+	}, [handleBuildTable, width]);
 
 	return {
 		table,
