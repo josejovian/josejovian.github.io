@@ -31,18 +31,27 @@ export function PostContentTable({ scroll, table }: SideProps) {
 			setActive(flattenTable[0].name);
 		}
 
+		let newDestination = "Error";
+
+		// https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom-not-just-the-window-but-any-element#comment92747215_34550171
+		const element = document.documentElement;
+		const unscrolledHeight = Math.abs(
+			element.scrollHeight - element.scrollTop - element.clientHeight
+		);
+		const isAtBottom = Math.abs(unscrolledHeight) <= 3.0;
+
 		for (let i = 0; i < flattenTable.length; i++) {
-			const section = flattenTable[i],
-				prevSection = flattenTable[i - 1];
+			const section = flattenTable[i];
 
-			if (!section.position) continue;
-
-			if (section.position >= scroll + 300) {
-				setActive(prevSection ? prevSection.name : section.name);
-				break;
-			} else if (section.position >= scroll - 100)
-				setActive(section.name);
+			if (
+				scroll + 8 >= section.position ||
+				(i + 1 === flattenTable.length && isAtBottom)
+			) {
+				newDestination = section.name;
+			}
 		}
+
+		setActive(newDestination);
 	}, [active, scroll, table]);
 
 	useEffect(() => {
