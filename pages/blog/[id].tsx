@@ -9,8 +9,7 @@ import {
 	PostContentThumbnail,
 	PostContentWrapper,
 } from "@/src/components";
-import { WidthContext, ScrollContext } from "@/src/contexts";
-import { useTable } from "@/src/hooks";
+import { useMetrics, useTable } from "@/src/hooks";
 
 interface PageProps {
 	code: any;
@@ -20,10 +19,7 @@ interface PageProps {
 const Blogs = ({ code, frontmatter }: PageProps) => {
 	const { id, title, techs, overview, repo, demo } = frontmatter;
 	const Component = useMemo(() => getMDXComponent(code), [code]);
-
-	const { width } = useContext(WidthContext);
-	const { scroll } = useContext(ScrollContext);
-
+	const { width, scroll } = useMetrics();
 	const { table, thumbnailWidth, bodyPictureWidth } = useTable({ width });
 
 	return (
