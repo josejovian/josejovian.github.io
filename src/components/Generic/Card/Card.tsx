@@ -11,6 +11,7 @@ import Link from "next/link";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import { WidthContext } from "@/src/contexts";
+import { useMetrics } from "@/src/hooks";
 
 export interface CardProps {
 	id: string;
@@ -18,10 +19,18 @@ export interface CardProps {
 	href?: string;
 	thumbSrc?: string;
 	thumbTitle?: string;
+	overrideWidth?: number;
 }
 
-export function Card({ id, children, href, thumbSrc, thumbTitle }: CardProps) {
-	const { width } = useContext(WidthContext);
+export function Card({
+	id,
+	children,
+	href,
+	thumbSrc,
+	thumbTitle,
+	overrideWidth,
+}: CardProps) {
+	const { width } = useMetrics();
 	const [cardThumbnailWidth, setCardThumbnailWidth] = useState(0);
 
 	const renderCardThumbnail = useMemo(
@@ -70,13 +79,13 @@ export function Card({ id, children, href, thumbSrc, thumbTitle }: CardProps) {
 		const card = document.getElementById(id);
 
 		if (card) {
-			setCardThumbnailWidth(card.offsetWidth);
+			setCardThumbnailWidth(overrideWidth || card.offsetWidth);
 		}
-	}, [id]);
+	}, [id, overrideWidth]);
 
 	useEffect(() => {
 		handleAdjustCardThumbnail();
-	}, [width, handleAdjustCardThumbnail]);
+	}, [overrideWidth, width, handleAdjustCardThumbnail]);
 
 	return href ? (
 		<Link href={href}>{renderCardWrapper}</Link>

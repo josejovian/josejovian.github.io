@@ -273,6 +273,24 @@
 		width: calc(100% + 64px);
 	}
 
+	@media only screen and (min-width: 1721px) {
+		.PostGrid > div {
+			@apply grid-cols-3;
+		}
+	}
+
+	@media only screen and (min-width: 1024px) and (max-width: 1720px) {
+		.PostGrid > div {
+			@apply grid-cols-2;
+		}
+	}
+
+	@media only screen and (max-width: 1023px) {
+		.PostGrid > div {
+			@apply grid-cols-1;
+		}
+	}
+
 	@media only screen and (max-width: 1024px) {
 		.List_entry {
 			width: 100%;

@@ -10,9 +10,11 @@ import {
 import { contentDetailLink } from "@/src/constants";
 import { BlogType } from "@/src/types";
 
-export interface BlogCardProps extends BlogType {}
+export interface BlogCardProps extends BlogType {
+	width?: number;
+}
 
-export function BlogCard(project: BlogCardProps) {
+export function BlogCard({ width, ...project }: BlogCardProps) {
 	const { id, title, date, overview, autoOverview } = project;
 
 	const identifier = `BlogCard_${id}`;
@@ -20,7 +22,12 @@ export function BlogCard(project: BlogCardProps) {
 	const thumbnail = `${link}.png`;
 
 	return (
-		<Card href={link} id={identifier} thumbSrc={thumbnail}>
+		<Card
+			href={link}
+			id={identifier}
+			thumbSrc={thumbnail}
+			overrideWidth={width}
+		>
 			<>
 				<PostCardTitle>{title}</PostCardTitle>
 				<div className="flex gap-4">

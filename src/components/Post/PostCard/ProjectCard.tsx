@@ -8,9 +8,11 @@ import {
 import { contentDetailLink } from "@/src/constants";
 import { ProjectType } from "@/src/types";
 
-export interface ProjectCardProps extends ProjectType {}
+export interface ProjectCardProps extends ProjectType {
+	width?: number;
+}
 
-export function ProjectCard(project: ProjectCardProps) {
+export function ProjectCard({ width, ...project }: ProjectCardProps) {
 	const { id, title, overview, autoOverview, techs } = project;
 
 	const identifier = `ProjectCard_${id}`;
@@ -18,7 +20,12 @@ export function ProjectCard(project: ProjectCardProps) {
 	const thumbnail = `${contentDetailLink("projects", id)}.png`;
 
 	return (
-		<Card href={link} id={identifier} thumbSrc={thumbnail}>
+		<Card
+			href={link}
+			id={identifier}
+			thumbSrc={thumbnail}
+			overrideWidth={width}
+		>
 			<>
 				<PostCardTitle>{title}</PostCardTitle>
 				<PostCardDescription>

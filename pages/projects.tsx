@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Meta, ProjectCard } from "@/src/components";
+import { Meta, PostGrid } from "@/src/components";
 import { ProjectType } from "@/src/types";
 
 interface HomeProps {
@@ -11,11 +11,11 @@ const Projects = ({ projects }: HomeProps) => {
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
 			<Meta page="Projects" />
 			<h1 className="text-6xl">My Projects.</h1>
-			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
-				{projects.map((project) => {
-					return <ProjectCard {...project} key={project.id} />;
-				})}
-			</section>
+			<PostGrid
+				id="projects"
+				contentType="projects"
+				contents={projects}
+			/>
 		</main>
 	);
 };

@@ -5,6 +5,7 @@ import {
 	TechStack,
 	ProjectCard,
 	ListEntry,
+	PostGrid,
 } from "@/src/components";
 import { ProjectType } from "@/src/types";
 
@@ -49,11 +50,16 @@ const Home = ({ projects }: HomeProps) => {
 			</section>
 			<section>
 				<h2 className="text-4xl text-center mb-8">Projects</h2>
-				<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
+				{/* <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
 					{projects.map((project) => {
 						return <ProjectCard key={project.id} {...project} />;
 					})}
-				</div>
+				</div> */}
+				<PostGrid
+					id="featured"
+					contentType="projects"
+					contents={projects}
+				/>
 			</section>
 		</main>
 	);
