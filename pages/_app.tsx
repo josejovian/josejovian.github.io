@@ -63,8 +63,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 		};
 
 	const trackScroll = useCallback(() => {
-		const doc: HTMLElement = document.documentElement;
-		setScroll(doc.scrollTop);
+		const appExt = document.querySelector("#App_ext");
+		if (appExt) setScroll(appExt.scrollTop);
 	}, []);
 
 	const trackWidth = useCallback(() => {
@@ -81,10 +81,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	const getPreferredMode = useCallback(() => {
 		const existing = localStorage.getItem("mode");
-		console.log("Existing: ", existing);
+
 		if (existing) {
 			setMode(JSON.parse(existing));
 		}
+
 		setReadExistingPreference(true);
 	}, [setMode]);
 
@@ -112,30 +113,43 @@ function MyApp({ Component, pageProps }: AppProps) {
 		}, 100);
 	}, [loading]);
 
-	useEffect(() => {
-		setInit(true);
-		window.removeEventListener("scroll", trackScroll);
-		window.addEventListener("scroll", trackScroll, { passive: true });
+	const handleEnableListeners = useCallback(() => {
+		const appExt = document.querySelector("#App_ext");
+
+		if (!appExt) return;
+
+		appExt.removeEventListener("scroll", trackScroll);
+		appExt.addEventListener("scroll", trackScroll);
+
 		window.removeEventListener("resize", trackWidth);
 		window.addEventListener("resize", trackWidth);
+
 		router.events.on("routeChangeStart", startLoading);
 		router.events.on("routeChangeComplete", stopLoading);
-		getPreferredMode();
+	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
 
+	const handleDisableListeners = useCallback(() => {
+		const appExt = document.querySelector("#App_ext");
+
+		if (appExt) {
+			appExt.removeEventListener("scroll", trackScroll);
+		}
+		window.removeEventListener("resize", trackWidth);
+
+		router.events.off("routeChangeStart", startLoading);
+		router.events.off("routeChangeComplete", stopLoading);
+	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
+
+	useEffect(() => {
+		setInit(true);
+		getPreferredMode();
+		setTimeout(() => {
+			handleEnableListeners();
+		}, 200);
 		return () => {
-			window.removeEventListener("scroll", trackScroll);
-			window.removeEventListener("resize", trackWidth);
-			router.events.off("routeChangeStart", startLoading);
-			router.events.off("routeChangeComplete", stopLoading);
+			handleDisableListeners();
 		};
-	}, [
-		router.events,
-		getPreferredMode,
-		startLoading,
-		stopLoading,
-		trackScroll,
-		trackWidth,
-	]);
+	}, [getPreferredMode, handleDisableListeners, handleEnableListeners]);
 
 	return (
 		<LoadingContext.Provider value={loadingContextValue}>
@@ -143,21 +157,48 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<ScrollContext.Provider value={scrollContextValue}>
 					<ModeContext.Provider value={mode}>
 						<ModalContext.Provider value={modalContextValue}>
-							<div className={clsx(mode ? "dark" : "")}>
+							<div
+								className={clsx(
+									"App_ext2",
+									"overflow-hidden relative flex flex-col",
+									mode ? "dark" : ""
+								)}
+								style={{ flex: "1 1 auto" }}
+							>
+								{/** @todo This is very scuffed. */}
+								{/* <div
+									className={clsx(
+										"fixed w-screen h-screen",
+										"top-0 left-0",
+										"dark:bg-slate-900 bg-gray-100"
+									)}
+								></div> */}
 								{init ? (
 									<>
-										<PictureViewer />
 										<Nav
 											scroll={scroll}
 											loading={loading}
 											stateMode={stateMode}
 											setPreferredMode={setPreferredMode}
 										/>
-										<div className="App relative top-16 p-adaptive col-secondary">
-											<Component {...pageProps} />
-											<div className="relative col-text text-center p-8">
-												© {new Date().getFullYear()}{" "}
-												Jose Jovian
+										<PictureViewer />
+										<div
+											id="App_ext"
+											className={clsx(
+												"App_ext h-exc-nav w-screen",
+												"col-secondary overflow-y-scroll"
+											)}
+											// onScroll={() => trackScroll()}
+										>
+											<div
+												id="App"
+												className="App relative w-adaptive"
+											>
+												<Component {...pageProps} />
+												<div className="relative col-text text-center p-8">
+													© {new Date().getFullYear()}{" "}
+													Jose Jovian
+												</div>
 											</div>
 										</div>
 									</>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { GreatSectionType } from "@/src/types";
 import { lineify } from "@/src/utils";
+import { NAV_HEIGHT } from "@/src/constants";
 
 export interface useTableProps {
 	width: number;
@@ -43,6 +44,9 @@ export function useTable({ width, scroll }: useTableProps) {
 		const heads: NodeListOf<HTMLHeadElement> =
 			document.querySelectorAll("h2, h3");
 
+		const appExt = document.querySelector("#App_ext");
+		if (!appExt) return;
+
 		let idx1 = -1;
 		let idx2 = -1;
 		heads.forEach((head, idx) => {
@@ -51,7 +55,8 @@ export function useTable({ width, scroll }: useTableProps) {
 
 			const position =
 				head.getBoundingClientRect().top -
-				document.body.getBoundingClientRect().top;
+				appExt.getBoundingClientRect().top -
+				NAV_HEIGHT;
 
 			if (head.tagName === "H2") {
 				idx2 = -1;

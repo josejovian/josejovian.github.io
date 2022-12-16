@@ -48,7 +48,7 @@ export function Nav({
 			id="Nav"
 			className={clsx(
 				"w-screen h-16",
-				"fixed flex flex-col top-0",
+				"flex flex-col",
 				"secondary border-b col-text",
 				"z-50 overflow-hidden transition-shadow",
 				scroll > 0 && "shadow-lg"

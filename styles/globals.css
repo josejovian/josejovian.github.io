@@ -273,9 +273,21 @@
 		width: calc(100% + 64px);
 	}
 
+	.App {
+		@apply mx-auto;
+	}
+
+	.h-exc-nav {
+		height: calc(100vh - 64px) !important;
+	}
+
 	@media only screen and (min-width: 1721px) {
 		.PostGrid > div {
 			@apply grid-cols-3;
+		}
+
+		.App {
+			width: 1024px;
 		}
 	}
 
@@ -283,15 +295,15 @@
 		.PostGrid > div {
 			@apply grid-cols-2;
 		}
+		.App {
+			width: 960px;
+		}
 	}
 
 	@media only screen and (max-width: 1023px) {
 		.PostGrid > div {
 			@apply grid-cols-1;
 		}
-	}
-
-	@media only screen and (max-width: 1024px) {
 		.List_entry {
 			width: 100%;
 		}
@@ -303,6 +315,15 @@
 		}
 		.List_line-cleaner {
 			@apply left-3.5;
+		}
+		.App {
+			width: 640px;
+		}
+	}
+
+	@media only screen and (max-width: 704px) {
+		.App {
+			width: calc(100% - 64px);
 		}
 	}
 
@@ -380,11 +401,4 @@
 @font-face {
 	font-family: Rubik;
 	src: url("../public/fonts/HankenGrotesk.ttf");
-}
-
-@media (prefers-color-scheme: dark) {
-	html,
-	body {
-		background: #1e293b;
-	}
 }

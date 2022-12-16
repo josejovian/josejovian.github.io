@@ -34,7 +34,9 @@ export function PostContentTable({ scroll, table }: SideProps) {
 		let newDestination = "Error";
 
 		// https://stackoverflow.com/questions/3898130/check-if-a-user-has-scrolled-to-the-bottom-not-just-the-window-but-any-element#comment92747215_34550171
-		const element = document.documentElement;
+		const element = document.querySelector("#App_ext");
+		if (!element) return;
+
 		const unscrolledHeight = Math.abs(
 			element.scrollHeight - element.scrollTop - element.clientHeight
 		);
