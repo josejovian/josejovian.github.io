@@ -11,7 +11,7 @@ import Link from "next/link";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
 import { WidthContext } from "@/src/contexts";
-import { useMetrics } from "@/src/hooks";
+import { useWidth } from "@/src/hooks";
 
 export interface CardProps {
 	id: string;
@@ -30,7 +30,7 @@ export function Card({
 	thumbTitle,
 	overrideWidth,
 }: CardProps) {
-	const { width } = useMetrics();
+	const width = useWidth();
 	const [cardThumbnailWidth, setCardThumbnailWidth] = useState(0);
 
 	const renderCardThumbnail = useMemo(
@@ -87,9 +87,13 @@ export function Card({
 		handleAdjustCardThumbnail();
 	}, [overrideWidth, width, handleAdjustCardThumbnail]);
 
-	return href ? (
-		<Link href={href}>{renderCardWrapper}</Link>
-	) : (
-		<>{renderCardWrapper}</>
+	return (
+		<div style={{ maxWidth: overrideWidth }}>
+			{href ? (
+				<Link href={href}>{renderCardWrapper}</Link>
+			) : (
+				<>{renderCardWrapper}</>
+			)}
+		</div>
 	);
 }

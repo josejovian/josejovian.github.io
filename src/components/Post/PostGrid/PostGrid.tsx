@@ -7,7 +7,7 @@ import {
 	ProjectType,
 } from "@/src/types";
 import { BlogCard, ProjectCard } from "@/src/components";
-import { useMetrics } from "@/src/hooks";
+import { useWidth } from "@/src/hooks";
 import {
 	GRID_THREE_COLUMNS_BREAKPOINT,
 	GRID_TWO_COLUMNS_BREAKPOINT,
@@ -25,7 +25,7 @@ export function PostGrid({ id, contentType, contents }: PostGridProps) {
 		[contents.length]
 	);
 
-	const { width } = useMetrics();
+	const width = useWidth();
 	const [cardWidth, setCardWidth] = useState<number | undefined>();
 
 	const handleCalculateCardWidth = useCallback(() => {
@@ -33,13 +33,14 @@ export function PostGrid({ id, contentType, contents }: PostGridProps) {
 		let newWidth: number | undefined;
 		if (width > 0 && postGrid) {
 			if (width >= GRID_THREE_COLUMNS_BREAKPOINT) {
-				newWidth = (postGrid.clientWidth - 2 * 32) / 3;
+				newWidth = Math.floor((postGrid.clientWidth - 2 * 32) / 3);
 			} else if (width >= GRID_TWO_COLUMNS_BREAKPOINT) {
-				newWidth = (postGrid.clientWidth - 32) / 2;
+				newWidth = Math.floor((postGrid.clientWidth - 32) / 2);
 			} else {
 				newWidth = undefined;
 			}
 		}
+
 		setCardWidth(newWidth);
 	}, [id, width]);
 
@@ -57,7 +58,7 @@ export function PostGrid({ id, contentType, contents }: PostGridProps) {
 								<BlogCard
 									{...(content as BlogType)}
 									key={content.id}
-									// width={cardWidth}
+									width={cardWidth}
 								/>
 							);
 						case "projects":
@@ -65,16 +66,12 @@ export function PostGrid({ id, contentType, contents }: PostGridProps) {
 								<ProjectCard
 									{...(content as ProjectType)}
 									key={content.id}
-									// width={cardWidth}
+									width={cardWidth}
 								/>
 							);
 					}
-				})();
-				return (
-					<div key={content.id} style={{ maxWidth: cardWidth }}>
-						{element}
-					</div>
-				);
+				})(); //
+				return <div key={content.id}>{element}</div>;
 			}),
 		[cardWidth, contentType]
 	);

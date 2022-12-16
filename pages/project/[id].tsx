@@ -1,16 +1,14 @@
-import clsx from "clsx";
-import { useContext, useEffect, useMemo, useState, useCallback } from "react";
+import { useMemo } from "react";
 import { bundleMDX } from "mdx-bundler";
 import { getMDXComponent } from "mdx-bundler/client";
 import {
 	Meta,
 	PostContentBody,
-	PostContentDetail,
 	PostContentHeader,
 	PostContentThumbnail,
 	PostContentWrapper,
 } from "@/src/components";
-import { useMetrics, useTable } from "@/src/hooks";
+import { useScroll, useTable, useWidth } from "@/src/hooks";
 
 interface PageProps {
 	code: any;
@@ -20,7 +18,8 @@ interface PageProps {
 const Projects = ({ code, frontmatter }: PageProps) => {
 	const { id, title, techs, overview, repo, demo } = frontmatter;
 	const Component = useMemo(() => getMDXComponent(code), [code]);
-	const { width, scroll } = useMetrics();
+	const width = useWidth();
+	const scroll = useScroll();
 	const { table, thumbnailWidth, bodyPictureWidth } = useTable({ width });
 
 	return (
