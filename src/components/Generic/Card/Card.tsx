@@ -62,7 +62,7 @@ export function Card({
 				id={id}
 				className={clsx(
 					"relative",
-					"flex flex-col w-fit secondary border",
+					"flex flex-col w-full secondary border",
 					"rounded-sm overflow-hidden"
 				)}
 				whileTap={{ scale: 1.1 }}

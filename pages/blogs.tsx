@@ -11,11 +11,6 @@ const Blogs = ({ blogs }: BlogsProps) => {
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
 			<Meta page="Blog" />
 			<h1 className="text-6xl">Random Posts.</h1>
-			{/* <section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
-				{blogs.map((blog) => {
-					return <BlogCard key={blog.id} {...blog} />;
-				})}
-			</section> */}
 			<PostGrid id="blogs" contentType="blogs" contents={blogs} />
 		</main>
 	);

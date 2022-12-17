@@ -20,28 +20,32 @@ interface PostGridProps {
 }
 
 export function PostGrid({ id, contentType, contents }: PostGridProps) {
-	const remainder = useMemo(
-		() => (contents.length > 0 ? contents.length % 3 : 0),
-		[contents.length]
-	);
-
 	const width = useWidth();
 	const [cardWidth, setCardWidth] = useState<number | undefined>();
+	const [columns, setColumns] = useState<number>(3);
+	const remainder = useMemo(
+		() => (contents.length > 0 ? contents.length % columns : 0),
+		[columns, contents.length]
+	);
 
 	const handleCalculateCardWidth = useCallback(() => {
 		const postGrid = document.getElementById(id);
 		let newWidth: number | undefined;
+		let newColumns: number = 1;
 		if (width > 0 && postGrid) {
 			if (width >= GRID_THREE_COLUMNS_BREAKPOINT) {
 				newWidth = Math.floor((postGrid.clientWidth - 2 * 32) / 3);
+				newColumns = 3;
 			} else if (width >= GRID_TWO_COLUMNS_BREAKPOINT) {
 				newWidth = Math.floor((postGrid.clientWidth - 32) / 2);
+				newColumns = 2;
 			} else {
 				newWidth = undefined;
 			}
 		}
 
 		setCardWidth(newWidth);
+		setColumns(newColumns);
 	}, [id, width]);
 
 	useEffect(() => {
