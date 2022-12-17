@@ -16,7 +16,7 @@ import clsx from "clsx";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
 function createRipple(event: any) {
-	const button = event.currentTarget,
+	const button = event.currentTarget as HTMLElement,
 		circle = document.createElement("span"),
 		diameter = Math.max(button.clientWidth, button.clientHeight),
 		radius = diameter / 2,
@@ -35,6 +35,9 @@ function createRipple(event: any) {
 	}
 
 	button.appendChild(circle);
+	setTimeout(() => {
+		circle.remove();
+	}, 1000);
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -79,7 +82,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		setLoading(false);
 	}, []);
 
-	const getPreferredMode = useCallback(() => {
+	const handleGetPreferredMode = useCallback(() => {
 		const existing = localStorage.getItem("mode");
 
 		if (existing) {
@@ -89,29 +92,26 @@ function MyApp({ Component, pageProps }: AppProps) {
 		setReadExistingPreference(true);
 	}, [setMode]);
 
-	const setPreferredMode = useCallback(() => {
+	const handleSetPreferredMode = useCallback(() => {
 		localStorage.setItem("mode", JSON.stringify(mode));
 	}, [mode]);
 
 	useEffect(() => {
-		if (readExistingPreference) setPreferredMode();
-	}, [mode, setPreferredMode, readExistingPreference]);
+		if (readExistingPreference) handleSetPreferredMode();
+	}, [mode, handleSetPreferredMode, readExistingPreference]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			const buttons: HTMLCollectionOf<any> =
-				document.getElementsByClassName("Pulsable");
+		const buttons = document.querySelectorAll(".Nav_link");
 
-			for (let i = 0; i < buttons.length; i++) {
-				const button: any = buttons.item(i);
+		for (let i = 0; i < buttons.length; i++) {
+			const button: any = buttons.item(i);
 
-				if (button) {
-					button.removeEventListener("click", createRipple);
-					button.addEventListener("click", createRipple);
-				}
+			if (button) {
+				button.removeEventListener("click", createRipple);
+				button.addEventListener("click", createRipple);
 			}
-		}, 100);
-	}, [loading]);
+		}
+	}, [width, init, loading]);
 
 	const handleEnableListeners = useCallback(() => {
 		const appExt = document.querySelector("#App_ext");
@@ -142,14 +142,18 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	useEffect(() => {
 		setInit(true);
-		getPreferredMode();
+		handleGetPreferredMode();
 		setTimeout(() => {
 			handleEnableListeners();
 		}, 200);
 		return () => {
 			handleDisableListeners();
 		};
-	}, [getPreferredMode, handleDisableListeners, handleEnableListeners]);
+	}, [handleGetPreferredMode, handleDisableListeners, handleEnableListeners]);
+
+	useEffect(() => {
+		setWidth(document.documentElement.offsetWidth);
+	}, []);
 
 	return (
 		<LoadingContext.Provider value={loadingContextValue}>
@@ -165,21 +169,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 								)}
 								style={{ flex: "1 1 auto" }}
 							>
-								{/** @todo This is very scuffed. */}
-								{/* <div
-									className={clsx(
-										"fixed w-screen h-screen",
-										"top-0 left-0",
-										"dark:bg-slate-900 bg-gray-100"
-									)}
-								></div> */}
 								{init ? (
 									<>
 										<Nav
+											width={width}
 											scroll={scroll}
 											loading={loading}
 											stateMode={stateMode}
-											setPreferredMode={setPreferredMode}
 										/>
 										<PictureViewer />
 										<div

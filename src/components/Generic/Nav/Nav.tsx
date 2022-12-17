@@ -1,9 +1,9 @@
 import Link from "next/link";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { NextRouter, useRouter } from "next/router";
 import NavImage from "./NavImage.svg";
-import { BsFillMoonFill, BsFillSunFill } from "react-icons/bs";
+import { BsFillMoonFill, BsFillSunFill, BsList } from "react-icons/bs";
 import { StateModeType } from "@/src/types/Mode";
 
 interface LinkType {
@@ -17,7 +17,7 @@ const links: LinkType[] = [
 		link: "/",
 	},
 	{
-		name: "blogs",
+		name: "blog",
 		link: "/blogs",
 	},
 	{
@@ -27,21 +27,32 @@ const links: LinkType[] = [
 ];
 
 export interface NavProps {
+	width: number;
 	scroll: number;
 	loading: boolean;
 	stateMode: StateModeType;
-	setPreferredMode: (mode: boolean) => void;
+	setPreferredMode?: (mode: boolean) => void;
 }
 
-export function Nav({
-	scroll,
-	loading,
-	stateMode,
-	setPreferredMode,
-}: NavProps) {
+export function Nav({ width, scroll, loading, stateMode }: NavProps) {
+	const [mobileHidden, setMobileHidden] = useState(false);
 	const [mode, setMode] = stateMode;
 
 	const router: NextRouter = useRouter();
+
+	useEffect(() => {
+		if (!loading) setMobileHidden(false);
+	}, [loading, width]);
+
+	const navMainLinksResponsiveStyle = useMemo(
+		() => clsx("hidden sm:flex", mobileHidden && "!flex"),
+		[mobileHidden]
+	);
+
+	const navLogoResponsiveStyle = useMemo(
+		() => clsx("flex", mobileHidden && "!hidden"),
+		[mobileHidden]
+	);
 
 	return (
 		<nav
@@ -63,10 +74,15 @@ export function Nav({
 			<div
 				className={clsx(
 					"flex flex-row items-between justify-between",
-					"w-full p-adaptive"
+					"w-adaptive m-auto"
 				)}
 			>
-				<div className="flex items-center justify-center">
+				<div
+					className={clsx(
+						"flex items-center justify-center",
+						navLogoResponsiveStyle
+					)}
+				>
 					<Link href="/">
 						<div className={clsx("NavImage", "bg-blue-400")}>
 							<svg width="108" height="28">
@@ -99,8 +115,9 @@ export function Nav({
 						return (
 							<li
 								className={clsx(
-									"Nav_link Pulsable",
-									"relative flex flex-col items-center"
+									"Nav_link",
+									"relative flex flex-col items-center",
+									navMainLinksResponsiveStyle
 								)}
 								key={`Nav_${link.name}`}
 							>
@@ -130,18 +147,32 @@ export function Nav({
 					})}
 					<li
 						className={clsx(
-							"Nav_link Pulsable",
-							"relative flex flex-col items-center"
+							"Nav_link",
+							"relative flex flex-col items-center",
+							navMainLinksResponsiveStyle
 						)}
 					>
 						<button
-							className={clsx("p-4 z-50")}
+							className={clsx("py-4 z-50 px-4 sm:px-8")}
 							onClick={() => setMode((prev) => !prev)}
 						>
 							{mode ? <BsFillSunFill /> : <BsFillMoonFill />}
 						</button>
 					</li>
 				</ul>
+				<div
+					className={clsx(
+						"Nav_link relative flex sm:hidden",
+						"flex-col items-center my-auto"
+					)}
+				>
+					<button
+						className={clsx("py-4 z-50 flex px-6 sm:px-8")}
+						onClick={() => setMobileHidden((prev) => !prev)}
+					>
+						<BsList />
+					</button>
+				</div>
 			</div>
 		</nav>
 	);

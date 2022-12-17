@@ -74,6 +74,7 @@
 @tailwind base;
 @layer components {
 	.App {
+		@apply mx-auto w-adaptive;
 		min-height: calc(100vh - 64px) !important;
 	}
 	.List_line {
@@ -161,6 +162,11 @@
 
 	.NavImage {
 		clip-path: url(#Nav_logo-clip);
+	}
+	.Nav_link {
+		@apply sm:Pulsable;
+	}
+	.Pulsable {
 	}
 
 	@-webkit-keyframes Nav_pulse-anim {
@@ -273,10 +279,6 @@
 		width: calc(100% + 64px);
 	}
 
-	.App {
-		@apply mx-auto;
-	}
-
 	.h-exc-nav {
 		height: calc(100vh - 64px) !important;
 	}
@@ -286,7 +288,7 @@
 			@apply grid-cols-3;
 		}
 
-		.App {
+		.w-adaptive {
 			width: 1024px;
 		}
 	}
@@ -295,7 +297,7 @@
 		.PostGrid > div {
 			@apply grid-cols-2;
 		}
-		.App {
+		.w-adaptive {
 			width: 960px;
 		}
 	}
@@ -316,13 +318,13 @@
 		.List_line-cleaner {
 			@apply left-3.5;
 		}
-		.App {
+		.w-adaptive {
 			width: 640px;
 		}
 	}
 
 	@media only screen and (max-width: 704px) {
-		.App {
+		.w-adaptive {
 			width: calc(100% - 64px);
 		}
 	}
