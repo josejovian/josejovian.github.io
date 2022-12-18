@@ -10,10 +10,10 @@ export const CONTENT_DETAIL_PATH: Record<ContentType, string> = {
 	projects: "/project/",
 };
 
-export function contentListLink(cat: ContentType, id: string) {
+export const contentListLink = (cat: ContentType, id: string) => {
 	return `${CONTENT_LIST_PATH[cat]}${id}`;
-}
+};
 
-export function contentDetailLink(cat: ContentType, id: string) {
+export const contentDetailLink = (cat: ContentType, id: string) => {
 	return `${CONTENT_DETAIL_PATH[cat]}${id}`;
-}
+};
