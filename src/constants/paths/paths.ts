@@ -1,4 +1,4 @@
-import { ContentType } from "../types";
+import { ContentType } from "../../types";
 
 export const CONTENT_LIST_PATH: Record<ContentType, string> = {
 	blogs: "/blogs/",
