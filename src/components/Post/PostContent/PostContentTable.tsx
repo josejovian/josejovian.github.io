@@ -45,6 +45,8 @@ export function PostContentTable({ scroll, table }: SideProps) {
 		for (let i = 0; i < flattenTable.length; i++) {
 			const section = flattenTable[i];
 
+			if (!section) continue;
+
 			if (
 				scroll + 8 >= section.position ||
 				(i + 1 === flattenTable.length && isAtBottom)
