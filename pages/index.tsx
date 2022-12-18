@@ -31,7 +31,13 @@ interface HomeProps {
 const Home = ({ projects }: HomeProps) => {
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
-			<Meta title="Jose Jovian" />
+			<Meta
+				title="Jose Jovian"
+				description={clsx(
+					"My personal portfolio website,",
+					"where I post my projects and other random things."
+				)}
+			/>
 			<section className="flex flex-col gap-4">
 				<h1 className="text-6xl">Hey! Jose here.</h1>
 				<p>

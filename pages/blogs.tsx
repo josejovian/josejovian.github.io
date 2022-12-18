@@ -9,7 +9,12 @@ interface BlogsProps {
 const Blogs = ({ blogs }: BlogsProps) => {
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
-			<Meta page="Blog" />
+			<Meta
+				title="Blog"
+				description={clsx(
+					"A page listing some blog posts I write at a random time and about random things."
+				)}
+			/>
 			<h1 className="text-6xl">Random Posts.</h1>
 			<PostGrid id="blogs" contentType="blogs" contents={blogs} />
 		</main>

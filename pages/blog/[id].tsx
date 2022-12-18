@@ -9,14 +9,15 @@ import {
 	PostContentWrapper,
 } from "@/src/components";
 import { useScroll, useTable, useWidth } from "@/src/hooks";
+import { BlogType } from "@/src/types";
 
 interface PageProps {
 	code: any;
-	frontmatter: any;
+	frontmatter: BlogType;
 }
 
 const Blogs = ({ code, frontmatter }: PageProps) => {
-	const { id, title, techs, overview, repo, demo } = frontmatter;
+	const { id, title, overview, autoOverview } = frontmatter;
 	const Component = useMemo(() => getMDXComponent(code), [code]);
 	const width = useWidth();
 	const scroll = useScroll();
@@ -24,7 +25,7 @@ const Blogs = ({ code, frontmatter }: PageProps) => {
 
 	return (
 		<>
-			<Meta page={title} />
+			<Meta page={title} description={overview ?? autoOverview} />
 			<PostContentWrapper>
 				<PostContentHeader
 					contentDetail={frontmatter}
