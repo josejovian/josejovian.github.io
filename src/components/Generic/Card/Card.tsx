@@ -1,16 +1,8 @@
 import clsx from "clsx";
-import {
-	ReactNode,
-	useCallback,
-	useContext,
-	useEffect,
-	useMemo,
-	useState,
-} from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/legacy/image";
 import { motion } from "framer-motion";
-import { WidthContext } from "@/src/contexts";
 import { useWidth } from "@/src/hooks";
 
 export interface CardProps {

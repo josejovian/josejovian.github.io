@@ -5,6 +5,7 @@ import { IconText } from "./IconText";
 export interface TagProps {
 	children: React.ReactNode;
 	className?: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	style?: any;
 }
 

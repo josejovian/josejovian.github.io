@@ -1,7 +1,5 @@
-import clsx from "clsx";
 import {
 	Card,
-	getTech,
 	PostCardDescription,
 	PostCardTitle,
 	PostDetailAuthor,

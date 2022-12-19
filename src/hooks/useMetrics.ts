@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState, useCallback } from "react";
+import { useContext } from "react";
 import { ScrollContext, WidthContext } from "@/src/contexts";
 
 export function useWidth() {

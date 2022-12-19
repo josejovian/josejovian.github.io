@@ -18,6 +18,10 @@ interface PageProps {
 
 const Blogs = ({ code, frontmatter }: PageProps) => {
 	const { id, title, overview, autoOverview } = frontmatter;
+	const finalOverview = useMemo(
+		() => overview ?? autoOverview,
+		[autoOverview, overview]
+	);
 	const Component = useMemo(() => getMDXComponent(code), [code]);
 	const width = useWidth();
 	const scroll = useScroll();
@@ -25,7 +29,7 @@ const Blogs = ({ code, frontmatter }: PageProps) => {
 
 	return (
 		<>
-			<Meta page={title} description={overview ?? autoOverview} />
+			<Meta page={title} description={finalOverview} />
 			<PostContentWrapper>
 				<PostContentHeader
 					contentDetail={frontmatter}

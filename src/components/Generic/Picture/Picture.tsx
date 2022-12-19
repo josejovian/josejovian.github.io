@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useContext } from "react";
 import Image from "next/legacy/image";
-import { ModalContext, ModalContextProps } from "@/src/contexts";
+import { ModalContext } from "@/src/contexts";
 
 export interface PictureProps {
 	src: string;
@@ -22,7 +22,7 @@ export function Picture({
 	alt,
 	zoomable = true,
 }: PictureProps) {
-	const { modal, setModal } = useContext<ModalContextProps>(ModalContext);
+	const { setModal } = useContext(ModalContext);
 
 	return (
 		<Image

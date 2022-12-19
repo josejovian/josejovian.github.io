@@ -5,10 +5,6 @@ import { BsBriefcaseFill } from "react-icons/bs";
 import { Picture } from "@/src/components";
 import { ListEntryCategoryType, ListEntryType } from "@/src/types";
 
-function alternate(idx: number, a: any, b: any) {
-	return idx % 2 === 1 ? a : b;
-}
-
 export interface ListEntryProps extends ListEntryType {
 	idx: number;
 	maxIdx: number;
@@ -25,6 +21,10 @@ function getEntryIcon(input: ListEntryCategoryType) {
 		default:
 			return <></>;
 	}
+}
+
+function alternate(idx: number, a: string | string[], b: string | string[]) {
+	return idx % 2 === 1 ? a : b;
 }
 
 export function ListEntry({

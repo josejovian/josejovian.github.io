@@ -10,7 +10,8 @@ export interface ListEntryAttachmentType {
 export interface ListEntryType {
 	name: string;
 	addon: string;
-	description: any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	description: JSX.Element;
 	type?: ListEntryCategoryType;
 	attachments?: ListEntryAttachmentType[];
 }
