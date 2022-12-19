@@ -9,21 +9,11 @@ export interface PostType {
 	id: string;
 	title: string;
 	date: string;
+	labels?: string[];
 	featured?: boolean;
 	hidden?: boolean;
 	overview?: string;
 	autoOverview?: string;
-}
-
-export interface SectionType {
-	name: string;
-	link: string;
-	position?: number;
-	tier?: number;
-}
-
-export interface GreatSectionType extends SectionType {
-	subsections: SectionType[];
 }
 
 export interface ProjectType extends PostType {
@@ -35,3 +25,14 @@ export interface ProjectType extends PostType {
 export interface BlogType extends PostType {}
 
 export type PostDescendantType = ProjectType | BlogType;
+
+export interface SectionType {
+	name: string;
+	link: string;
+	position: number;
+	tier?: number;
+}
+
+export interface GreatSectionType extends SectionType {
+	subsections: SectionType[];
+}
