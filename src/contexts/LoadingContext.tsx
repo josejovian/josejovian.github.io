@@ -1,5 +1,5 @@
-import React, { SetStateAction } from "react";
 import { createContext } from "react";
+import { SetStateType } from "../types";
 
 const defaultContextValue: LoadingContextProps = {
 	loading: false,
@@ -9,7 +9,7 @@ const defaultContextValue: LoadingContextProps = {
 
 export interface LoadingContextProps {
 	loading: boolean;
-	setLoading?: React.Dispatch<SetStateAction<boolean>>;
+	setLoading?: SetStateType<boolean>;
 }
 
 export const LoadingContext = createContext(defaultContextValue);

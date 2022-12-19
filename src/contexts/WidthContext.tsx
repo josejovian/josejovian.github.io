@@ -1,5 +1,5 @@
-import React, { SetStateAction } from "react";
 import { createContext } from "react";
+import { SetStateType } from "../types";
 
 const defaultContextValue: WidthContextProps = {
 	width: 0,
@@ -9,7 +9,7 @@ const defaultContextValue: WidthContextProps = {
 
 export interface WidthContextProps {
 	width: number;
-	setWidth?: React.Dispatch<SetStateAction<number>>;
+	setWidth?: SetStateType<number>;
 }
 
 export const WidthContext = createContext(defaultContextValue);

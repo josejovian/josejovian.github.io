@@ -1,5 +1,5 @@
-import React, { SetStateAction } from "react";
 import { createContext } from "react";
+import { SetStateType } from "../types";
 
 const defaultContextValue: ScrollContextProps = {
 	scroll: 0,
@@ -9,7 +9,7 @@ const defaultContextValue: ScrollContextProps = {
 
 export interface ScrollContextProps {
 	scroll: number;
-	setScroll?: React.Dispatch<SetStateAction<number>>;
+	setScroll?: SetStateType<number>;
 }
 
 export const ScrollContext = createContext(defaultContextValue);

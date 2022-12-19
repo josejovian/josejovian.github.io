@@ -1,4 +1,5 @@
-import React, { createContext, SetStateAction } from "react";
+import { createContext } from "react";
+import { SetStateType } from "../types";
 
 export interface ModalType {
 	src: string;
@@ -9,7 +10,7 @@ export interface ModalType {
 
 export interface ModalContextProps {
 	modal: ModalType;
-	setModal: React.Dispatch<SetStateAction<ModalType>>;
+	setModal: SetStateType<ModalType>;
 }
 
 export const defaultModal: ModalType = {
