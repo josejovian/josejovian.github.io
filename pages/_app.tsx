@@ -15,8 +15,8 @@ import {
 import clsx from "clsx";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
-function createRipple(event: any) {
-	const button = event.currentTarget,
+function createRipple(event: MouseEvent) {
+	const button = event.currentTarget as HTMLElement,
 		circle = document.createElement("span"),
 		diameter = Math.max(button.clientWidth, button.clientHeight),
 		radius = diameter / 2,
@@ -35,6 +35,9 @@ function createRipple(event: any) {
 	}
 
 	button.appendChild(circle);
+	setTimeout(() => {
+		circle.remove();
+	}, 1000);
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -63,8 +66,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 		};
 
 	const trackScroll = useCallback(() => {
-		const doc: HTMLElement = document.documentElement;
-		setScroll(doc.scrollTop);
+		const appExt = document.querySelector("#App_ext");
+		if (appExt) setScroll(appExt.scrollTop);
 	}, []);
 
 	const trackWidth = useCallback(() => {
@@ -79,63 +82,78 @@ function MyApp({ Component, pageProps }: AppProps) {
 		setLoading(false);
 	}, []);
 
-	const getPreferredMode = useCallback(() => {
+	const handleGetPreferredMode = useCallback(() => {
 		const existing = localStorage.getItem("mode");
-		console.log("Existing: ", existing);
+
 		if (existing) {
 			setMode(JSON.parse(existing));
 		}
+
 		setReadExistingPreference(true);
 	}, [setMode]);
 
-	const setPreferredMode = useCallback(() => {
+	const handleSetPreferredMode = useCallback(() => {
 		localStorage.setItem("mode", JSON.stringify(mode));
 	}, [mode]);
 
 	useEffect(() => {
-		if (readExistingPreference) setPreferredMode();
-	}, [mode, setPreferredMode, readExistingPreference]);
+		if (readExistingPreference) handleSetPreferredMode();
+	}, [mode, handleSetPreferredMode, readExistingPreference]);
 
 	useEffect(() => {
-		setTimeout(() => {
-			const buttons: HTMLCollectionOf<any> =
-				document.getElementsByClassName("Pulsable");
+		const buttons = document.querySelectorAll(".Nav_link");
 
-			for (let i = 0; i < buttons.length; i++) {
-				const button: any = buttons.item(i);
+		for (let i = 0; i < buttons.length; i++) {
+			const button = buttons.item(i) as HTMLLIElement;
 
-				if (button) {
-					button.removeEventListener("click", createRipple);
-					button.addEventListener("click", createRipple);
-				}
+			if (button) {
+				button.removeEventListener("click", createRipple);
+				button.addEventListener("click", createRipple);
 			}
-		}, 100);
-	}, [loading]);
+		}
+	}, [width, init, loading]);
+
+	const handleEnableListeners = useCallback(() => {
+		const appExt = document.querySelector("#App_ext");
+
+		if (!appExt) return;
+
+		appExt.removeEventListener("scroll", trackScroll);
+		appExt.addEventListener("scroll", trackScroll);
+
+		window.removeEventListener("resize", trackWidth);
+		window.addEventListener("resize", trackWidth);
+
+		router.events.on("routeChangeStart", startLoading);
+		router.events.on("routeChangeComplete", stopLoading);
+	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
+
+	const handleDisableListeners = useCallback(() => {
+		const appExt = document.querySelector("#App_ext");
+
+		if (appExt) {
+			appExt.removeEventListener("scroll", trackScroll);
+		}
+		window.removeEventListener("resize", trackWidth);
+
+		router.events.off("routeChangeStart", startLoading);
+		router.events.off("routeChangeComplete", stopLoading);
+	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
 
 	useEffect(() => {
 		setInit(true);
-		window.removeEventListener("scroll", trackScroll);
-		window.addEventListener("scroll", trackScroll, { passive: true });
-		window.removeEventListener("resize", trackWidth);
-		window.addEventListener("resize", trackWidth);
-		router.events.on("routeChangeStart", startLoading);
-		router.events.on("routeChangeComplete", stopLoading);
-		getPreferredMode();
-
+		handleGetPreferredMode();
+		setTimeout(() => {
+			handleEnableListeners();
+		}, 200);
 		return () => {
-			window.removeEventListener("scroll", trackScroll);
-			window.removeEventListener("resize", trackWidth);
-			router.events.off("routeChangeStart", startLoading);
-			router.events.off("routeChangeComplete", stopLoading);
+			handleDisableListeners();
 		};
-	}, [
-		router.events,
-		getPreferredMode,
-		startLoading,
-		stopLoading,
-		trackScroll,
-		trackWidth,
-	]);
+	}, [handleGetPreferredMode, handleDisableListeners, handleEnableListeners]);
+
+	useEffect(() => {
+		setWidth(document.documentElement.offsetWidth);
+	}, []);
 
 	return (
 		<LoadingContext.Provider value={loadingContextValue}>
@@ -143,21 +161,40 @@ function MyApp({ Component, pageProps }: AppProps) {
 				<ScrollContext.Provider value={scrollContextValue}>
 					<ModeContext.Provider value={mode}>
 						<ModalContext.Provider value={modalContextValue}>
-							<div className={clsx(mode ? "dark" : "")}>
+							<div
+								className={clsx(
+									"App_ext2",
+									"overflow-hidden relative flex flex-col",
+									mode ? "dark" : ""
+								)}
+								style={{ flex: "1 1 auto" }}
+							>
 								{init ? (
 									<>
-										<PictureViewer />
 										<Nav
+											width={width}
 											scroll={scroll}
 											loading={loading}
 											stateMode={stateMode}
-											setPreferredMode={setPreferredMode}
 										/>
-										<div className="relative top-16 p-adaptive col-secondary">
-											<Component {...pageProps} />
-											<div className="relative col-text text-center p-8">
-												© {new Date().getFullYear()}{" "}
-												Jose Jovian
+										<PictureViewer />
+										<div
+											id="App_ext"
+											className={clsx(
+												"App_ext h-exc-nav w-screen",
+												"col-secondary overflow-y-scroll"
+											)}
+											// onScroll={() => trackScroll()}
+										>
+											<div
+												id="App"
+												className="App relative w-adaptive"
+											>
+												<Component {...pageProps} />
+												<div className="relative col-text text-center p-8">
+													© {new Date().getFullYear()}{" "}
+													Jose Jovian
+												</div>
 											</div>
 										</div>
 									</>

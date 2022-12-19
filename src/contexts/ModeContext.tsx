@@ -1,3 +1,3 @@
-import React, { createContext, SetStateAction } from "react";
+import { createContext } from "react";
 
 export const ModeContext = createContext(false);

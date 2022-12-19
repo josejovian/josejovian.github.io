@@ -1,33 +1,39 @@
 import clsx from "clsx";
-import { useEffect } from "react";
-import { Meta, ProjectCard } from "@/src/components";
-import { ProjectProps } from "@/src/types";
+import { Meta, PostGrid } from "@/src/components";
+import { ProjectType } from "@/src/types";
 
 interface HomeProps {
-	projects: ProjectProps[];
+	projects: ProjectType[];
 }
 
 const Projects = ({ projects }: HomeProps) => {
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
-			<Meta page="Projects" />
+			<Meta
+				page="Projects"
+				description={clsx(
+					"A page listing some projects I've done either as part of a class",
+					"or simply just personal projects I do for fun."
+				)}
+			/>
 			<h1 className="text-6xl">My Projects.</h1>
-			<section className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
-				{projects.map((project) => {
-					return <ProjectCard key={project.id} {...project} />;
-				})}
-			</section>
+			<PostGrid
+				id="projects"
+				contentType="projects"
+				contents={projects}
+			/>
 		</main>
 	);
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { getProjects } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectProps[] = await getProjects();
+	const projects: ProjectType[] = await getProjects();
 
 	return {
-		props: { projects: projects },
+		props: { projects },
 		revalidate: 300,
 	};
 };

@@ -10,6 +10,7 @@ export interface PictureProps {
 	ogWidth?: number;
 	ogHeight?: number;
 	alt: string;
+	zoomable?: boolean;
 }
 
 export function Picture({
@@ -19,6 +20,7 @@ export function Picture({
 	ogWidth,
 	ogHeight,
 	alt,
+	zoomable = true,
 }: PictureProps) {
 	const { modal, setModal } = useContext<ModalContextProps>(ModalContext);
 
@@ -30,16 +32,17 @@ export function Picture({
 			alt={alt}
 			title={alt}
 			className={clsx(
-				"hover:opacity-60 active:opacity-20",
-				"cursor-pointer transition-opacity"
+				zoomable && "hover:opacity-60 active:opacity-20 cursor-pointer",
+				"transition-opacity"
 			)}
 			onClick={() => {
-				setModal({
-					src: src,
-					width: ogWidth ?? width,
-					height: ogHeight ?? height,
-					alt: alt,
-				});
+				zoomable &&
+					setModal({
+						src: src,
+						width: ogWidth ?? width,
+						height: ogHeight ?? height,
+						alt: alt,
+					});
 			}}
 		/>
 	);

@@ -22,13 +22,13 @@
 		@apply dark:bg-slate-900 bg-white;
 	}
 	.col-secondary {
-		@apply dark:bg-slate-800 bg-slate-100;
+		@apply dark:bg-slate-900 bg-slate-100;
 	}
 	.secondary {
 		@apply dark:bg-gray-700 bg-white col-text border-gray-300 dark:border-zinc-500;
 	}
 	.col-text {
-		@apply dark:text-gray-50 text-slate-800;
+		@apply dark:text-gray-200 text-slate-800;
 	}
 	.p-adaptive {
 		@apply px-8 sm:px-16 md:px-16 lg:px-32 xl:px-64 2xl:px-96;
@@ -64,15 +64,19 @@
 	}
 
 	::-webkit-scrollbar-track {
-		@apply bg-stone-900;
+		@apply bg-stone-200 dark:bg-stone-900;
 	}
 
 	::-webkit-scrollbar-thumb {
-		@apply bg-stone-600;
+		@apply bg-stone-400 dark:bg-stone-600;
 	}
 }
 @tailwind base;
 @layer components {
+	.App {
+		@apply mx-auto w-adaptive;
+		min-height: calc(100vh - 64px) !important;
+	}
 	.List_line {
 		top: 28px;
 		height: calc(100% - 32px);
@@ -122,7 +126,7 @@
 	}
 
 	.text {
-		font-size: 1rem;
+		font-size: 16px;
 		line-height: 1.5rem;
 	}
 
@@ -134,6 +138,14 @@
 	.Nav_arrow {
 		clip-path: polygon(100% 0, 50% 50%, 0 0);
 		z-index: 55;
+	}
+
+	.IconText svg {
+		@apply text-gray-800 dark:text-gray-200;
+	}
+
+	.IconText span {
+		@apply text-gray-600 dark:text-gray-400;
 	}
 
 	/* https://www.gradient-animator.com/ */
@@ -150,6 +162,11 @@
 
 	.NavImage {
 		clip-path: url(#Nav_logo-clip);
+	}
+	.Nav_link {
+		@apply sm:Pulsable;
+	}
+	.Pulsable {
 	}
 
 	@-webkit-keyframes Nav_pulse-anim {
@@ -186,6 +203,10 @@
 		}
 	}
 
+	#ProjectPost_body {
+		font-size: 18px !important;
+	}
+
 	#ProjectPost_body :is(h2, h3) {
 		@apply mt-16 mb-8;
 	}
@@ -209,8 +230,8 @@
 	}
 
 	#ProjectPost_body p {
-		@apply mb-8 col-text;
-		font-size: 17px;
+		@apply mb-8 col-text text-justify;
+		font-size: 18px;
 		line-height: 2.4rem;
 		letter-spacing: 0.1px;
 	}
@@ -238,12 +259,12 @@
 		@apply text-blue-400;
 	}
 
-	.ProjectPost_body-md {
+	/* .ProjectPost_body-md {
 		width: calc(100% - 20rem);
-	}
+	} */
 
-	#ProjectPost_table {
-		width: 18rem;
+	#ProjectPost_table > div {
+		width: 18rem !important;
 	}
 
 	.ProjectPost_table-arrow {
@@ -254,7 +275,37 @@
 		border-bottom: 0.5rem solid transparent;
 	}
 
-	@media only screen and (max-width: 1024px) {
+	.Anchor {
+		width: calc(100% + 64px);
+	}
+
+	.h-exc-nav {
+		height: calc(100vh - 64px) !important;
+	}
+
+	@media only screen and (min-width: 1721px) {
+		.PostGrid > div {
+			@apply grid-cols-3;
+		}
+
+		.w-adaptive {
+			width: 1024px;
+		}
+	}
+
+	@media only screen and (min-width: 1024px) and (max-width: 1720px) {
+		.PostGrid > div {
+			@apply grid-cols-2;
+		}
+		.w-adaptive {
+			width: 960px;
+		}
+	}
+
+	@media only screen and (max-width: 1023px) {
+		.PostGrid > div {
+			@apply grid-cols-1;
+		}
 		.List_entry {
 			width: 100%;
 		}
@@ -266,6 +317,15 @@
 		}
 		.List_line-cleaner {
 			@apply left-3.5;
+		}
+		.w-adaptive {
+			width: 640px;
+		}
+	}
+
+	@media only screen and (max-width: 704px) {
+		.w-adaptive {
+			width: calc(100% - 64px);
 		}
 	}
 
@@ -343,11 +403,4 @@
 @font-face {
 	font-family: Rubik;
 	src: url("../public/fonts/HankenGrotesk.ttf");
-}
-
-@media (prefers-color-scheme: dark) {
-	html,
-	body {
-		background: #1e293b;
-	}
 }

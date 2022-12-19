@@ -1,12 +1,6 @@
 import clsx from "clsx";
-import {
-	List,
-	Meta,
-	TechStack,
-	ProjectCard,
-	ListEntry,
-} from "@/src/components";
-import { ProjectProps } from "@/src/types";
+import { List, Meta, TechStack, PostGrid } from "@/src/components";
+import { ProjectType } from "@/src/types";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];
 
@@ -24,13 +18,19 @@ const techStacks = [
 ];
 
 interface HomeProps {
-	projects: ProjectProps[];
+	projects: ProjectType[];
 }
 
 const Home = ({ projects }: HomeProps) => {
 	return (
 		<main className={clsx("w-full h-full py-16", "flex flex-col gap-16")}>
-			<Meta title="Jose Jovian" />
+			<Meta
+				title="Jose Jovian"
+				description={clsx(
+					"My personal portfolio website,",
+					"where I post my projects and other random things."
+				)}
+			/>
 			<section className="flex flex-col gap-4">
 				<h1 className="text-6xl">Hey! Jose here.</h1>
 				<p>
@@ -49,30 +49,38 @@ const Home = ({ projects }: HomeProps) => {
 			</section>
 			<section>
 				<h2 className="text-4xl text-center mb-8">Projects</h2>
-				<div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
+				{/* <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8 3xl:gap-16">
 					{projects.map((project) => {
 						return <ProjectCard key={project.id} {...project} />;
 					})}
-				</div>
+				</div> */}
+				<PostGrid
+					id="featured"
+					contentType="projects"
+					contents={projects}
+				/>
 			</section>
 		</main>
 	);
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { getProject } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectProps[] = [];
+	const projects: ProjectType[] = [];
 
 	try {
 		for (const id of featuredProjects) {
 			const featured = await getProject(id);
 			projects.push(featured);
 		}
-	} catch (e) {}
+	} catch (e) {
+		//
+	}
 
 	return {
-		props: { projects: projects },
+		props: { projects },
 		revalidate: 300,
 	};
 };

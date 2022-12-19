@@ -51,32 +51,33 @@ export function ListEntry({
 	);
 
 	const renderEntryIcon = useMemo(() => {
-		return type ? (
-			<div
-				className={clsx(
-					"List_entry-back",
-					"absolute top-0 right-4 z-40"
-				)}
-			>
-				{getEntryIcon(type)}
-			</div>
-		) : (
-			<></>
+		return (
+			type && (
+				<div
+					className={clsx(
+						"List_entry-back",
+						"absolute top-0 right-4 z-40"
+					)}
+				>
+					{getEntryIcon(type)}
+				</div>
+			)
 		);
 	}, [type]);
 
 	const renderEntryLineCleaner = useMemo(
-		() => (
-			<div
-				className={clsx(
-					"List_line-cleaner",
-					"absolute",
-					alternate(idx, "lg:right-3.5", "lg:left-3.5"),
-					"w-6 bg-inherit z-30"
-				)}
-			/>
-		),
-		[idx]
+		() =>
+			idx === maxIdx && (
+				<div
+					className={clsx(
+						"List_line-cleaner",
+						"absolute",
+						alternate(idx, "lg:right-3.5", "lg:left-3.5"),
+						"w-6 bg-inherit z-30"
+					)}
+				/>
+			),
+		[idx, maxIdx]
 	);
 
 	const renderEntryDetail = useMemo(
@@ -128,7 +129,7 @@ export function ListEntry({
 		>
 			{renderEntryDot}
 			{renderEntryIcon}
-			{idx === maxIdx && renderEntryLineCleaner}
+			{renderEntryLineCleaner}
 			{renderEntryDetail}
 		</div>
 	);

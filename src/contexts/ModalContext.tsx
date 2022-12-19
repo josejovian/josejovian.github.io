@@ -9,7 +9,7 @@ export interface ModalType {
 
 export interface ModalContextProps {
 	modal: ModalType;
-	setModal: React.Dispatch<SetStateAction<any>>;
+	setModal: React.Dispatch<SetStateAction<ModalType>>;
 }
 
 export const defaultModal: ModalType = {
@@ -21,6 +21,7 @@ export const defaultModal: ModalType = {
 
 const defaultContextValue: ModalContextProps = {
 	modal: defaultModal,
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	setModal: () => {},
 };
 
