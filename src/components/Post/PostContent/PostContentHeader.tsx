@@ -2,6 +2,7 @@ import { ContentComponentGenericProps } from "@/src/types";
 import { PostContentDetail } from "./PostContentDetail";
 import { PostContentTitle } from "./PostContentTitle";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PostContentHeaderProps extends ContentComponentGenericProps {}
 
 export function PostContentHeader({

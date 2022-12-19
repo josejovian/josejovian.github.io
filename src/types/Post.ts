@@ -22,6 +22,7 @@ export interface ProjectType extends PostType {
 	repo?: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface BlogType extends PostType {}
 
 export type PostDescendantType = ProjectType | BlogType;
@@ -35,4 +36,10 @@ export interface SectionType {
 
 export interface GreatSectionType extends SectionType {
 	subsections: SectionType[];
+}
+
+export interface PostDetailRequestProps {
+	params: {
+		id: string;
+	};
 }

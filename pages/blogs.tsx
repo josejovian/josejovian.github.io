@@ -21,13 +21,14 @@ const Blogs = ({ blogs }: BlogsProps) => {
 	);
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { getBlogs } = require("../src/lib/mdx.tsx");
 
-	let blogs: BlogType[] = await getBlogs();
+	const blogs: BlogType[] = await getBlogs();
 
 	return {
-		props: { blogs: blogs },
+		props: { blogs },
 		revalidate: 300,
 	};
 };

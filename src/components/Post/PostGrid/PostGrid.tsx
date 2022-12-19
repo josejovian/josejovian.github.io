@@ -1,5 +1,4 @@
-import clsx from "clsx";
-import { useMemo, useCallback, useState, useEffect, createRef } from "react";
+import { useMemo, useCallback, useState, useEffect } from "react";
 import {
 	BlogType,
 	ContentType,
@@ -31,7 +30,7 @@ export function PostGrid({ id, contentType, contents }: PostGridProps) {
 	const handleCalculateCardWidth = useCallback(() => {
 		const postGrid = document.getElementById(id);
 		let newWidth: number | undefined;
-		let newColumns: number = 1;
+		let newColumns = 1;
 		if (width > 0 && postGrid) {
 			if (width >= GRID_THREE_COLUMNS_BREAKPOINT) {
 				newWidth = Math.floor((postGrid.clientWidth - 2 * 32) / 3);

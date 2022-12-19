@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { ContentComponentGenericProps } from "@/src/types";
 import { PostDetailDate, PostDetailAuthor } from "@/src/components";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PostContentDetailProps extends ContentComponentGenericProps {}
 
 export function PostContentDetail({

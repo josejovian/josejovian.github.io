@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { BlogType, ContentType, ProjectType } from "@/src/types";
 import { toAltDateFormat } from "@/src/utils";
 

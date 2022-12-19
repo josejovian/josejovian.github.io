@@ -1,12 +1,5 @@
 import clsx from "clsx";
-import {
-	List,
-	Meta,
-	TechStack,
-	ProjectCard,
-	ListEntry,
-	PostGrid,
-} from "@/src/components";
+import { List, Meta, TechStack, PostGrid } from "@/src/components";
 import { ProjectType } from "@/src/types";
 
 const featuredProjects = ["bncc-x-tiket-movies", "lade", "trellone"];
@@ -71,20 +64,23 @@ const Home = ({ projects }: HomeProps) => {
 	);
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { getProject } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectType[] = [];
+	const projects: ProjectType[] = [];
 
 	try {
 		for (const id of featuredProjects) {
 			const featured = await getProject(id);
 			projects.push(featured);
 		}
-	} catch (e) {}
+	} catch (e) {
+		//
+	}
 
 	return {
-		props: { projects: projects },
+		props: { projects },
 		revalidate: 300,
 	};
 };

@@ -9,10 +9,10 @@ import {
 	PostContentWrapper,
 } from "@/src/components";
 import { useScroll, useTable, useWidth } from "@/src/hooks";
-import { ProjectType } from "@/src/types";
+import { PostDetailRequestProps, ProjectType } from "@/src/types";
 
 interface PageProps {
-	code: any;
+	code: string;
 	frontmatter: ProjectType;
 }
 
@@ -50,6 +50,7 @@ const Projects = ({ code, frontmatter }: PageProps) => {
 };
 
 export const getStaticPaths = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { readProjects } = require("../../src/lib/mdx.tsx");
 
 	const projects = await readProjects();
@@ -64,8 +65,10 @@ export const getStaticPaths = async () => {
 	};
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async (req: PostDetailRequestProps) => {
 	const { id } = req.params;
+
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { readProject } = require("../../src/lib/mdx.tsx");
 
 	const projectMD = await readProject(id);

@@ -26,13 +26,14 @@ const Projects = ({ projects }: HomeProps) => {
 	);
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { getProjects } = require("../src/lib/mdx.tsx");
 
-	let projects: ProjectType[] = await getProjects();
+	const projects: ProjectType[] = await getProjects();
 
 	return {
-		props: { projects: projects },
+		props: { projects },
 		revalidate: 300,
 	};
 };

@@ -12,7 +12,7 @@ export function PostContentTable({ scroll, table }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
 	const handleTrackSections = useCallback(() => {
-		const flattenTable: SectionType[] = [];
+		const flattenTable: (SectionType | undefined)[] = [];
 
 		table.forEach((section) => {
 			flattenTable.push({

@@ -15,7 +15,7 @@ import {
 import clsx from "clsx";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
-function createRipple(event: any) {
+function createRipple(event: MouseEvent) {
 	const button = event.currentTarget as HTMLElement,
 		circle = document.createElement("span"),
 		diameter = Math.max(button.clientWidth, button.clientHeight),
@@ -104,7 +104,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		const buttons = document.querySelectorAll(".Nav_link");
 
 		for (let i = 0; i < buttons.length; i++) {
-			const button: any = buttons.item(i);
+			const button = buttons.item(i) as HTMLLIElement;
 
 			if (button) {
 				button.removeEventListener("click", createRipple);

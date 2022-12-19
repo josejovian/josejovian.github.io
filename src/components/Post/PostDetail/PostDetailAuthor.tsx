@@ -1,9 +1,7 @@
 import { BsPersonFill } from "react-icons/bs";
 import { PostDetail } from "@/src/components";
 
-interface PostDetailAuthorProps {}
-
-export function PostDetailAuthor({}: PostDetailAuthorProps) {
+export function PostDetailAuthor() {
 	return (
 		<PostDetail>
 			<BsPersonFill />

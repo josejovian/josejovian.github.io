@@ -9,10 +9,10 @@ import {
 	PostContentWrapper,
 } from "@/src/components";
 import { useScroll, useTable, useWidth } from "@/src/hooks";
-import { BlogType } from "@/src/types";
+import { BlogType, PostDetailRequestProps } from "@/src/types";
 
 interface PageProps {
-	code: any;
+	code: string;
 	frontmatter: BlogType;
 }
 
@@ -49,6 +49,7 @@ const Blogs = ({ code, frontmatter }: PageProps) => {
 };
 
 export const getStaticPaths = async () => {
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { readBlogs } = require("../../src/lib/mdx.tsx");
 
 	const blogs = await readBlogs();
@@ -63,8 +64,10 @@ export const getStaticPaths = async () => {
 	};
 };
 
-export const getStaticProps = async (req: any) => {
+export const getStaticProps = async (req: PostDetailRequestProps) => {
 	const { id } = req.params;
+
+	// eslint-disable-next-line @typescript-eslint/no-var-requires
 	const { readBlog } = require("../../src/lib/mdx.tsx");
 
 	const blogMD = await readBlog(id);
