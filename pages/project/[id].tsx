@@ -1,15 +1,6 @@
-import { useMemo } from "react";
 import { bundleMDX } from "mdx-bundler";
-import { getMDXComponent } from "mdx-bundler/client";
-import {
-	Meta,
-	PostContentBody,
-	PostContentHeader,
-	PostContentThumbnail,
-	PostContentWrapper,
-} from "@/src/components";
-import { useScroll, useTable, useWidth } from "@/src/hooks";
 import { PostDetailRequestProps, ProjectType } from "@/src/types";
+import { PostTemplate } from "@/src/components";
 
 interface PageProps {
 	code: string;
@@ -17,38 +8,8 @@ interface PageProps {
 }
 
 const Projects = ({ code, frontmatter }: PageProps) => {
-	const { id, title, overview, autoOverview } = frontmatter;
-	const finalOverview = useMemo(
-		() => overview ?? autoOverview,
-		[autoOverview, overview]
-	);
-	const Component = useMemo(() => getMDXComponent(code), [code]);
-	const width = useWidth();
-	const scroll = useScroll();
-	const { table, thumbnailWidth, bodyPictureWidth } = useTable({ width });
-
 	return (
-		<>
-			<Meta page={title} description={finalOverview} />
-			<PostContentWrapper>
-				<PostContentHeader
-					contentDetail={frontmatter}
-					contentType="projects"
-				/>
-				<PostContentThumbnail
-					contentType="projects"
-					id={id}
-					thumbnailWidth={thumbnailWidth}
-					title={title}
-				/>
-				<PostContentBody
-					bodyPictureWidth={bodyPictureWidth}
-					Component={Component}
-					scroll={scroll}
-					table={table}
-				/>
-			</PostContentWrapper>
-		</>
+		<PostTemplate code={code} frontmatter={frontmatter} type="projects" />
 	);
 };
 
