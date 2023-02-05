@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { Nav, PictureViewer } from "@/src/components";
 import {
@@ -47,9 +47,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [readExistingPreference, setReadExistingPreference] = useState(false);
 	const stateMode = useState(false);
-	const [init, setInit] = useState(false);
+	const init = useRef(false);
 	const [mode, setMode] = stateMode;
 	const router: NextRouter = useRouter();
+	const scrolls = useRef<Record<string, number>>({});
 
 	const loadingContextValue = {
 			loading: loading,
@@ -67,19 +68,49 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 	const trackScroll = useCallback(() => {
 		const appExt = document.querySelector("#App_ext");
-		if (appExt) setScroll(appExt.scrollTop);
+		if (appExt) {
+			setScroll(appExt.scrollTop);
+		}
 	}, []);
 
 	const trackWidth = useCallback(() => {
 		setWidth(window.innerWidth);
 	}, []);
 
-	const startLoading = useCallback(() => {
-		setLoading(true);
-	}, []);
+	const startLoading = useCallback(
+		(nextRoute: string) => {
+			const appExt = document.querySelector("#App_ext");
+			const route = router.asPath;
 
-	const stopLoading = useCallback(() => {
+			if (appExt && nextRoute !== route) {
+				scrolls.current[route] = appExt.scrollTop;
+				console.log(
+					`[Start Loading] Updating ${route}: `,
+					appExt.scrollTop
+				);
+			} else {
+				console.log("Conflict!");
+			}
+
+			setLoading(true);
+		},
+		[router.asPath]
+	);
+
+	const stopLoading = useCallback((route: string) => {
+		const appExt = document.querySelector("#App_ext");
+
 		setLoading(false);
+
+		if (!appExt) return;
+
+		appExt.scrollTop = 0;
+		window.scrollTo(0, 0);
+
+		setTimeout(() => {
+			appExt.scrollTop = scrolls.current[route];
+			window.scrollTo(0, scrolls.current[route]);
+		}, 100);
 	}, []);
 
 	const handleGetPreferredMode = useCallback(() => {
@@ -118,38 +149,23 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 		if (!appExt) return;
 
-		appExt.removeEventListener("scroll", trackScroll);
 		appExt.addEventListener("scroll", trackScroll);
-
-		window.removeEventListener("resize", trackWidth);
 		window.addEventListener("resize", trackWidth);
 
+		router.events.off("routeChangeStart", startLoading);
 		router.events.on("routeChangeStart", startLoading);
 		router.events.on("routeChangeComplete", stopLoading);
 	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
 
-	const handleDisableListeners = useCallback(() => {
-		const appExt = document.querySelector("#App_ext");
-
-		if (appExt) {
-			appExt.removeEventListener("scroll", trackScroll);
-		}
-		window.removeEventListener("resize", trackWidth);
-
-		router.events.off("routeChangeStart", startLoading);
-		router.events.off("routeChangeComplete", stopLoading);
-	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
-
 	useEffect(() => {
-		setInit(true);
-		handleGetPreferredMode();
-		setTimeout(() => {
-			handleEnableListeners();
-		}, 200);
-		return () => {
-			handleDisableListeners();
-		};
-	}, [handleGetPreferredMode, handleDisableListeners, handleEnableListeners]);
+		if (!init.current) {
+			init.current = true;
+			handleGetPreferredMode();
+			setTimeout(() => {
+				handleEnableListeners();
+			}, 200);
+		}
+	}, [handleGetPreferredMode, handleEnableListeners]);
 
 	useEffect(() => {
 		setWidth(document.documentElement.offsetWidth);
@@ -184,7 +200,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 												"App_ext h-exc-nav w-screen",
 												"col-secondary overflow-y-scroll"
 											)}
-											// onScroll={() => trackScroll()}
 										>
 											<div
 												id="App"

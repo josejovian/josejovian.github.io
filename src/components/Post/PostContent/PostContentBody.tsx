@@ -8,6 +8,7 @@ export interface PostContentBodyProps {
 	scroll: number;
 	table: GreatSectionType[];
 	Component: FunctionComponent<MDXContentProps>;
+	onChangeActive?: (active: string) => void;
 }
 
 export function PostContentBody({
@@ -15,6 +16,7 @@ export function PostContentBody({
 	table,
 	bodyPictureWidth,
 	Component,
+	onChangeActive,
 }: PostContentBodyProps) {
 	return (
 		<div
@@ -40,7 +42,11 @@ export function PostContentBody({
 					}}
 				/>
 			</section>
-			<PostContentTable scroll={scroll} table={table} />
+			<PostContentTable
+				scroll={scroll}
+				table={table}
+				onChangeActive={onChangeActive}
+			/>
 		</div>
 	);
 }
