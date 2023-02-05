@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { useCallback, useEffect, useState } from "react";
 import { PostContentTableAnchor } from "./PostContentTableAnchor";
 import { GreatSectionType, SectionType } from "@/src/types";
-import { useRouter } from "next/router";
 
 export interface SideProps {
 	table: GreatSectionType[];

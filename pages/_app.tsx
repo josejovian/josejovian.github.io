@@ -1,18 +1,15 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { NextRouter, useRouter } from "next/router";
 import { Nav, PictureViewer } from "@/src/components";
 import {
 	defaultModal,
-	ModalContext,
 	ModalType,
-	ModeContext,
-	LoadingContext,
-	ScrollContext,
-	WidthContext,
+	ContextProviderWrapper,
 } from "@/src/contexts";
 import clsx from "clsx";
+import { ContextValueObjectType } from "@/src/types";
 
 // https://codepen.io/BretCameron/pen/mdPMVaW
 function createRipple(event: MouseEvent) {
@@ -41,55 +38,56 @@ function createRipple(event: MouseEvent) {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
+	const init = useRef(false);
+
+	const [readExistingPreference, setReadExistingPreference] = useState(false);
+	const stateMode = useState(false);
+	const [mode, setMode] = stateMode;
 	const [modal, setModal] = useState<ModalType>(defaultModal);
 	const [scroll, setScroll] = useState<number>(0);
 	const [width, setWidth] = useState<number>(0);
 	const [loading, setLoading] = useState<boolean>(false);
-	const [readExistingPreference, setReadExistingPreference] = useState(false);
-	const stateMode = useState(false);
-	const init = useRef(false);
-	const [mode, setMode] = stateMode;
-	const router: NextRouter = useRouter();
 	const scrolls = useRef<Record<string, number>>({});
+	const router: NextRouter = useRouter();
 
-	const loadingContextValue = {
-			loading: loading,
-		},
-		widthContextValue = {
-			width: width,
-		},
-		scrollContextValue = {
-			scroll: scroll,
-		},
-		modalContextValue = {
-			modal: modal,
-			setModal: setModal,
-		};
+	const contextValues = useMemo<ContextValueObjectType>(
+		() => ({
+			loading: {
+				loading,
+			},
+			modal: {
+				modal,
+				setModal,
+			},
+			mode,
+			scroll: {
+				scroll,
+			},
+			width: {
+				width,
+			},
+		}),
+		[loading, modal, mode, scroll, width]
+	);
 
-	const trackScroll = useCallback(() => {
+	const handleTrackScroll = useCallback(() => {
 		const appExt = document.querySelector("#App_ext");
 		if (appExt) {
 			setScroll(appExt.scrollTop);
 		}
 	}, []);
 
-	const trackWidth = useCallback(() => {
+	const handleTrackWidth = useCallback(() => {
 		setWidth(window.innerWidth);
 	}, []);
 
-	const startLoading = useCallback(
+	const handleRouteChangeStart = useCallback(
 		(nextRoute: string) => {
 			const appExt = document.querySelector("#App_ext");
 			const route = router.asPath;
 
 			if (appExt && nextRoute !== route) {
 				scrolls.current[route] = appExt.scrollTop;
-				console.log(
-					`[Start Loading] Updating ${route}: `,
-					appExt.scrollTop
-				);
-			} else {
-				console.log("Conflict!");
 			}
 
 			setLoading(true);
@@ -97,7 +95,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 		[router.asPath]
 	);
 
-	const stopLoading = useCallback((route: string) => {
+	const handleRouteChangeComplete = useCallback((route: string) => {
 		const appExt = document.querySelector("#App_ext");
 
 		setLoading(false);
@@ -149,13 +147,19 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 		if (!appExt) return;
 
-		appExt.addEventListener("scroll", trackScroll);
-		window.addEventListener("resize", trackWidth);
+		appExt.addEventListener("scroll", handleTrackScroll);
+		window.addEventListener("resize", handleTrackWidth);
 
-		router.events.off("routeChangeStart", startLoading);
-		router.events.on("routeChangeStart", startLoading);
-		router.events.on("routeChangeComplete", stopLoading);
-	}, [router.events, startLoading, stopLoading, trackScroll, trackWidth]);
+		router.events.off("routeChangeStart", handleRouteChangeStart);
+		router.events.on("routeChangeStart", handleRouteChangeStart);
+		router.events.on("routeChangeComplete", handleRouteChangeComplete);
+	}, [
+		router.events,
+		handleRouteChangeStart,
+		handleRouteChangeComplete,
+		handleTrackScroll,
+		handleTrackWidth,
+	]);
 
 	useEffect(() => {
 		if (!init.current) {
@@ -172,56 +176,44 @@ function MyApp({ Component, pageProps }: AppProps) {
 	}, []);
 
 	return (
-		<LoadingContext.Provider value={loadingContextValue}>
-			<WidthContext.Provider value={widthContextValue}>
-				<ScrollContext.Provider value={scrollContextValue}>
-					<ModeContext.Provider value={mode}>
-						<ModalContext.Provider value={modalContextValue}>
-							<div
-								className={clsx(
-									"App_ext2",
-									"overflow-hidden relative flex flex-col",
-									mode ? "dark" : ""
-								)}
-								style={{ flex: "1 1 auto" }}
-							>
-								{init ? (
-									<>
-										<Nav
-											width={width}
-											scroll={scroll}
-											loading={loading}
-											stateMode={stateMode}
-										/>
-										<PictureViewer />
-										<div
-											id="App_ext"
-											className={clsx(
-												"App_ext h-exc-nav w-screen",
-												"col-secondary overflow-y-scroll"
-											)}
-										>
-											<div
-												id="App"
-												className="App relative w-adaptive"
-											>
-												<Component {...pageProps} />
-												<div className="relative col-text text-center p-8">
-													© {new Date().getFullYear()}{" "}
-													Jose Jovian
-												</div>
-											</div>
-										</div>
-									</>
-								) : (
-									<div className="" />
-								)}
+		<ContextProviderWrapper values={contextValues}>
+			<div
+				className={clsx(
+					"App_ext2",
+					"overflow-hidden relative flex flex-col",
+					mode ? "dark" : ""
+				)}
+				style={{ flex: "1 1 auto" }}
+			>
+				{init ? (
+					<>
+						<Nav
+							width={width}
+							scroll={scroll}
+							loading={loading}
+							stateMode={stateMode}
+						/>
+						<PictureViewer />
+						<div
+							id="App_ext"
+							className={clsx(
+								"App_ext h-exc-nav w-screen",
+								"col-secondary overflow-y-scroll"
+							)}
+						>
+							<div id="App" className="App relative w-adaptive">
+								<Component {...pageProps} />
+								<div className="relative col-text text-center p-8">
+									© {new Date().getFullYear()} Jose Jovian
+								</div>
 							</div>
-						</ModalContext.Provider>
-					</ModeContext.Provider>
-				</ScrollContext.Provider>
-			</WidthContext.Provider>
-		</LoadingContext.Provider>
+						</div>
+					</>
+				) : (
+					<div className="" />
+				)}
+			</div>
+		</ContextProviderWrapper>
 	);
 }
 
