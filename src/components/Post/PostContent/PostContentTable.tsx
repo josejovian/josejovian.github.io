@@ -6,9 +6,10 @@ import { GreatSectionType, SectionType } from "@/src/types";
 export interface SideProps {
 	table: GreatSectionType[];
 	scroll: number;
+	onChangeActive?: (active: string) => void;
 }
 
-export function PostContentTable({ scroll, table }: SideProps) {
+export function PostContentTable({ scroll, table, onChangeActive }: SideProps) {
 	const [active, setActive] = useState<string>("");
 
 	const handleTrackSections = useCallback(() => {
@@ -51,12 +52,13 @@ export function PostContentTable({ scroll, table }: SideProps) {
 				scroll + 8 >= section.position ||
 				(i + 1 === flattenTable.length && isAtBottom)
 			) {
-				newDestination = section.name;
+				newDestination = section.link;
 			}
 		}
 
 		setActive(newDestination);
-	}, [active, scroll, table]);
+		onChangeActive && onChangeActive(newDestination);
+	}, [active, onChangeActive, scroll, table]);
 
 	useEffect(() => {
 		handleTrackSections();
@@ -84,19 +86,19 @@ export function PostContentTable({ scroll, table }: SideProps) {
 										key={sub.name}
 										head={sub}
 										depth={2}
-										active={active === sub.name}
-										onClick={() => setActive(sub.name)}
+										active={active === sub.link}
+										onClick={() => setActive(sub.link)}
 									/>
 								);
 							}
 						);
 
 						return (
-							<li key={head.name}>
+							<li key={head.link}>
 								<PostContentTableAnchor
 									head={head}
 									depth={1}
-									active={active === head.name}
+									active={active === head.link}
 								/>
 								{sectionElements}
 							</li>
