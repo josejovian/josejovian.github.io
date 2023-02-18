@@ -1,16 +1,16 @@
 import {
-	LoadingContextProps,
-	ModalContextProps,
-	ScrollContextProps,
-	WidthContextProps,
+  LoadingContextProps,
+  ModalContextProps,
+  ScrollContextProps,
+  WidthContextProps,
 } from "../contexts";
 
 export interface ContextPropsDict {
-	loading: LoadingContextProps;
-	scroll: ScrollContextProps;
-	width: WidthContextProps;
-	modal: ModalContextProps;
-	mode: boolean;
+  loading: LoadingContextProps;
+  scroll: ScrollContextProps;
+  width: WidthContextProps;
+  modal: ModalContextProps;
+  mode: boolean;
 }
 export type ContextsType = "loading" | "scroll" | "width" | "modal" | "mode";
 

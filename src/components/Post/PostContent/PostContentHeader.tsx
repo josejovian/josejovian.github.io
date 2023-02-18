@@ -6,17 +6,17 @@ import { PostContentTitle } from "./PostContentTitle";
 export interface PostContentHeaderProps extends ContentComponentGenericProps {}
 
 export function PostContentHeader({
-	contentDetail,
-	contentType,
+  contentDetail,
+  contentType,
 }: PostContentHeaderProps) {
-	const { title } = contentDetail;
-	return (
-		<div className="flex flex-col gap-4">
-			<PostContentTitle>{title}</PostContentTitle>
-			<PostContentDetail
-				contentDetail={contentDetail}
-				contentType={contentType}
-			/>
-		</div>
-	);
+  const { title } = contentDetail;
+  return (
+    <div className="flex flex-col gap-4">
+      <PostContentTitle>{title}</PostContentTitle>
+      <PostContentDetail
+        contentDetail={contentDetail}
+        contentType={contentType}
+      />
+    </div>
+  );
 }
