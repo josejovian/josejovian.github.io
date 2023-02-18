@@ -106,6 +106,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       appExt.scrollTop = 0;
       window.scrollTo(0, 0);
     } else {
+      console.log("Existing Values");
       setTimeout(() => {
         appExt.scrollTop = scrolls.current[route];
         window.scrollTo(0, scrolls.current[route]);
