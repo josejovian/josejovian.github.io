@@ -73,9 +73,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleTrackScroll = useCallback(() => {
     const appExt = document.querySelector("#App_ext");
     if (appExt) {
+      const route = router.asPath;
+      console.log(`${route}: ${appExt.scrollTop}`);
       setScroll(appExt.scrollTop);
     }
-  }, []);
+  }, [router.asPath]);
 
   const handleTrackWidth = useCallback(() => {
     setWidth(window.innerWidth);
