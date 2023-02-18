@@ -73,11 +73,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleTrackScroll = useCallback(() => {
     const appExt = document.querySelector("#App_ext");
     if (appExt) {
-      const route = router.asPath;
-      console.log(`${route}: ${appExt.scrollTop}`);
       setScroll(appExt.scrollTop);
     }
-  }, [router.asPath]);
+  }, []);
 
   const handleTrackWidth = useCallback(() => {
     setWidth(window.innerWidth);
@@ -86,9 +84,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const handleRouteChangeStart = useCallback((nextRoute: string) => {
     const appExt = document.querySelector("#App_ext");
     const route = window.location.pathname;
-
-    console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
-    console.log(scrolls.current);
 
     if (appExt && nextRoute !== route) {
       scrolls.current[route] = appExt.scrollTop;
@@ -105,15 +100,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
     if (!appExt) return;
 
-    console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
-    console.log(scrolls.current);
-
     if (!scrolls.current[route]) {
       appExt.scrollTop = 0;
       window.scrollTo(0, 0);
     } else {
-      console.log("Existing Values");
-      console.log(scrolls.current);
       setTimeout(() => {
         appExt.scrollTop = scrolls.current[route];
         window.scrollTo(0, scrolls.current[route]);
