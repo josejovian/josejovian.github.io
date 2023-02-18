@@ -3,14 +3,14 @@ import { toAltDateFormat } from "@/src/utils";
 import { BsClockFill } from "react-icons/bs";
 
 interface PostDetailDateProps {
-	date: string;
+  date: string;
 }
 
 export function PostDetailDate({ date }: PostDetailDateProps) {
-	return (
-		<PostDetail>
-			<BsClockFill />
-			<span>{toAltDateFormat(date)}</span>
-		</PostDetail>
-	);
+  return (
+    <PostDetail>
+      <BsClockFill />
+      <span>{toAltDateFormat(date)}</span>
+    </PostDetail>
+  );
 }

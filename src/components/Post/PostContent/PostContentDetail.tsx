@@ -6,32 +6,32 @@ import { PostDetailDate, PostDetailAuthor } from "@/src/components";
 export interface PostContentDetailProps extends ContentComponentGenericProps {}
 
 export function PostContentDetail({
-	contentType,
-	contentDetail,
+  contentType,
+  contentDetail,
 }: PostContentDetailProps) {
-	const { date } = contentDetail;
+  const { date } = contentDetail;
 
-	const renderProjectDetail = useMemo(() => <></>, []);
+  const renderProjectDetail = useMemo(() => <></>, []);
 
-	const renderBlogDetail = useMemo(
-		() => (
-			<>
-				<PostDetailAuthor />
-				<PostDetailDate date={date} />
-			</>
-		),
-		[date]
-	);
+  const renderBlogDetail = useMemo(
+    () => (
+      <>
+        <PostDetailAuthor />
+        <PostDetailDate date={date} />
+      </>
+    ),
+    [date]
+  );
 
-	const renderPostDetail = useMemo(
-		() => (
-			<>
-				{contentType === "projects" && renderProjectDetail}
-				{contentType === "blogs" && renderBlogDetail}
-			</>
-		),
-		[contentType, renderBlogDetail, renderProjectDetail]
-	);
+  const renderPostDetail = useMemo(
+    () => (
+      <>
+        {contentType === "projects" && renderProjectDetail}
+        {contentType === "blogs" && renderBlogDetail}
+      </>
+    ),
+    [contentType, renderBlogDetail, renderProjectDetail]
+  );
 
-	return <div className="flex gap-4">{renderPostDetail}</div>;
+  return <div className="flex gap-4">{renderPostDetail}</div>;
 }

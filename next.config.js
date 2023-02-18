@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-	webpack(config) {
+  webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ["@svgr/webpack"],
     });
 
     return config;
@@ -11,8 +11,8 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: ['student-activity.binus.ac.id'],
+    domains: ["student-activity.binus.ac.id"],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

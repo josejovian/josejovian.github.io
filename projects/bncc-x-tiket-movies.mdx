@@ -20,18 +20,18 @@ BNCC x Tiket Movies is an app where people can view new movies, search for movie
 
 We mainly used NextJS. The following are other libraries or API that we use:
 
--   **TheMovieDB API**, to get movie data and TMDB account authentication.
--   **Axios**, to handle API calls.
--   **Redux**, for state management.
--   **Redux Persist**, to ensure that the states persist within pages, even if the user closes the tab, by saving the states in the user's local storage.
+- **TheMovieDB API**, to get movie data and TMDB account authentication.
+- **Axios**, to handle API calls.
+- **Redux**, for state management.
+- **Redux Persist**, to ensure that the states persist within pages, even if the user closes the tab, by saving the states in the user's local storage.
 
 ## Highlighted Features
 
 The first main feature of this application is **account login**. After a user inputs their TMDB username and password, clicking the login button will trigger three API calls, as parts of the authentication process with TMDB:
 
--   Get new token.
--   Validate the new token using the username and password, to create a new session.
--   Request for user data using the session ID.
+- Get new token.
+- Validate the new token using the username and password, to create a new session.
+- Request for user data using the session ID.
 
 Upon login, the user will be redirected to the home page. Users can **visit their own profile page**, where they can also see the movies in their favorites. Visiting the profile page triggers an API call that will request for the user's favorite movies from TMDB.
 
