@@ -86,6 +86,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       const appExt = document.querySelector("#App_ext");
       const route = router.asPath;
 
+      console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
+
       if (appExt && nextRoute !== route) {
         scrolls.current[route] = appExt.scrollTop;
       }
@@ -95,22 +97,25 @@ function MyApp({ Component, pageProps }: AppProps) {
     [router.asPath]
   );
 
-  const handleRouteChangeComplete = useCallback((route: string) => {
+  const handleRouteChangeComplete = useCallback((nextRoute: string) => {
     const appExt = document.querySelector("#App_ext");
+    const route = router.asPath;
 
     setLoading(false);
 
     if (!appExt) return;
 
-    if (!scrolls.current[route]) {
+    console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
+
+    if (!scrolls.current[nextRoute]) {
       appExt.scrollTop = 0;
       window.scrollTo(0, 0);
     } else {
       console.log("Existing Values");
       console.log(scrolls.current);
       setTimeout(() => {
-        appExt.scrollTop = scrolls.current[route];
-        window.scrollTo(0, scrolls.current[route]);
+        appExt.scrollTop = scrolls.current[nextRoute];
+        window.scrollTo(0, scrolls.current[nextRoute]);
       }, 100);
     }
   }, []);
