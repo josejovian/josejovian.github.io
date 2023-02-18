@@ -83,49 +83,43 @@ function MyApp({ Component, pageProps }: AppProps) {
     setWidth(window.innerWidth);
   }, []);
 
-  const handleRouteChangeStart = useCallback(
-    (nextRoute: string) => {
-      const appExt = document.querySelector("#App_ext");
-      const route = router.asPath;
+  const handleRouteChangeStart = useCallback((nextRoute: string) => {
+    const appExt = document.querySelector("#App_ext");
+    const route = window.location.pathname;
 
-      console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
+    console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
+    console.log(scrolls.current);
+
+    if (appExt && nextRoute !== route) {
+      scrolls.current[route] = appExt.scrollTop;
+    }
+
+    setLoading(true);
+  }, []);
+
+  const handleRouteChangeComplete = useCallback((nextRoute: string) => {
+    const appExt = document.querySelector("#App_ext");
+    const route = window.location.pathname;
+
+    setLoading(false);
+
+    if (!appExt) return;
+
+    console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
+    console.log(scrolls.current);
+
+    if (!scrolls.current[route]) {
+      appExt.scrollTop = 0;
+      window.scrollTo(0, 0);
+    } else {
+      console.log("Existing Values");
       console.log(scrolls.current);
-
-      if (appExt && nextRoute !== route) {
-        scrolls.current[route] = appExt.scrollTop;
-      }
-
-      setLoading(true);
-    },
-    [router.asPath]
-  );
-
-  const handleRouteChangeComplete = useCallback(
-    (nextRoute: string) => {
-      const appExt = document.querySelector("#App_ext");
-      const route = router.asPath;
-
-      setLoading(false);
-
-      if (!appExt) return;
-
-      console.log(`Route vs NextRoute: ${route} vs. ${nextRoute}`);
-      console.log(scrolls.current);
-
-      if (!scrolls.current[nextRoute]) {
-        appExt.scrollTop = 0;
-        window.scrollTo(0, 0);
-      } else {
-        console.log("Existing Values");
-        console.log(scrolls.current);
-        setTimeout(() => {
-          appExt.scrollTop = scrolls.current[nextRoute];
-          window.scrollTo(0, scrolls.current[nextRoute]);
-        }, 100);
-      }
-    },
-    [router.asPath]
-  );
+      setTimeout(() => {
+        appExt.scrollTop = scrolls.current[route];
+        window.scrollTo(0, scrolls.current[route]);
+      }, 100);
+    }
+  }, []);
 
   const handleGetPreferredMode = useCallback(() => {
     const existing = localStorage.getItem("mode");
