@@ -82,7 +82,9 @@ export function Card({
   return (
     <div style={{ maxWidth: overrideWidth }}>
       {href ? (
-        <Link href={href}>{renderCardWrapper}</Link>
+        <Link aria-label={`Read more about ${thumbTitle}`} href={href}>
+          {renderCardWrapper}
+        </Link>
       ) : (
         <>{renderCardWrapper}</>
       )}

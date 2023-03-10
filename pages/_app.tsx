@@ -1,41 +1,15 @@
 import "../styles/globals.css";
-import type { AppProps } from "next/app";
 import { useCallback, useEffect, useRef, useState, useMemo } from "react";
 import { NextRouter, useRouter } from "next/router";
+import clsx from "clsx";
+import type { AppProps } from "next/app";
 import { Nav, PictureViewer } from "@/src/components";
 import {
   defaultModal,
   ModalType,
   ContextProviderWrapper,
 } from "@/src/contexts";
-import clsx from "clsx";
 import { ContextValueObjectType } from "@/src/types";
-
-// https://codepen.io/BretCameron/pen/mdPMVaW
-function createRipple(event: MouseEvent) {
-  const button = event.currentTarget as HTMLElement,
-    circle = document.createElement("span"),
-    diameter = Math.max(button.clientWidth, button.clientHeight),
-    radius = diameter / 2,
-    left = event.clientX - button.offsetLeft - radius,
-    top = event.clientY - button.offsetTop - radius;
-
-  circle.style.width = circle.style.height = `${diameter}px`;
-  circle.style.left = `${left}px`;
-  circle.style.top = `${top}px`;
-  circle.className = "ripple bg-gray-300 dark:bg-gray-600 z-40";
-
-  const ripple = button.getElementsByClassName("ripple")[0];
-
-  if (ripple) {
-    ripple.remove();
-  }
-
-  button.appendChild(circle);
-  setTimeout(() => {
-    circle.remove();
-  }, 1000);
-}
 
 function MyApp({ Component, pageProps }: AppProps) {
   const init = useRef(false);
@@ -49,6 +23,32 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState<boolean>(false);
   const scrolls = useRef<Record<string, number>>({});
   const router: NextRouter = useRouter();
+
+  // https://codepen.io/BretCameron/pen/mdPMVaW
+  const createRipple = useCallback((event: MouseEvent) => {
+    const button = event.currentTarget as HTMLElement,
+      circle = document.createElement("span"),
+      diameter = Math.max(button.clientWidth, button.clientHeight),
+      radius = diameter / 2,
+      left = event.clientX - button.offsetLeft - radius,
+      top = event.clientY - button.offsetTop - radius;
+
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${left}px`;
+    circle.style.top = `${top}px`;
+    circle.className = "ripple bg-gray-300 dark:bg-gray-600 z-40";
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+
+    if (ripple) {
+      ripple.remove();
+    }
+
+    button.appendChild(circle);
+    setTimeout(() => {
+      circle.remove();
+    }, 1000);
+  }, []);
 
   const contextValues = useMemo<ContextValueObjectType>(
     () => ({
@@ -92,7 +92,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     setLoading(true);
   }, []);
 
-  const handleRouteChangeComplete = useCallback((nextRoute: string) => {
+  const handleRouteChangeComplete = useCallback(() => {
     const appExt = document.querySelector("#App_ext");
     const route = window.location.pathname;
 
@@ -140,7 +140,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         button.addEventListener("click", createRipple);
       }
     }
-  }, [width, init, loading]);
+  }, [width, init, loading, createRipple]);
 
   const handleEnableListeners = useCallback(() => {
     const appExt = document.querySelector("#App_ext");

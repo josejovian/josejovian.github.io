@@ -24,6 +24,7 @@ export function ProjectCard({ width, ...project }: ProjectCardProps) {
       href={link}
       id={identifier}
       thumbSrc={thumbnail}
+      thumbTitle={title}
       overrideWidth={width}
     >
       <>
