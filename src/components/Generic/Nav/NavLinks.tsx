@@ -87,6 +87,7 @@ export function NavLinks({
         )}
       >
         <button
+          aria-label="Toggle Dark/Light Mode"
           className={clsx("py-4 z-50 px-4 sm:px-8")}
           onClick={() => setMode((prev) => !prev)}
         >
