@@ -24,6 +24,7 @@ export function BlogCard({ width, ...project }: BlogCardProps) {
       href={link}
       id={identifier}
       thumbSrc={thumbnail}
+      thumbTitle={title}
       overrideWidth={width}
     >
       <>
