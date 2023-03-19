@@ -48,7 +48,10 @@ export function NavLinks({
             <li
               className={clsx(
                 "Nav_link",
-                "relative flex flex-col items-center",
+                "relative flex flex-col items-center h-full",
+                active
+                  ? [mode ? "bg-slate-600" : "bg-blue-50"]
+                  : [mode ? "hover:bg-slate-600" : "hover:bg-gray-100"],
                 navMainLinksResponsiveStyle
               )}
               key={`Nav_${link.name}`}
@@ -69,7 +72,7 @@ export function NavLinks({
                 key={`Nav_${link.name}`}
                 className={clsx(
                   "px-8 py-4 z-50",
-                  active && "text-blue-400",
+                  active && (mode ? "text-blue-400" : "text-blue-600"),
                   idx === 0 && mobileHidden
                 )}
                 aria-label={`Go to page "${link.name}"`}

@@ -88,7 +88,7 @@ export function Nav({ width, scroll, loading, stateMode }: NavProps) {
     () => (
       <div
         className={clsx(
-          "flex flex-row items-between justify-between",
+          "flex flex-row items-between justify-between h-full",
           "w-adaptive m-auto"
         )}
       >
